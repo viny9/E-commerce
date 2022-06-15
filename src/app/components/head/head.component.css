@@ -1,0 +1,38 @@
+h1 {
+    margin: 0;
+}
+
+.head {
+    border-bottom: 1px solid;
+    height: 60px;
+    padding: 0 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    width: 40%;
+}
+
+.search input {
+    width: 100%;
+    padding: 6px;
+    margin-right: 10px;
+}
+
+.search input:focus  {
+     outline: none;
+}
+
+.search-btn {
+    border: 1px solid;
+    background-color: transparent;
+}
+
+.btn {
+    background-color: transparent;
+    border: none;
+}
