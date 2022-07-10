@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeadComponent } from './components/head/head.component';
 import { MainComponent } from './components/main/main.component'
+import { CartComponent } from './components/cart/cart.component';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
@@ -14,12 +15,14 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeadComponent,
-    MainComponent
+    MainComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatIconModule,
     MatButtonModule,
     MatCardModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]
