@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ListComponent } from './components/list/list.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ListComponent } from './components/list/list.component';
     HeadComponent,
     MainComponent,
     CartComponent,
-    ListComponent
+    ListComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

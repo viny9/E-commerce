@@ -3,8 +3,8 @@
     <h1>Logo</h1>
   </a>
   <form class="search">
-    <input type="text">
-    <button class="search-btn" disabled>
+    <input type="text" [formControl]="searchInput">
+    <button class="search-btn" [disabled]="searchInput.invalid" routerLink="/search/{{searchInput.value}}">
       <mat-icon>search</mat-icon>
     </button>
   </form>
