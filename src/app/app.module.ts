@@ -16,13 +16,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { ListComponent } from './components/list/list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeadComponent,
     MainComponent,
-    CartComponent
+    CartComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,
