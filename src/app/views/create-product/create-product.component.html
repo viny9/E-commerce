@@ -1,0 +1,18 @@
+<mat-card class="productCreateComponent">
+  <h1>Novo Produto</h1>
+  <form class="form">
+    <mat-form-field>
+      <mat-label>Nome do produto</mat-label>
+      <input type="text" matInput>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Preço do produto</mat-label>
+      <input type="text" matInput>
+    </mat-form-field>
+  </form>
+  <div class="actions">
+    <button mat-raised-button color="warn" (click)="home.emit('')">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="createProduct()">Criar</button>
+  </div>
+</mat-card>

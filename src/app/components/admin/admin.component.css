@@ -1,0 +1,16 @@
+.admin {
+    height: 92%;
+    margin-top: 10px;
+}
+
+.main {
+    padding: 20px 50px;
+}
+
+.main table {
+    width: 100%;
+}
+
+.newProduct {
+    margin: 15px 0 ;
+}

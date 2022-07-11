@@ -35,7 +35,7 @@
 .prices {
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
   border-bottom: 1px solid #ddd;
   padding: 20px;
 }
