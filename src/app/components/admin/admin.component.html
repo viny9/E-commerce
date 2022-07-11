@@ -1,10 +1,58 @@
 <mat-drawer-container class="admin">
-    <mat-drawer mode="side" opened class="sidebar">
-        <button mat-button>Adicionar Produto</button>
-        <button mat-button>Editar Produto</button>
-        <button mat-button>Remover Produto</button>
-    </mat-drawer>
-    <mat-drawer-content class="main">
-        <app-create-product></app-create-product>
-    </mat-drawer-content>
-  </mat-drawer-container>
+
+  <mat-drawer mode="side" opened class="sidebar">
+    <button mat-button>Inicio</button>
+    <button mat-button>Produtos</button>
+  </mat-drawer>
+
+  <mat-drawer-content class="main">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="component === ''">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+
+      <!-- Price Column -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <div>
+            <button mat-icon-button color="primary" (click)="component = 'edit-product'">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button color="warn" (click)="openDelete()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+    </table>
+
+    <button class="newProduct" mat-raised-button color="primary"
+     (click)="component = 'create-product'" *ngIf="component === ''">
+      Novo produto
+    </button>
+
+    <app-create-product (home)="recive($event)" *ngIf="component === 'create-product'"></app-create-product>
+    <app-edit-product (home)="recive($event)" *ngIf="component === 'edit-product'"></app-edit-product>
+  </mat-drawer-content>
+</mat-drawer-container>

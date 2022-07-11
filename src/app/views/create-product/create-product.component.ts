@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-create-product',
@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateProductComponent implements OnInit {
 
+  @Output() home = new EventEmitter()
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  createProduct() {
+    window.location.reload()
   }
 
 }
