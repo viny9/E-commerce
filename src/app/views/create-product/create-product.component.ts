@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-create-product',
@@ -8,14 +10,23 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class CreateProductComponent implements OnInit {
 
   @Output() home = new EventEmitter()
+  form:any
 
-  constructor() { }
+  constructor(private product:ProductService) { }
 
   ngOnInit(): void {
+    this.createForm()
+  }
+
+  createForm() {
+    this.form = new FormGroup({
+      name: new FormControl('', [Validators.required]),
+      price: new FormControl('', [Validators.required])
+    })
   }
 
   createProduct() {
-    window.location.reload()
+    this.product.createProduct(this.form.value)
   }
 
 }

@@ -1,14 +1,14 @@
 <mat-card class="productCreateComponent">
   <h1>Novo Produto</h1>
-  <form class="form">
+  <form class="form" [formGroup]="form">
     <mat-form-field>
       <mat-label>Nome do produto</mat-label>
-      <input type="text" matInput>
+      <input type="text" matInput formControlName="name">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Preço do produto</mat-label>
-      <input type="text" matInput>
+      <input type="text" matInput formControlName="price">
     </mat-form-field>
   </form>
   <div class="actions">

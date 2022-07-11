@@ -1,16 +1,16 @@
 <div class="delete">
   <mat-form-field>
     <mat-label>Nome do produto</mat-label>
-    <input type="text" matInput>
+    <input type="text" matInput [value]="data.name">
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Preço do produto</mat-label>
-    <input type="text" matInput>
+    <input type="text" matInput [value]="data.price">
   </mat-form-field>
   <div class="actions">
     <button mat-raised-button color="warn" (click)="close()">Cancel</button>
-    <button mat-raised-button color="primary" (click)="close()">Remover</button>
+    <button mat-raised-button color="primary" (click)="delete()">Remover</button>
   </div>
 
 </div>
