@@ -1,0 +1,15 @@
+.admin {
+    height: 92%;
+    margin-top: 10px;
+}
+
+.sidebar {
+    width: 20%;
+}
+
+.sidebar button {
+    border-radius: 0;
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+}

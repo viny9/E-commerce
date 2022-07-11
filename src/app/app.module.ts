@@ -8,6 +8,10 @@ import { AppComponent } from './app.component';
 import { HeadComponent } from './components/head/head.component';
 import { MainComponent } from './components/main/main.component'
 import { CartComponent } from './components/cart/cart.component';
+import { ListComponent } from './components/list/list.component';
+import { SearchComponent } from './components/search/search.component';
+import { ProductComponent } from './components/product/product.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
@@ -16,9 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { ListComponent } from './components/list/list.component';
-import { SearchComponent } from './components/search/search.component';
-import { ProductComponent } from './components/product/product.component';
+import { CreateProductComponent } from './views/create-product/create-product.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { ProductComponent } from './components/product/product.component';
     CartComponent,
     ListComponent,
     SearchComponent,
-    ProductComponent
+    ProductComponent,
+    AdminComponent,
+    CreateProductComponent
   ],
   imports: [
     BrowserModule,

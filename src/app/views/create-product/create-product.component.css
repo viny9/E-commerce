@@ -1,0 +1,21 @@
+.productCreateComponent {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.productCreateComponent h1 {
+    width: 100%;
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.actions button {
+    margin: 10px 5px 0;
+}
