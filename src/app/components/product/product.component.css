@@ -1,0 +1,72 @@
+.productComponent {
+    margin: 20px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product {
+    box-shadow: 0 0 3px;
+    width:85%;
+    margin-right: 20px  ;
+}
+
+.infos {
+    padding:25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.infos span h1{
+    margin-bottom: 10px;
+}
+
+.infos span h2 {
+    font-size: 30px;
+}
+
+.actions button{
+    padding: 5px;
+}
+
+.buy-btn {
+    height: 100%;
+    padding: 5px 100px;
+}
+
+.questions {
+    width: 100%;
+    border-top: 1px solid #dcdcdc;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.questionAndAnswer {
+    width: 30%;
+    margin-bottom: 40px;
+}
+
+.question {
+    margin-bottom: 10px;
+    word-break: break-all;
+}
+
+.question p {
+    border-bottom: 1px solid #dcdcdc;
+    padding: 10px 0;
+}
+
+.answer {
+    word-break: break-all;
+}
+
+.answer p {
+    padding: 10px 0;
+}
+
+.questionInput {
+    width: 50%;
+    margin-right: 10px;
+}

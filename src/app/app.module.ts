@@ -18,6 +18,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ListComponent } from './components/list/list.component';
 import { SearchComponent } from './components/search/search.component';
+import { ProductComponent } from './components/product/product.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SearchComponent } from './components/search/search.component';
     MainComponent,
     CartComponent,
     ListComponent,
-    SearchComponent
+    SearchComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
