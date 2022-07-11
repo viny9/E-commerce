@@ -1,11 +1,5 @@
-<mat-drawer-container class="admin">
-
-  <mat-drawer mode="side" opened class="sidebar">
-    <button mat-button>Inicio</button>
-    <button mat-button>Produtos</button>
-  </mat-drawer>
-
-  <mat-drawer-content class="main">
+<div class="admin">
+  <div class="main">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="component === ''">
 
       <!-- Position Column -->
@@ -47,12 +41,11 @@
       <tr mat-row *matRowDef="let row; columns: columns;"></tr>
     </table>
 
-    <button class="newProduct" mat-raised-button color="primary"
-     (click)="component = 'create-product'" *ngIf="component === ''">
+    <button class="newProduct" mat-raised-button color="primary" (click)="component = 'create-product'"
+      *ngIf="component === ''">
       Novo produto
     </button>
-
-    <app-create-product (home)="recive($event)" *ngIf="component === 'create-product'"></app-create-product>
-    <app-edit-product (home)="recive($event)" *ngIf="component === 'edit-product'"></app-edit-product>
-  </mat-drawer-content>
-</mat-drawer-container>
+  </div>
+  <app-create-product (home)="recive($event)" *ngIf="component === 'create-product'"></app-create-product>
+  <app-edit-product (home)="recive($event)" *ngIf="component === 'edit-product'"></app-edit-product>
+</div>
