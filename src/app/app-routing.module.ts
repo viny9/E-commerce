@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'search/:value',
     component: SearchComponent },
 
-  { path: 'product',
+  { path: 'product/:productName',
     component: ProductComponent },
 
   { path: 'admin',

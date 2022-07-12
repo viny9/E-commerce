@@ -15,6 +15,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { CreateProductComponent } from './views/create-product/create-product.component';
 import { EditProductComponent } from './views/edit-product/edit-product.component';
 import { DeleteProductComponent } from './views/delete-product/delete-product.component';
+import { environment } from 'src/environments/environment';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
@@ -25,12 +26,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AngularFireModule } from '@angular/fire/compat'
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,7 @@ import { environment } from 'src/environments/environment';
     MatSidenavModule,
     MatTableModule,
     MatDialogModule,
-
+    MatSnackBarModule,
     
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
