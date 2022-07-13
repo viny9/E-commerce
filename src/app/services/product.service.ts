@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
@@ -34,13 +35,13 @@ export class ProductService {
   }
 
   //Lista
-  readList() {
-    return this.firebase.collection('list').get()
-  }
-
   addToList(product:any) {
     return this.firebase.collection('list').add(product)
       .then(() => window.location.reload())
+  }
+
+  readList() {
+    return this.firebase.collection('list').get()
   }
 
   deleteFromTheList(productId:any) {
@@ -49,18 +50,27 @@ export class ProductService {
   }
   
   //Carrinho
-  readCart() {
-    return this.firebase.collection('cart').get()
-  }
-  
   addToCart(product:any) {
     return this.firebase.collection('cart').add(product)
     .then(() => window.location.reload())
   }
 
+  readCart() {
+    return this.firebase.collection('cart').get()
+  }
+
   deleteFromTheCart(productId:any) {
     return this.firebase.collection('cart').doc(productId).delete()
       .then(() => window.location.reload())
+  }
+
+  addQuestions(productId:any, question:any) {
+    return this.firebase.collection('products').doc(productId).collection('questions').add(question)
+      .then(() => window.location.reload())
+  }
+
+  readQuestions(productId:any) {
+    return this.firebase.collection('products').doc(productId).collection('questions').get()
   }
 
   messages(message:any) {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -11,6 +12,8 @@ export class ProductComponent implements OnInit {
 
   productInfos:any
   pathId:any
+  input:any = new FormControl('', [Validators.required])
+  question:any = []
 
   constructor(private product:ProductService, private route:ActivatedRoute, private router: Router) { }
 
@@ -21,6 +24,16 @@ export class ProductComponent implements OnInit {
         this.productInfos = res.data()
         this.productInfos.id = this.pathId
       })
+    })
+
+  this.allQuestions()
+  }
+
+  allQuestions() {
+    this.product.readQuestions(this.pathId).subscribe((res:any) => {
+      res.forEach((element:any) => {
+        this.question.push(element.data())
+      });
     })
   }
 
@@ -56,7 +69,23 @@ export class ProductComponent implements OnInit {
           this.router.navigate(['cart'])
         }
     });
-
   }
+
+  questions() {
+    const question = {
+      quest: this.input.value
+    }
+
+    this.product.addQuestions(this.pathId, question)
+  }
+  
+  // answer() {
+  //   const answer = {
+  //     answer: this.input.value
+  //   }
+  
+  //   this.product.addQuestions(this.pathId, answer)
+
+  // }
 
 }

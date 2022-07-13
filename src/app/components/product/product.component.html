@@ -16,22 +16,22 @@
   </div>
   <div class="questions">
     <h1>Perguntas</h1>
-    <mat-card class="questionAndAnswer">
+    <mat-card class="questionAndAnswer" *ngFor="let quest of question">
         <span class="question">
             Pergunta:
-            <p>nsbwgfuiberguib~pqejwtgrhgui~wetg8 gyhb ?</p>
+            <p>{{quest.quest}}</p>
         </span>
         <span class="answer">
             Resposta:
-            <p>fwgetgkpaiogubdlçasdf9-yuue hfauvwebf ozujnoh 8igh</p>
+            <p>{{quest.answer}}</p>
         </span>
     </mat-card>
     <div>
         <mat-form-field class="questionInput">
             <mat-label>Escreva sua pergunta aqui</mat-label>
-            <input type="text" matInput>
+            <input type="text" matInput [formControl]="input">
         </mat-form-field>
-        <button mat-flat-button color="primary">Enviar</button>
+        <button mat-flat-button color="primary" (click)="questions()" [disabled]="input.invalid">Enviar</button>
     </div>
 </div>
 </div>
