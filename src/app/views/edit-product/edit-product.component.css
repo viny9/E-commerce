@@ -16,6 +16,51 @@
     width: 100%;
 }
 
+.imgs {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.img {
+    margin: 0 20px;
+    max-width:200px;
+    max-height:176px;
+    border-radius: 4px;
+}
+
+.selectImg {
+    width: 15%;
+    background-color: #3f51b5;
+    color: white;
+    box-sizing: border-box;
+    position: relative;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    -webkit-tap-highlight-color: #0000;
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: baseline;
+    text-align: center;
+    margin: 0;
+    margin-top: 20px;
+    min-width: 64px;
+    line-height: 36px;
+    padding: 0 16px;
+    border-radius: 4px;
+    overflow: visible;
+    transform: translate3d(0, 0, 0);
+  }
+
+.fileInput {
+    display: none;
+}
+
 .actions button {
     margin: 10px 5px 0;
 }

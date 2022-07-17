@@ -27,6 +27,10 @@
     font-size: 30px;
 }
 
+.productImg  {
+    border-radius: 4px;
+}
+
 .actions button{
     padding: 5px;
 }

@@ -23,6 +23,7 @@ export class ProductComponent implements OnInit {
       this.product.readProduct(res.productName).subscribe((res:any) => {
         this.productInfos = res.data()
         this.productInfos.id = this.pathId
+        console.log(this.productInfos)
       })
     })
 

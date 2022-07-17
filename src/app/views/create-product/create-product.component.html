@@ -5,14 +5,25 @@
       <mat-label>Nome do produto</mat-label>
       <input type="text" matInput formControlName="name">
     </mat-form-field>
-
+    
     <mat-form-field>
       <mat-label>Preço do produto</mat-label>
       <input type="text" matInput formControlName="price">
     </mat-form-field>
+
+    <div class="imgs">
+      <div *ngFor="let img of imgs">
+        <img [src]="img" alt="Imagem do Produto" class="img" >
+      </div>
+      <mat-spinner [diameter]="50" *ngIf="gif === true" class="img"></mat-spinner>
+    </div>
+
+    <label *ngIf="!form.invalid" for="input" class="selectImg">Selecionar imagem</label>
+    <input id="input" type="file" (change)="imgUpload($event)" class="fileInput" accept="image/*">
+
   </form>
   <div class="actions">
-    <button mat-raised-button color="warn" (click)="home.emit('')">Cancelar</button>
+    <button mat-raised-button color="warn" (click)="cancel()" (click)="home.emit('')">Cancelar</button>
     <button mat-raised-button color="primary" (click)="createProduct()">Criar</button>
   </div>
 </mat-card>

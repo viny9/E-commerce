@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ProductService {
 
-  constructor(private firebase: AngularFirestore, private snackBar: MatSnackBar) { }
+  constructor(private firebase: AngularFirestore, private firestorage:AngularFireStorage, private snackBar: MatSnackBar) { }
 
   //Produtos
   createProduct(product:any) {
@@ -71,6 +71,22 @@ export class ProductService {
 
   readQuestions(productId:any) {
     return this.firebase.collection('products').doc(productId).collection('questions').get()
+  }
+
+  upload(path?:any, img?:any) {
+    return this.firestorage.upload(path, img)
+  }
+
+  getImg(imgName:any, productName:any) {
+    return this.firestorage.ref(`products/${productName}`).child(imgName).getDownloadURL()
+  }
+
+  changeImg(imgName:any, newImg:any) {
+    return this.firestorage.ref('products').child(imgName).put(newImg)
+  }
+
+  deleteImg(productName:any, imgName:any) {
+    return this.firestorage.ref(`products/${productName}`).child(imgName).delete()
   }
 
   messages(message:any) {

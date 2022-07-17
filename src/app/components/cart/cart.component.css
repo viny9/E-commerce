@@ -23,6 +23,10 @@
   align-items: center;
 }
 
+.productInfos img {
+  border-radius: 4px;
+}
+
 .productInfos span h1 {
   font-size: 18px;
   margin-left: 10px;

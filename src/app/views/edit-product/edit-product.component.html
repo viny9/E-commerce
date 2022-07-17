@@ -1,19 +1,29 @@
 <mat-card class="productCreateComponent">
-    <h1>Edit</h1>
-    <form class="form" [formGroup]="form">
-      <mat-form-field>
-        <mat-label>Nome do produto</mat-label>
-        <input type="text" matInput formControlName="name">
-      </mat-form-field>
-  
-      <mat-form-field>
-        <mat-label>Preço do produto</mat-label>
-        <input type="text" matInput formControlName="price">
-      </mat-form-field>
-    </form>
-    <div class="actions">
-      <button mat-raised-button color="warn" (click)="home.emit('')">Cancelar</button>
-      <button mat-raised-button color="primary" (click)="editProduct()">Atualizar</button>
+  <h1>Edit</h1>
+  <form class="form" [formGroup]="form">
+
+    <div class="imgs">
+      <div *ngFor="let img of img">
+        <img [src]="img" alt="" *ngIf="gif === false" class="img">
+      </div>
+      <mat-spinner *ngIf="gif === true" [diameter]="50"></mat-spinner>
+      <label for="fileInput" class="selectImg">Adicionar imagem</label>
+      <input type="file" id="fileInput" accept="image/*" (change)="addImg($event)" class="fileInput">
     </div>
-  </mat-card>
-  
+
+    <mat-form-field>
+      <mat-label>Nome do produto</mat-label>
+      <input type="text" matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Preço do produto</mat-label>
+      <input type="text" matInput formControlName="price">
+    </mat-form-field>
+
+  </form>
+  <div class="actions">
+    <button mat-raised-button color="warn" (click)="cancel()" (click)="home.emit('')">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="editProduct()">Atualizar</button>
+  </div>
+</mat-card>

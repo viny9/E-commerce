@@ -53,7 +53,7 @@ export class AdminComponent implements OnInit {
       data: product
     })
     ref.afterClosed().subscribe((res:any) => {
-      res === true? this.product.deleteProduct(this.id) : false
+      res === true? this.product.deleteProduct(this.id).then(() => this.delete(product)) : false
     })
 
    })
@@ -68,10 +68,13 @@ export class AdminComponent implements OnInit {
       const index = names.indexOf(product.name)
       this.id = ids[index].id
   }
- 
 
   recive(event:any) {
     this.component = event
+  }
+
+  delete(product:any) {
+    this.product.deleteImg(product.name, product.imgName)
   }
 
 }

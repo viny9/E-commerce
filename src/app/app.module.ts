@@ -27,6 +27,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AngularFireModule } from '@angular/fire/compat'
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database'
@@ -45,7 +46,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     AdminComponent,
     CreateProductComponent,
     EditProductComponent,
-    DeleteProductComponent
+    DeleteProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,6 +63,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     MatTableModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
     
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,

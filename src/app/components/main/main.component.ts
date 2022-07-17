@@ -34,5 +34,4 @@ export class MainComponent implements OnInit {
       this.router.navigate([`product/${this.id}`])
     })
   }
-
 }

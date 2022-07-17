@@ -19,13 +19,28 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
 }
 
 .product:hover {
   background-color: #aeaeae14;
 }
 
-.product img {
+.img {
+  width: 200px;
+  height: 176px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-bottom: 1px solid #cecece;
+}
+
+.img img {
+  max-width:200px;
+  max-height:176px;
+  width: auto;
+  height: auto;
+  border-radius: 4px ;
+  
   padding-bottom: 15px;
 }
