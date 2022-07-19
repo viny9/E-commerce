@@ -1,0 +1,67 @@
+.signIn {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #f1af37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .form {
+    color: #fff;
+    background-color: #020001d0;
+    border-radius: 25%;
+    display: flex;
+    width: 30%;
+    height: 50%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+  }
+  
+  .form h1 {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .form .mat-form-field {
+      width: 85%;
+      margin: 10px 0;
+  }
+  
+  ::ng-deep .mat-form-field-label {
+      color: #fff !important;
+  }
+  
+  /*change color of label*/
+  ::ng-deep .mat-focused .mat-form-field-label {
+    color: #f1af37 !important;
+  }
+  
+  /*change color of underline*/
+  ::ng-deep.mat-form-field-underline {
+    background-color: #fff !important;
+  }
+  
+  /*change color of underline when focused*/
+  ::ng-deep.mat-form-field-ripple {
+    background-color: #f1af37 !important;
+  }
+  
+  .btn {
+    background-color: #f1af37;
+    color: white;
+    width: 50%;
+    padding: 5px 0;
+    margin: 20px 0 10px 0;
+  }
+  
+  .link {
+    color: #f1af37;
+    text-decoration: underline;
+    margin-top: 20px;
+  }
+  
