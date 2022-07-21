@@ -6,3 +6,23 @@
 .actions button {
     margin-right: 10px;
 }
+
+ /*Change color of label when is not focus*/
+  ::ng-deep .mat-form-field-label {
+        color: #fff !important;
+  }
+  
+  /*Change color of label*/
+  ::ng-deep .mat-focused .mat-form-field-label {
+  color: #ffd740 !important;
+  }
+  
+  /*Change color of underline*/
+  ::ng-deep.mat-form-field-underline {
+  background-color: #ffd740 !important;
+  }
+  
+  /*Change color of underline when focused*/
+  ::ng-deep.mat-form-field-ripple {
+  background-color: #ffd740 !important;
+  }

@@ -5,7 +5,7 @@
         <img [src]="product.img" alt="produto img" width="100px" routerLink="/product">
         <span>
           <h1 routerLink="/product/{{product.id}}">{{product.name}}</h1>
-          <a (click)="remove(product)">Excluir</a>
+          <button mat-stroked-button color="warn" (click)="remove(product)">Excluir</button>
           <button>Qtd</button>
         </span>
       </div>
@@ -16,11 +16,11 @@
     <p>Frete: </p>
     <p>preço total: </p>
   </div>
-  <button mat-raised-button color="primary" class="btn"> Comprar </button>
+  <button mat-raised-button class="btn"> Comprar </button>
 </div>
 
 <div class="cart empty" *ngIf="products === false">
   <h1>O carrinho está vazio</h1>
   <p>Adicione produtos no carrinho para aparecerem aqui.</p>
-  <button mat-button color="primary" routerLink="">Ínicio</button>
+  <button mat-button class="btnE" routerLink="">Ínicio</button>
 </div>

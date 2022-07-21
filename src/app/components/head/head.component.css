@@ -8,12 +8,12 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: #ffd740;
   box-shadow: 0px 0px 5px;
 }
 
 .logo {
   text-decoration: none;
-  color: black;
 }
 
 .search {
@@ -27,6 +27,9 @@ h1 {
   width: 100%;
   padding: 6px;
   margin-right: 10px;
+  background-color: #424242;
+  color: #fff;
+  border: none;
 }
 
 .search input:focus {
@@ -34,11 +37,12 @@ h1 {
 }
 
 .search-btn {
-  background-color: #fff;
-  border: 1px solid;
+  background-color: #424242;
+  color: #ffd740;
 }
 
 .btn {
   background-color: transparent;
   border: none;
+  color: #424242;
 }

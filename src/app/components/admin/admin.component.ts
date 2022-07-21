@@ -50,7 +50,8 @@ export class AdminComponent implements OnInit {
 
    const ref = this.dialog.open(DeleteProductComponent, {
       width: '500px',
-      data: product
+      data: product,
+      panelClass: ['dialog'],
     })
     ref.afterClosed().subscribe((res:any) => {
       res === true? this.product.deleteProduct(this.id).then(() => this.delete(product)) : false

@@ -3,7 +3,7 @@ h2 {
 }
 
 .main {
-  margin: 20px 50px;
+  padding: 20px 50px;
 }
 
 .products {
@@ -20,6 +20,8 @@ h2 {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  background-color: #424242;
+  color: #fff;
 }
 
 .product:hover {
@@ -32,7 +34,7 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #cecece;
+  border-bottom: 1px solid #ffd740;
 }
 
 .img img {

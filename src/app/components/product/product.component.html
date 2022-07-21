@@ -11,7 +11,7 @@
           <button mat-button color="primary">Frete</button>
         </div>
       </span>
-      <button mat-flat-button color="primary" class="buy-btn">Comprar</button>
+      <button mat-flat-button class="buy-btn">Comprar</button>
     </div>
   </div>
   <div class="questions">
@@ -31,7 +31,7 @@
             <mat-label>Escreva sua pergunta aqui</mat-label>
             <input type="text" matInput [formControl]="input">
         </mat-form-field>
-        <button mat-flat-button color="primary" (click)="questions()" [disabled]="input.invalid">Enviar</button>
+        <button mat-flat-button class="btnQuestion" (click)="questions()" [disabled]="input.invalid">Enviar</button>
     </div>
 </div>
 </div>

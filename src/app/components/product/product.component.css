@@ -1,12 +1,12 @@
 .productComponent {
-    margin: 20px 50px;
+    padding: 20px 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .product {
-    box-shadow: 0 0 3px;
+    background-color: #424242;
     width:85%;
     margin-right: 20px  ;
 }
@@ -16,6 +16,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: #fff;
 }
 
 
@@ -33,23 +34,28 @@
 
 .actions button{
     padding: 5px;
+    color: #ffd740;
 }
 
 .buy-btn {
     height: 100%;
     padding: 5px 100px;
+    background-color: #ffd740;
 }
 
 .questions {
     width: 100%;
-    border-top: 1px solid #dcdcdc;
+    border-top: 1px solid #ffd740;
     margin-top: 20px;
     padding: 10px;
+    color: #fff;
 }
 
 .questionAndAnswer {
     width: 30%;
     margin-bottom: 40px;
+    background-color: #424242;
+    color: #fff;
 }
 
 .question {
@@ -58,7 +64,7 @@
 }
 
 .question p {
-    border-bottom: 1px solid #dcdcdc;
+    border-bottom: 1px solid #ffd740;
     padding: 10px 0;
 }
 
@@ -73,4 +79,31 @@
 .questionInput {
     width: 50%;
     margin-right: 10px;
+}
+
+::ng-deep .mat-form-field-label {
+    color: #fff !important;
+}
+
+/*change color of label*/
+::ng-deep .mat-focused .mat-form-field-label {
+  color: #ffd740 !important;
+}
+
+/*change color of underline*/
+::ng-deep.mat-form-field-underline {
+  background-color: #fff !important;
+}
+
+/*change color of underline when focused*/
+::ng-deep.mat-form-field-ripple {
+  background-color: #ffd740 !important;
+}
+
+.btnQuestion:disabled{
+    background-color: #ffd740;
+}
+
+.btnQuestion {
+    background-color: #ffd740;
 }

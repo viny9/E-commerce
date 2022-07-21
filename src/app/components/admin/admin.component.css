@@ -1,6 +1,6 @@
 .admin {
     height: 92%;
-    margin-top: 10px;
+    padding-top: 10px;
 }
 
 .main {
@@ -9,8 +9,24 @@
 
 .main table {
     width: 100%;
+    background-color: #424242;
+    color: #fff;
+}
+
+td, th {
+    color: #fff;
+}
+
+th.mat-header-cell {
+    border-bottom: 1px solid #595959;
+}
+
+td.mat-cell {
+    border-bottom: 1px solid #595959;
 }
 
 .newProduct {
     margin: 15px 0 ;
+    background-color: #ffd740;
+    color: black;
 }
