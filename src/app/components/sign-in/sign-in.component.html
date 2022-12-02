@@ -1,17 +1,8 @@
-<div class="signUp">
+<div class="signIn">
     <form class="form">
-        <h1>Cadastro</h1>
+        <h1>Login</h1>
 
         <div class="fields">
-
-            <mat-form-field>
-                <mat-label>
-                    <mat-icon>person</mat-icon>
-                    Nome
-                </mat-label>
-                <input type="text" matInput>
-            </mat-form-field>
-
             <mat-form-field>
                 <mat-label>
                     <mat-icon matPrefix>email</mat-icon>
@@ -25,27 +16,16 @@
                     <mat-icon>lock</mat-icon>
                     Senha
                 </mat-label>
-                <input [type]="hidePassword? 'password': 'text'" matInput>
-                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
-                    <mat-icon> {{hidePassword? 'visibility_off' : 'visibility'}} </mat-icon>
-                </button>
-            </mat-form-field>
-
-            <mat-form-field>
-                <mat-label>
-                    <mat-icon>lock</mat-icon>
-                    Confirmar Senha
-                </mat-label>
-                <input [type]="hideConfirmPassword? 'password': 'text'" matInput>
-                <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword">
-                    <mat-icon> {{hideConfirmPassword? 'visibility_off' : 'visibility'}} </mat-icon>
+                <input [type]="hide? 'password': 'text'" matInput>
+                <button mat-icon-button matSuffix (click)="hide = !hide">
+                    <mat-icon> {{hide? 'visibility_off' : 'visibility'}} </mat-icon>
                 </button>
             </mat-form-field>
         </div>
         <p class="forgotPassword">Esqueceu sua senha ?</p>
         <div class="btnContainer">
-            <button mat-stroked-button class="btn"> Cadastrar </button>
+            <button mat-stroked-button class="btn"> Entrar </button>
         </div>
-        <p class="login">Você ja tem conta ? <a>Login</a> </p>
+        <p class="login">Ainda não tem conta ? <a> Cadastrar</a> </p>
     </form>
 </div>

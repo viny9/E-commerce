@@ -1,4 +1,4 @@
-.signUp {
+.signIn {
   height: 100%;
   background-color: #ffba00;
   display: flex;
@@ -8,7 +8,7 @@
 
 .form {
   background-color: #151515d8;
-  height: 35rem;
+  height: 25rem;
   width: 25%;
   color: #fff;
   padding: 3rem;
@@ -28,7 +28,6 @@
 .mat-form-field {
   font-size: 17px;
   width: 80%;
-  margin: 5px 0;
 }
 
 ::ng-deep .mat-form-field-label {
@@ -44,10 +43,10 @@
 }
 
 .forgotPassword {
-  font-size: 17px;
   text-align: end;
-  margin: 10px 0 30px;
   text-decoration: underline;
+  font-size: 17px;
+  margin: 10px 30px 40px 0;
 }
 
 .btnContainer {

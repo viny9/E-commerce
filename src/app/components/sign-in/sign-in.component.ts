@@ -7,8 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignInComponent implements OnInit {
 
-  hidePassword:any = true
-  hideConfirmPassword:any = true
+  hide:any = true
 
   constructor() { }
 
