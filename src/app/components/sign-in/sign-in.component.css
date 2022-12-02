@@ -1,0 +1,75 @@
+.signUp {
+  height: 100%;
+  background-color: #ffba00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  background-color: #151515d8;
+  height: 35rem;
+  width: 25%;
+  color: #fff;
+  padding: 3rem;
+  border-radius: 90px;
+}
+
+.form h1 {
+  text-align: center;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mat-form-field {
+  font-size: 17px;
+  width: 80%;
+  margin: 5px 0;
+}
+
+::ng-deep .mat-form-field-label {
+  color: #fff !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  background-color: #fff !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  background-color: #ffba00 !important;
+}
+
+.forgotPassword {
+  font-size: 17px;
+  text-align: end;
+  margin: 10px 0 30px;
+  text-decoration: underline;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  background-color: #ffba00;
+  color: #fff;
+  width: 70%;
+  border-radius: 20px;
+  padding: 5px 0;
+  margin-top: 20px;
+}
+
+.login {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.login a {
+  text-decoration: underline;
+  color: #ffba00;
+}
