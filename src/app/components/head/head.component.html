@@ -1,0 +1,31 @@
+<div class="head">
+    <a href="">Logo</a>
+    <div class="search">
+        <input type="text" placeholder="Pesquisar">
+        <button>
+            <mat-icon>search</mat-icon>
+        </button>
+    </div>
+    <div class="options">
+        <button mat-icon-button>
+            <mat-icon class="icons">shopping_cart</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon class="icons">person</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon class="icons">settings</mat-icon>
+        </button>
+        <div class="themeIcons" (click)="themeIconToggle()">
+            <button mat-icon-button class="sun">
+                <mat-icon>wb_sunny</mat-icon>
+            </button>
+            <button mat-icon-button class="moon">
+                <mat-icon>brightness_4</mat-icon>
+            </button>
+        </div>
+    </div>
+    <!-- <div class="logged">
+        Cadastro/Login
+    </div> -->
+</div>

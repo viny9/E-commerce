@@ -11,14 +11,18 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon';
-import { SignUpComponent } from './components/sign-up/sign-up.component'
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { MainComponent } from './components/main/main.component';
+import { HeadComponent } from './components/head/head.component'
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    MainComponent,
+    HeadComponent
   ],
   imports: [
     BrowserModule,
