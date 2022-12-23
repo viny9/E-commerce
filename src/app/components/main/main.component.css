@@ -3,11 +3,9 @@ h2 {
 }
 
 .main {
-  background-color: #171717;
-  padding: 100px 50px 50px;
   height: auto;
   min-height: 100%;
-  color: rgba(255, 255, 255, 0.542);
+  color: #ffffff8a;
 }
 
 .teste {

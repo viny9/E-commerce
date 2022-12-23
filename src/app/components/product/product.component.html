@@ -1,0 +1,51 @@
+<div class="productComponent">
+    <div class="product">
+        <div>
+            <img src="https://www.shutterstock.com/image-photo/varna-bulgaria-18-november-2016-260nw-553415794.jpg" alt="">
+        </div>
+
+        <div class="productInfos">
+            <h1 class="productName">That Time I Got Reincarnated as a Slime - Vol. 01 </h1>
+            <h2 class="productPrice">R$ 2000</h2>
+
+            <div>
+                <p>Quantidade: </p>
+                <div class="amountContainer">
+                    <button (click)="subAmount()" mat-icon-button>-</button>
+                    <p>{{amount}}</p>
+                    <button (click)="addAmount()" mat-icon-button>+</button>
+                </div>
+            </div>
+
+            <div class="icons">
+                <div>
+                    <button mat-icon-button color="warn" (click)="favorite = !favorite">
+                        <mat-icon>{{favorite? "favorite" : "favorite_border"}}</mat-icon>
+                    </button>
+                </div>
+
+                <button mat-icon-button>
+                    <mat-icon>link</mat-icon>
+                </button>
+
+                <button mat-icon-button>
+                    <mat-icon>share</mat-icon>
+                </button>
+            </div>
+
+
+            <div class="actionButtons">
+                <button mat-flat-button>Adicionar ao carrinho</button>
+                <button mat-flat-button>Comprar</button>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="questionsContainer">
+        <div class="question">
+            <mat-card>Teste</mat-card>
+        </div>
+        <div class="answer">
+            <mat-card>Teste</mat-card>
+        </div>
+    </div> -->
+</div>
