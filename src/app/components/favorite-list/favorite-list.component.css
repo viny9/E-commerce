@@ -1,0 +1,24 @@
+.productContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:  1rem 2rem;
+    background-color: var(--card-color);
+    color: var(--text-color);
+    border-radius: 0;
+    border-bottom: 1px solid var(--secondary-text-color);
+}
+
+.productContainer:hover {
+    background-color: var(--hover-color);
+}
+
+.productInfos {
+    display: flex;
+    align-items: center;
+}
+
+img {
+    margin-right: 20px;
+    max-width: 150px;
+}

@@ -42,7 +42,7 @@ h2 {
   justify-content: center;
 }
 ::ng-deep.product:hover {
-  background-color: #2828289c !important;
+  background-color: var(--hover-color) !important;
 }
 
 
