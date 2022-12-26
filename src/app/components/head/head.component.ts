@@ -7,24 +7,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeadComponent implements OnInit {
 
-  theme:any
+  theme: any
 
   constructor() { }
 
   ngOnInit(): void {
     this.themeStatus()
   }
-  
+
   themeStatus() {
     this.theme = localStorage.getItem('theme')
-  
+
     const sun = document.querySelector('.sun')
     const moon = document.querySelector('.moon')
-  
-    if(this.theme === "dark") {
+
+    if (this.theme === "dark") {
       sun?.classList.toggle('hide')
     } else {
       moon?.classList.toggle('hide')
+      document.body.classList.toggle('lightMode')
     }
   }
 
@@ -41,6 +42,7 @@ export class HeadComponent implements OnInit {
       moon?.classList.toggle('hideAnimation')
 
       localStorage.setItem('theme', 'light')
+      document.body.classList.toggle('lightMode')
 
     } else {
       this.theme = 'dark'
@@ -50,7 +52,9 @@ export class HeadComponent implements OnInit {
       sun?.classList.toggle('hideAnimation')
       moon?.classList.toggle('showAnimation')
 
+      document.body.classList.toggle('lightMode')
       localStorage.setItem('theme', 'dark')
     }
+
   }
 }

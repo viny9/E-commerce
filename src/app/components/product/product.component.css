@@ -3,10 +3,8 @@ p {
 }
 
 .productComponent {
-  height: 100%;
-  width: 100%;
-  background-color: #171717;
-  color: #fff;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 .product {
@@ -22,10 +20,10 @@ img {
 
 .productInfos {
   width: 100%;
+  /* width: 534.670px; */
 }
 
 .productName {
-  max-width: 100%;
   width: 25rem;
   word-wrap: break-word;
   font-size: 26px;
@@ -41,16 +39,17 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #fff;
-  background-color: #282828;
+  color: var(--text-color);
+  background-color: var(--card-color);
   margin-top: 10px;
   padding: 10px 7px;
   font-size: 20px;
   width: 40%;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 }
 
 .amountContainer button {
-  color: #fff;
+  color: var(--text-color);
   font-size: 20px;
   background-color: transparent;
   border: none;

@@ -35,8 +35,8 @@ h2 {
 }
 
 ::ng-deep.product {
-  background-color: #282828 !important;
-  color: #fff;
+  background-color: var(--card-color);
+  color: var(--text-color) !important;
   width: 13rem;
   display: flex;
   justify-content: center;
@@ -53,7 +53,7 @@ h2 {
 }
 
 .productInfos p {
-  color: #b3b3b3;
+  color: var(--secondary-text-color);
 }
 
 img {
