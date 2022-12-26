@@ -34,15 +34,17 @@ h2 {
   margin-bottom: 10px;
 }
 
-::ng-deep.product {
-  background-color: var(--card-color);
-  color: var(--text-color) !important;
+.product {
+  background-color: var(--card-color)  ;
+  color: var(--text-color) ;
   width: 13rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
-::ng-deep.product:hover {
-  background-color: var(--hover-color) !important;
+
+.product:hover {
+  background-color: var(--hover-color) ;
 }
 
 

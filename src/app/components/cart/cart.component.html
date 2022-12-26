@@ -1,0 +1,28 @@
+<div class="cartComponent">
+    <div class="productsContainer">
+        <mat-card class="product">
+            <div class="productInfos">
+                <img src="https://www.shutterstock.com/image-photo/varna-bulgaria-18-november-2016-260nw-553415794.jpg"
+                    alt="">
+                <h1 class=" productName" routerLink="/product">Product Name</h1>
+            </div>
+            <div>
+                <div class="amountContainer">
+                    <button (click)="subAmount()" mat-icon-button>-</button>
+                    <p>{{amount}}</p>
+                    <button (click)="addAmount()" mat-icon-button>+</button>
+                </div>
+            </div>
+            <h1>R$2000</h1>
+            <button mat-icon-button color="warn">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-card>
+    </div>
+    <div class="total">
+        <h2>Frete: R$0</h2>
+        <h2>Produtos: R$0</h2>
+        <h1>Total: R$2000</h1>
+        <button mat-flat-button>Fechar pedido</button>
+    </div>
+</div>

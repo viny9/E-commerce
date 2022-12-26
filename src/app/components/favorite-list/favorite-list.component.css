@@ -9,13 +9,13 @@
     border-bottom: 1px solid var(--secondary-text-color);
 }
 
-.productContainer:hover {
-    background-color: var(--hover-color);
-}
-
 .productInfos {
     display: flex;
     align-items: center;
+}
+
+.productInfos h1:hover {
+    text-decoration: underline;
 }
 
 img {
