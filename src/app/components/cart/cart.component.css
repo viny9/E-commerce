@@ -2,7 +2,7 @@ h1 {
   margin: 0;
 }
 
-.cartComponent {
+.fullCart {
   display: flex;
   justify-content: space-between;
 }
@@ -83,4 +83,22 @@ img {
   background-color: var(--orange);
   width: 90%;
   margin: 1.5rem 1rem 0;
+}
+
+.emptyCart {
+    background-color: var(--card-color);
+    color: var(--text-color);
+    text-align: center;
+}
+
+.emptyCart h1 {
+    font-size: 30px;
+}
+
+.emptyCart h2 {
+    color: var(--secondary-text-color);
+}
+
+.emptyCart button {
+    background-color: var(--orange);
 }

@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FavoriteListComponent implements OnInit {
 
-  favorite:Boolean = false
+  favorite:boolean = false
+  empty:boolean = true
 
   constructor() { }
 

@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class CartComponent implements OnInit {
 
   amount:number = 1
+  empty:boolean = true
 
   constructor() { }
 
