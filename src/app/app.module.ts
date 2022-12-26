@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { CartComponent } from './components/cart/cart.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { MatListModule } from '@angular/material/list';
     MainComponent,
     HeadComponent,
     ProductComponent,
-    FavoriteListComponent
+    FavoriteListComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
