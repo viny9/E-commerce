@@ -1,0 +1,31 @@
+<mat-sidenav-container class="userContainer">
+    <mat-sidenav mode="side" [opened]="teste" class="sidebar">
+        <mat-nav-list class="nav">
+            <a mat-list-item (click)="open='datas'" [ngClass]="(open==='datas'? 'select' : '')">
+                <mat-icon>person</mat-icon>
+                Meus dados
+            </a>
+            <a mat-list-item (click)="open='changePassword'" [ngClass]="(open==='changePassword'? 'select' : '')">
+                <mat-icon>lock</mat-icon>
+                Alterar Senha
+            </a>
+            <a mat-list-item (click)="open='adress'" [ngClass]="(open==='adress'? 'select' : '')">
+                <mat-icon>location_on</mat-icon>
+                Endereço
+            </a>
+            <a mat-list-item (click)="open='deleteAcount'" [ngClass]="(open==='deleteAcount'? 'select' : '')">
+                <mat-icon>delete</mat-icon>
+                Excluir Conta
+            </a>
+            <a mat-list-item>
+                <mat-icon>exit_to_app</mat-icon>
+                Sair
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="main">
+        <app-user-data></app-user-data>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+<!-- <button mat-flat-button (click)="teste = !teste">Close/Open</button> -->
+
