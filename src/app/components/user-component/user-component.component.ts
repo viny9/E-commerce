@@ -8,11 +8,15 @@ import { Component, OnInit } from '@angular/core';
 export class UserComponentComponent implements OnInit {
 
   teste:boolean = true
-  open:any = 'datas'
+  open:any = 'password'
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  changeComponent(component:string) {
+    this.open = component
   }
 
 }

@@ -1,31 +1,71 @@
-<mat-sidenav-container class="userContainer">
-    <mat-sidenav mode="side" [opened]="teste" class="sidebar">
-        <mat-nav-list class="nav">
-            <a mat-list-item (click)="open='datas'" [ngClass]="(open==='datas'? 'select' : '')">
-                <mat-icon>person</mat-icon>
-                Meus dados
-            </a>
-            <a mat-list-item (click)="open='changePassword'" [ngClass]="(open==='changePassword'? 'select' : '')">
-                <mat-icon>lock</mat-icon>
-                Alterar Senha
-            </a>
-            <a mat-list-item (click)="open='adress'" [ngClass]="(open==='adress'? 'select' : '')">
-                <mat-icon>location_on</mat-icon>
-                Endereço
-            </a>
-            <a mat-list-item (click)="open='deleteAcount'" [ngClass]="(open==='deleteAcount'? 'select' : '')">
-                <mat-icon>delete</mat-icon>
-                Excluir Conta
-            </a>
-            <a mat-list-item>
-                <mat-icon>exit_to_app</mat-icon>
-                Sair
-            </a>
-        </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content class="main">
-        <app-user-data></app-user-data>
-    </mat-sidenav-content>
-</mat-sidenav-container>
-<!-- <button mat-flat-button (click)="teste = !teste">Close/Open</button> -->
+<div class="userDatasComponent">
+    <div class="userInfos">
 
+        <h2>Meus dados</h2>
+        <form class="formContainer">
+            <mat-form-field>
+                <mat-label>Nome completo</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Telefone</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+        </form>
+        <button mat-flat-button disabled>Atualizar perfil</button>
+
+        <h2>Endereço</h2>
+        <form class="formContainer">
+            <mat-form-field>
+                <mat-label>Cep</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Número</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Bairro</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Cidade</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Estado</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+        </form>
+        <button mat-flat-button disabled>Atualizar Endereço</button>
+
+        <h2>Editar Senha</h2>
+        <form class="formContainer">
+            <mat-form-field>
+                <mat-label>Senha</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Nova senha</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+        </form>
+        <button mat-flat-button disabled>Editar senha </button>
+
+        <h2>Deletar conta</h2>
+        <p>Assim que você apertar o botão, sua conta ira ser deletada permanentemente. Após
+            um período de 3 meses você podera criar outra conta com seu email.</p>
+        <button mat-flat-button color="warn">Deletar Conta</button>
+    </div>
+</div>

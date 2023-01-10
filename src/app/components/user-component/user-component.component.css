@@ -1,43 +1,46 @@
-.userContainer {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    left: 0;
-    top: 7%;
-    width: 100%;
-    height: 95%;
-    background-color: var(--background-color);
-    color: var(--text-color);
+h2 {
+  margin: 10px 0 5px 0;
+  color: var(--text-color);
 }
 
-.sidebar {
-    width: 20%;
-    color: var(--text-color);
-    background-color: var(--card-color);
+.userDatasComponent {
+  display: flex;
+  justify-content: center;
 }
 
-.nav a{
-    color: var(--secondary-text-color);
-    margin: 5px 0;
-    font-size: 14px;
+.userInfos {
+  width: 50%;
 }
 
-.nav a mat-icon {
-    margin-right: 10px;
+.formContainer {
+  display: flex;
+  flex-direction: column;
 }
 
-.nav a:hover {
-    background-color: var(--hover-color);
+button {
+  width: 100%;
+  background-color: var(--orange);
+  margin: 1.5rem 0 2.5rem 0;
 }
 
-mat-divider {
-    background-color: var(--secondary-text-color);
+::ng-deep.mat-flat-button:disabled {
+    background-color: var(--disabled-color) !important;
+    color: var(--secondary-text-color) !important;
+    /* color: #00000042 !important; */
 }
 
-.main {
-    padding: 20px;
+p {
+  color: var(--secondary-text-color);
 }
 
-.select{
-    color: #ffba00 !important;
+::ng-deep .mat-form-field-label {
+  color: var(--secondary-text-color) !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  background-color: var(--text-color) !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  background-color: #ffba00 !important;
 }

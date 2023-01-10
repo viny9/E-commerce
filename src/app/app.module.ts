@@ -24,7 +24,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
-import { UserDataComponent } from './views/user/user-data/user-data.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +36,6 @@ import { UserDataComponent } from './views/user/user-data/user-data.component';
     FavoriteListComponent,
     CartComponent,
     UserComponentComponent,
-    UserDataComponent
   ],
   imports: [
     BrowserModule,
