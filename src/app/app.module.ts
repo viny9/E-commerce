@@ -12,6 +12,8 @@ import { MainComponent } from './components/main/main.component';
 import { HeadComponent } from './components/head/head.component'
 import { FavoriteListComponent } from './components/favorite-list/favorite-list.component';
 import { ProductComponent } from './components/product/product.component';
+import { CartComponent } from './components/cart/cart.component';
+import { UserComponentComponent } from './components/user-component/user-component.component';
 
 //Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -20,8 +22,8 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
-import { CartComponent } from './components/cart/cart.component';
-
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { CartComponent } from './components/cart/cart.component';
     HeadComponent,
     ProductComponent,
     FavoriteListComponent,
-    CartComponent
+    CartComponent,
+    UserComponentComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,8 @@ import { CartComponent } from './components/cart/cart.component';
     MatIconModule,
     MatCardModule,
     MatListModule,
+    MatSidenavModule,
+    MatDividerModule,
 
   ],
   providers: [],

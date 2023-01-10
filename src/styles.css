@@ -10,9 +10,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
     --backgroud-color: #171717;
     --orange: #ffba00;
     --card-color: #282828;
-    --white: #fff; 
     --text-color: #fff;
-    --secondary-text-color: #b3b3b3;
+    --secondary-text-color: #ffffffb3;
+    --disabled-color: #ffffff80;
     --hover-color: #404040;
 }
 
@@ -22,6 +22,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
     --orange: #ffba00;
     --card-color: #fff;
     --text-color: #000;
-    --secondary-text-color: #b3b3b3;
+    --secondary-text-color: #0000008a;
+    --disabled-color: #00000034;
     --hover-color: #f0f0f0;
 }
