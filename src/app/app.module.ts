@@ -24,6 +24,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { MatDividerModule } from '@angular/material/divider';
     FavoriteListComponent,
     CartComponent,
     UserComponentComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
