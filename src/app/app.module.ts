@@ -14,6 +14,8 @@ import { FavoriteListComponent } from './components/favorite-list/favorite-list.
 import { ProductComponent } from './components/product/product.component';
 import { CartComponent } from './components/cart/cart.component';
 import { UserComponentComponent } from './components/user-component/user-component.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 //Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -24,7 +26,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
-import { FooterComponent } from './components/footer/footer.component';
+
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { FooterComponent } from './components/footer/footer.component';
     CartComponent,
     UserComponentComponent,
     FooterComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

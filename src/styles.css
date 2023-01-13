@@ -7,7 +7,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 /* Dark mode */
 :root {
-    --backgroud-color: #171717;
+    --background-color: #171717;
     --orange: #ffba00;
     --card-color: #282828;
     --text-color: #fff;
@@ -18,7 +18,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 /* Light mode */
 .lightMode{
-    --backgroud-color: #fff;
+    --background-color: #fff;
     --orange: #ffba00;
     --card-color: #fff;
     --text-color: #000;
