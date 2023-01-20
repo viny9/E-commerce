@@ -1,0 +1,122 @@
+.productComponent {
+  max-width: 90%;
+}
+
+.table {
+  width: 100%;
+  background-color: var(--card-color);
+}
+
+tr {
+  vertical-align: middle;
+}
+
+th {
+  width: 20rem;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--disabled-color);
+  color: var(--text-color);
+}
+
+.tableFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.paginator {
+  background-color: transparent;
+  color: var(--text-color);
+}
+
+::ng-deep.mat-button-disabled {
+  color: var(--disabled-color) !important;
+}
+
+::ng-deep .mat-select-value,
+::ng-deep .mat-select-arrow {
+  color: var(--text-color) !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  background-color: white !important;
+  color: white !important;
+}
+
+/* New Product */
+.teste {
+  border: 1px solid #171717;
+  width: 90%;
+  height: 30rem;
+  background-color: var(--card-color);
+  display: flex;
+}
+
+.teste img {
+  height: 30rem;
+  max-height: 31rem;
+  margin-right: 2rem;
+}
+
+#selectImg {
+  display: none;
+}
+
+.productInfos {
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.productInfos ::ng-deep.mat-form-field {
+  width: 90%;
+  color: var(--secondary-text-color) !important;
+}
+
+::ng-deep .mat-form-field-label {
+  color: var(--secondary-text-color) !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  background-color: var(--text-color) !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  background-color: #ffba00 !important;
+}
+
+
+/* Outline */
+
+/* input outline color */
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: var(--text-color) !important;
+}
+
+/* mat-input focused color */
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: var(--text-color)!important;
+}
+
+/* mat-label normal state style */
+::ng-deep .mat-form-field-label {
+    color: var(--text-color)!important;
+}
+
+/* mat-label focused style */
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+    color: var(--text-color)!important;
+}
+
+.category {
+  margin-top: 1rem;
+}
+
+.productInfos button {
+  margin-top: 2rem;
+  width: 90%;
+  background-color: var(--orange);
+}

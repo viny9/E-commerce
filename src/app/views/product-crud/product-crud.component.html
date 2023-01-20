@@ -1,0 +1,69 @@
+<div class="productComponent" *ngIf="teste2">
+    <mat-table [dataSource]="dataSource" class="table mat-elevation-z8">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> Id </th>
+            <td mat-cell *matCellDef="let element">{{element.id}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef> Nome </th>
+            <td mat-cell *matCellDef="let element">{{element.nome}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="preco">
+            <th mat-header-cell *matHeaderCellDef> Preço </th>
+            <td mat-cell *matCellDef="let element">{{element.preco}}</td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Ações</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="primary">
+                    <mat-icon>edit</mat-icon>
+                </button>
+
+                <button mat-icon-button color="warn">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+    </mat-table>
+    <div class="tableFooter">
+        <button mat-flat-button color="primary">Novo Produto</button>
+        <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons aria-label="Select page of periodic elements"
+            class="paginator">
+        </mat-paginator>
+    </div>
+</div>
+<div class="newProduct" *ngIf="teste2 === false">
+    <h1>Novo produto</h1>
+    <div class="teste">
+        <label for="selectImg">
+            <img src="data:image/png;base64,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">
+        </label>
+        <input type="file" id="selectImg">
+
+        <form class="productInfos">
+            <mat-form-field>
+                <mat-label>Nome</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Preço</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="category">
+                <mat-label>Categoria</mat-label>
+                <mat-select>
+                    <mat-option value="teste">teste</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button mat-flat-button>Adicionar produto</button>
+        </form>
+    </div>
+</div>

@@ -16,6 +16,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { UserComponentComponent } from './components/user-component/user-component.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { ProductCrudComponent } from './views/product-crud/product-crud.component';
 
 //Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -26,6 +27,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatTableModule } from '@angular/material/table'
+import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatSelectModule } from '@angular/material/select'
 
 
 @NgModule({
@@ -41,6 +45,7 @@ import { MatDividerModule } from '@angular/material/divider';
     UserComponentComponent,
     FooterComponent,
     AdminComponent,
+    ProductCrudComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +60,9 @@ import { MatDividerModule } from '@angular/material/divider';
     MatListModule,
     MatSidenavModule,
     MatDividerModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSelectModule,
 
   ],
   providers: [],
