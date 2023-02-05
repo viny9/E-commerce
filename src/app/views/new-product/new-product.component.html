@@ -1,0 +1,36 @@
+<div class="newProduct">
+    <h1>Novo produto</h1>
+    <div class="productInfos">
+        <label for="addImg">
+            <div class="fileUploadLabel" (drop)="teste2($event)" (dragover)="teste3($event)">
+                <mat-icon class="a">add_photo_alternate</mat-icon>
+                <h2>Arraste ou selecione uma imagem</h2>
+            </div>
+        </label>
+        <input type="file" id="addImg">
+
+        <form class="productForm">
+            <mat-form-field>
+                <mat-label>Nome</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Preço</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="categorys">
+                <mat-label>Categoria</mat-label>
+                <mat-select>
+                    <mat-option value="teste">teste</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div class="actionBtns">
+                <button mat-flat-button>Adicionar produto</button>
+                <button mat-flat-button color="warn" (click)="teste1()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>

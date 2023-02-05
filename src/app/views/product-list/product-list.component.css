@@ -1,0 +1,52 @@
+.productComponent {
+    max-width: 90%;
+  }
+  
+  .table {
+    width: 100%;
+    background-color: var(--card-color);
+  }
+  
+  tr {
+    vertical-align: middle;
+  }
+  
+  th {
+    width: 20rem;
+  }
+  
+  th,
+  td {
+    border-bottom: 1px solid var(--disabled-color);
+    color: var(--text-color);
+  }
+  
+  .tableFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+  
+  .paginator {
+    background-color: transparent;
+    color: var(--text-color);
+  }
+  
+  ::ng-deep.mat-button-disabled {
+    color: var(--disabled-color) !important;
+  }
+  
+  ::ng-deep .mat-select-value,
+  ::ng-deep .mat-select-arrow {
+    color: var(--text-color) !important;
+  }
+  
+  ::ng-deep .mat-form-field-underline {
+    background-color: white !important;
+    color: white !important;
+  }
+
+  .mat-row:hover {
+    background-color: var(--hover-color) !important; 
+  }

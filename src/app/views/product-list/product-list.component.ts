@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-product-crud',
-  templateUrl: './product-crud.component.html',
-  styleUrls: ['./product-crud.component.css']
+  selector: 'app-product-list',
+  templateUrl: './product-list.component.html',
+  styleUrls: ['./product-list.component.css']
 })
-export class ProductCrudComponent implements OnInit {
+export class ProductListComponent implements OnInit {
 
-  teste2:any = false
-  @ViewChild(MatPaginator) paginator: any ;
+  page:any = ''
+  @ViewChild (MatPaginator) paginator: any ;
   columns:Array<String> = ['id', 'nome', 'preco', 'actions']
   teste:Array<object> = [
     { id: 1, nome: 'Teclado'},
@@ -32,14 +32,17 @@ export class ProductCrudComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>(this.teste);
 
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+  }
+
+  recive(event:any) {
+    this.page = event
   }
 
 }
