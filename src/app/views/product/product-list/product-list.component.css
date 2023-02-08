@@ -1,0 +1,54 @@
+.productComponent {
+  max-width: 90%;
+}
+
+.table {
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden !important;
+  background-color: var(--secondary-card-color);
+}
+
+tr {
+  vertical-align: middle;
+}
+
+th {
+  width: 20rem;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--disabled-color);
+  color: var(--text-color);
+}
+
+.tableFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--secondary-card-color);
+}
+
+.mat-row:hover {
+  background-color: var(--hover-color) !important;
+}
+
+.paginator {
+  color: var(--text-color);
+  background-color: var(--secondary-card-color);
+}
+
+::ng-deep.mat-button-disabled {
+  color: var(--disabled-color) !important;
+}
+
+::ng-deep .mat-select-value,
+::ng-deep .mat-select-arrow {
+  color: var(--text-color) !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  background-color: white !important;
+  color: white !important;
+}

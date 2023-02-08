@@ -1,8 +1,10 @@
-.productComponent {
-    max-width: 90%;
+.fullTable {
+    width: 90%;
+    border-radius: 5px;
+    overflow: hidden !important;
   }
   
-  .table {
+  mat-table {
     width: 100%;
     background-color: var(--card-color);
   }
@@ -21,15 +23,20 @@
     color: var(--text-color);
   }
   
-  .tableFooter {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 1rem;
+  .status {
+    background-color: green;
+    width: 40%;
+    border-radius: 10rem;
+    text-align: center;
+    margin-bottom: 0;
   }
   
-  .paginator {
-    background-color: transparent;
+  .mat-row:hover {
+    background-color: var(--hover-color);
+  }
+  
+  mat-paginator {
+    background-color: var(--card-color);
     color: var(--text-color);
   }
   
@@ -47,6 +54,3 @@
     color: white !important;
   }
 
-  .mat-row:hover {
-    background-color: var(--hover-color) !important; 
-  }

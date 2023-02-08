@@ -1,0 +1,45 @@
+<div class="orderDetails">
+    <button mat-icon-button class="backBtn">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <mat-card class="orderInfos">
+        <div class="userInfos">
+            <div>
+                <h2>Usuário</h2>
+                <p>Nome: Vinícius</p>
+                <p>email: viniolicar2004@gmail.com</p>
+                <p>Telefone: 61984977155</p>
+            </div>
+
+            <div>
+                <h2>Endereço</h2>
+                <p>CEP: 72710060 </p>
+                <p>Cidade: Brazlândia</p>
+                <p>Estado: Df </p>
+                <p>Número: 83</p>
+                <p>Extra: </p>
+            </div>
+        </div>
+
+        <h2>Produtos</h2>
+
+        <mat-accordion>
+            <mat-expansion-panel hideToggle class="product">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Mouse
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        R$ 300
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="row">
+                    <p>Detalhe 1:</p>
+                    <p>Detalhe 2:</p>
+                    <p>Detalhe 3:</p>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <h2 class="amount">Total: R$ 300</h2>
+    </mat-card>
+</div>

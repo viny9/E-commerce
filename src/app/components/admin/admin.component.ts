@@ -7,11 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  selected:string = 'products'
+  selected:string = 'orders'
 
   constructor() { }
 
   ngOnInit(): void {
   }
+
+  
 
 }

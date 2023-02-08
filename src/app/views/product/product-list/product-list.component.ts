@@ -37,9 +37,9 @@ export class ProductListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
-  }
+}
 
   recive(event:any) {
     this.page = event

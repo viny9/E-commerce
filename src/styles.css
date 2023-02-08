@@ -10,6 +10,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
     --background-color: #171717;
     --orange: #ffba00;
     --card-color: #282828;
+    --secondary-card-color: #424242;
     --text-color: #fff;
     --secondary-text-color: #ffffffb3;
     --disabled-color: #ffffff80;
@@ -21,8 +22,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
     --background-color: #fff;
     --orange: #ffba00;
     --card-color: #fff;
+    --secondary-card-color: ;
     --text-color: #000;
     --secondary-text-color: #0000008a;
     --disabled-color: #00000034;
     --hover-color: #f0f0f0;
+    /* 505050 */
 }

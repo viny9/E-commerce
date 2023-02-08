@@ -28,6 +28,7 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="main">
-        <app-product-list></app-product-list>
+        <app-product-list *ngIf="selected === 'products'"></app-product-list>
+        <app-orders-list *ngIf="selected === 'orders'"></app-orders-list>
     </mat-sidenav-content>
 </mat-sidenav-container>
