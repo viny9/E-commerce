@@ -1,28 +1,72 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /* Varíaveis */
 
 /* Dark mode */
 :root {
-    --backgroud-color: #171717;
-    --orange: #ffba00;
-    --card-color: #282828;
-    --text-color: #fff;
-    --secondary-text-color: #ffffffb3;
-    --disabled-color: #ffffff80;
-    --hover-color: #404040;
+  --background-color: #171717;
+  --orange: #ffba00;
+  --card-color: #282828;
+  --secondary-card-color: #424242;
+  --text-color: #fff;
+  --secondary-text-color: #ffffffb3;
+  --disabled-color: #ffffff80;
+  --hover-color: #505050;
 }
 
 /* Light mode */
-.lightMode{
-    --backgroud-color: #fff;
-    --orange: #ffba00;
-    --card-color: #fff;
-    --text-color: #000;
-    --secondary-text-color: #0000008a;
-    --disabled-color: #00000034;
-    --hover-color: #f0f0f0;
+.lightMode {
+  --background-color: #fff;
+  --orange: #ffba00;
+  --card-color: #fff;
+  --secondary-card-color: #f5f5f5ab;
+  --text-color: #000;
+  --secondary-text-color: #0000008a;
+  --disabled-color: #00000034;
+  --hover-color: #f0f0f0;
+}
+
+/* Table base style */
+.table {
+  width: 100%;
+  border-radius: 5px;
+  background-color: transparent;
+  /* background-color: var(--card-color); */
+}
+
+tr {
+  vertical-align: middle;
+}
+
+th,
+td {
+  border-bottom: 1px solid transparent !important;
+  color: var(--text-color) !important;
+  width: 10rem;
+}
+
+.tableId {
+  width: 9%;
+}
+
+.mat-row:hover {
+  background-color: var(--hover-color) !important;
+  /* background-color: #ebebeb !important; */
+}
+
+.mat-row:nth-child(odd) {
+  background-color: var(--card-color);
+}
+
+.mat-row:nth-child(even) {
+  background-color: var(--secondary-card-color);
 }

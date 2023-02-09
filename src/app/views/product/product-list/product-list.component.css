@@ -1,0 +1,33 @@
+.productComponent {
+  max-width: 100%;
+}
+
+.title {
+  margin-left: 1rem;
+}
+
+.tableFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: transparent;
+}
+
+.paginator {
+  color: var(--text-color);
+  background-color: transparent;
+}
+
+::ng-deep.mat-button-disabled {
+  color: var(--disabled-color) !important;
+}
+
+::ng-deep .mat-select-value,
+::ng-deep .mat-select-arrow {
+  color: var(--text-color) !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  background-color: #fff !important;
+  color: #fff !important;
+}

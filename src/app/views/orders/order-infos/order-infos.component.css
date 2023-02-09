@@ -1,0 +1,45 @@
+.orderDetails {
+  width: 90%;
+  padding: 0 3rem;
+}
+
+.backBtn {
+  margin-bottom: 1rem;
+}
+
+.orderInfos {
+  background-color: var(--card-color);
+  color: var(--text-color);
+  padding: 1rem 3rem;
+}
+
+.userInfos {
+  display: flex;
+}
+
+.userInfos div {
+  margin-right: 10rem;
+}
+
+.product {
+  background-color: var(--secondary-card-color);
+}
+
+/* Mat expansion styles */
+mat-expansion-panel {
+  margin: 1rem 0;
+  color: var(--text-color);
+}
+
+.mat-accordion > .mat-expansion-panel-spacing:last-child {
+  margin: 1rem 0;
+}
+
+.mat-expansion-panel-header-title,
+.mat-expansion-panel-header-description {
+  color: var(--text-color) !important;
+}
+
+.amount {
+    text-align: end;
+}
