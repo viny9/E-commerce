@@ -19,6 +19,9 @@ import { AdminComponent } from './components/admin/admin.component';
 import { ProductListComponent } from './views/product/product-list/product-list.component';
 import { NewProductComponent } from './views/product/new-product/new-product.component';
 import { EditProductComponent } from './views/product/edit-product/edit-product.component';
+import { OrderInfosComponent } from './views/orders/order-infos/order-infos.component';
+import { OrdersListComponent } from './views/orders/orders-list/orders-list.component';
+import { NotificationsComponent } from './views/notifications/notifications.component';
 
 //Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -33,9 +36,8 @@ import { MatTableModule } from '@angular/material/table'
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { OrderInfosComponent } from './views/orders/order-infos/order-infos.component';
-import { OrdersListComponent } from './views/orders/orders-list/orders-list.component';
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,7 @@ import { OrdersListComponent } from './views/orders/orders-list/orders-list.comp
     EditProductComponent,
     OrderInfosComponent,
     OrdersListComponent,
+    NotificationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +76,8 @@ import { OrdersListComponent } from './views/orders/orders-list/orders-list.comp
     MatPaginatorModule,
     MatSelectModule,
     MatExpansionModule,
+    MatCheckboxModule,
+    MatTooltipModule,
 
   ],
   providers: [],

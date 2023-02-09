@@ -11,23 +11,23 @@ export class ProductListComponent implements OnInit {
 
   page:any = ''
   @ViewChild (MatPaginator) paginator: any ;
-  columns:Array<String> = ['id', 'nome', 'preco', 'actions']
+  columns:Array<String> = ['id', 'nome', 'preco', 'categorias', 'actions']
   teste:Array<object> = [
-    { id: 1, nome: 'Teclado'},
-    { id: 2, nome: 'Mouse', preco: 299},
-    { id: 3, nome: 'Mouse', preco: 299},
-    { id: 4, nome: 'Mouse', preco: 299},
-    { id: 5, nome: 'Mouse', preco: 299},
-    { id: 6, nome: 'Mouse', preco: 299},
-    { id: 7, nome: 'Mouse', preco: 299},
-    { id: 8, nome: 'Mouse', preco: 299},
-    { id: 9, nome: 'Mouse', preco: 299},
-    { id: 10, nome: 'Mouse', preco: 299},
-    { id: 11, nome: 'Mouse', preco: 299},
-    { id: 12, nome: 'Mouse', preco: 299},
-    { id: 13, nome: 'Mouse', preco: 299},
-    { id: 14, nome: 'Mouse', preco: 299},
-    { id: 15, nome: 'Mouse', preco: 299},
+    // { id: 1, nome: 'Teclado mecanico redragon, switch brown', preco: 400.99, category: 'Eletronicos'},
+    { id: 2, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
+    { id: 3, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
+    { id: 4, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
+    { id: 5, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
+    { id: 6, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
+    { id: 7, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
+    { id: 8, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
+    { id: 9, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
+    { id: 10, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
+    { id: 11, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
+    { id: 12, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
+    { id: 13, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
+    { id: 14, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
+    { id: 15, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
   ]
 
   dataSource = new MatTableDataSource<any>(this.teste);

@@ -8,8 +8,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class OrdersListComponent implements OnInit {
 
-  dataSource: any = [{ id: 1, email: 'viniolicar2004@gmail.com', value: 300, status: 'pago' }]
-  columns: any = ['id', 'email', 'value', 'status', 'actions']
+  dataSource: any = [{ id: 1, email: 'viniolicar2004@gmail.com', value: 300, status: 'pago', data: '08/02/2023' }]
+  columns: any = ['id', 'email', 'value', 'status', 'data', 'actions']
   order: any = false
   @ViewChild(MatPaginator) paginator: any;
 

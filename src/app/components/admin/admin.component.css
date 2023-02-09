@@ -32,5 +32,5 @@ mat-icon {
   background-color: var(--background-color);
   color: var(--text-color);
   width: 80%;
-  padding: 2rem 3rem;
+  padding: 2rem 0rem;
 }

@@ -1,10 +1,10 @@
 <div class="ordersComponent" *ngIf="order === false">
-    <h1>Pedidos</h1>
-    <div class="fullTable mat-elevation-z8">
-        <mat-table [dataSource]="dataSource">
+    <h1 class="title">Pedidos</h1>
+    <div class="fullTable">
+        <mat-table [dataSource]="dataSource" class="table">
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef> Id </th>
-                <td mat-cell *matCellDef="let element" >{{element.id}}</td>
+                <td mat-cell *matCellDef="let element" class="tableId">{{element.id}}</td>
             </ng-container>
 
             <ng-container matColumnDef="email">
@@ -23,6 +23,13 @@
                     <p class="status">
                         {{element.status}}
                     </p>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="data">
+                <th mat-header-cell *matHeaderCellDef> Data </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.data}}
                 </td>
             </ng-container>
 

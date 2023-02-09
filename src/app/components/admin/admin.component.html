@@ -11,9 +11,9 @@
                 Pedidos
             </a>
 
-            <a mat-list-item [ngClass]="selected === 'offer' ? 'selected' : '' " (click)="selected = 'offer' ">
-                <mat-icon>local_offer</mat-icon>
-                Promoções
+            <a mat-list-item [ngClass]="selected === 'notifications' ? 'selected' : '' " (click)="selected = 'notifications' ">
+                <mat-icon>notifications_active</mat-icon>
+                Notificações
             </a>
 
             <a mat-list-item [ngClass]="selected === 'users' ? 'selected' : '' " (click)="selected = 'users' ">
@@ -30,5 +30,6 @@
     <mat-sidenav-content class="main">
         <app-product-list *ngIf="selected === 'products'"></app-product-list>
         <app-orders-list *ngIf="selected === 'orders'"></app-orders-list>
+        <app-notifications *ngIf="selected === 'notifications'"></app-notifications>
     </mat-sidenav-content>
 </mat-sidenav-container>

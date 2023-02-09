@@ -1,8 +1,9 @@
-<div class="productComponent mat-elevation-z8" *ngIf="page === '' ">
+<div class="productComponent" *ngIf="page === '' ">
+    <h1 class="title">Produtos</h1>
     <mat-table [dataSource]="dataSource" class="table ">
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef> Id </th>
-            <td mat-cell *matCellDef="let element">{{element.id}}</td>
+            <td mat-cell *matCellDef="let element" class="tableId">{{element.id}}</td>
         </ng-container>
 
         <ng-container matColumnDef="nome">
@@ -14,9 +15,19 @@
             <th mat-header-cell *matHeaderCellDef> Preço </th>
             <td mat-cell *matCellDef="let element">{{element.preco}}</td>
         </ng-container>
+
+        <ng-container matColumnDef="categorias">
+            <th mat-header-cell *matHeaderCellDef> Categorias </th>
+            <td mat-cell *matCellDef="let element">{{element.category}}</td>
+        </ng-container>
+
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Ações</th>
             <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="accent" (click)="page = 'edit' ">
+                    <mat-icon>local_offer</mat-icon>
+                </button>
+
                 <button mat-icon-button color="primary" (click)="page = 'edit' ">
                     <mat-icon>edit</mat-icon>
                 </button>

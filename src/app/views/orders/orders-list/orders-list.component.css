@@ -1,26 +1,11 @@
 .fullTable {
-    width: 90%;
+    width: 100%;
     border-radius: 5px;
     overflow: hidden !important;
   }
   
-  mat-table {
-    width: 100%;
-    background-color: var(--card-color);
-  }
-  
-  tr {
-    vertical-align: middle;
-  }
-  
-  th {
-    width: 20rem;
-  }
-  
-  th,
-  td {
-    border-bottom: 1px solid var(--disabled-color);
-    color: var(--text-color);
+  .title {
+    margin-left: 1rem;
   }
   
   .status {
@@ -31,12 +16,8 @@
     margin-bottom: 0;
   }
   
-  .mat-row:hover {
-    background-color: var(--hover-color);
-  }
-  
   mat-paginator {
-    background-color: var(--card-color);
+    background-color: transparent;
     color: var(--text-color);
   }
   
