@@ -1,4 +1,6 @@
+import { ProductService } from './../../../services/product.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-new-product',
@@ -7,23 +9,41 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class NewProductComponent implements OnInit {
 
-  @Output() teste:any = new EventEmitter()
+  @Output() teste: any = new EventEmitter()
+  form: any
+  products: any = []
 
-  constructor() { }
+  constructor(private db: ProductService) { }
 
   ngOnInit(): void {
+    this.createForm()
   }
 
-  teste1() {
+  createForm() {
+    this.form = new FormGroup({
+      name: new FormControl(''),
+      price: new FormControl(''),
+      category: new FormControl(''),
+      img: new FormControl('')
+    })
+  }
+
+  createProduct() {
+    this.db.createProduct(this.form.value)
+      .then(() => console.log('criado'))
+      .then(() => this.return())
+  }
+
+  return() {
     this.teste.emit('')
   }
 
-  teste2(event:Event | any) {
-    event.preventDefault()  
+  teste2(event: Event | any) {
+    event.preventDefault()
     // var data = event.dataTransfer.getData("text");
   }
-  
-  teste3(event:Event) {
+
+  teste3(event: Event) {
     event.preventDefault()
     console.log(event)
   }

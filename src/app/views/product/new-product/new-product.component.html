@@ -9,27 +9,27 @@
         </label>
         <input type="file" id="addImg">
 
-        <form class="productForm">
+        <form class="productForm" [formGroup]="form">
             <mat-form-field>
                 <mat-label>Nome</mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput formControlName="name">
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Preço</mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput formControlName="price">
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="categorys">
                 <mat-label>Categoria</mat-label>
-                <mat-select>
+                <mat-select formControlName="category">
                     <mat-option value="teste">teste</mat-option>
                 </mat-select>
             </mat-form-field>
 
             <div class="actionBtns">
-                <button mat-flat-button>Adicionar produto</button>
-                <button mat-flat-button color="warn" (click)="teste1()">Cancelar</button>
+                <button mat-flat-button (click)="createProduct()">Adicionar produto</button>
+                <button mat-flat-button color="warn" (click)="return()">Cancelar</button>
             </div>
         </form>
     </div>

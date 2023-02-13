@@ -1,38 +1,38 @@
 <div class="productComponent" *ngIf="page === '' ">
     <h1 class="title">Produtos</h1>
-    <mat-table [dataSource]="dataSource" class="table ">
+    <mat-table [dataSource]="dataSource" class="table" matSort >
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef> Id </th>
-            <td mat-cell *matCellDef="let element" class="tableId">{{element.id}}</td>
+            <td mat-cell *matCellDef="let element; let i = index;" class="tableId">{{i + 1}}</td>
         </ng-container>
 
-        <ng-container matColumnDef="nome">
-            <th mat-header-cell *matHeaderCellDef> Nome </th>
-            <td mat-cell *matCellDef="let element">{{element.nome}}</td>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header > Nome </th>
+            <td mat-cell *matCellDef="let element" >{{element.name}}</td>
         </ng-container>
 
-        <ng-container matColumnDef="preco">
-            <th mat-header-cell *matHeaderCellDef> Preço </th>
-            <td mat-cell *matCellDef="let element">{{element.preco}}</td>
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Preço </th>
+            <td mat-cell *matCellDef="let element">{{element.price}}</td>
         </ng-container>
 
-        <ng-container matColumnDef="categorias">
-            <th mat-header-cell *matHeaderCellDef> Categorias </th>
+        <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Categorias </th>
             <td mat-cell *matCellDef="let element">{{element.category}}</td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Ações</th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button color="accent" (click)="page = 'edit' ">
+                <button mat-icon-button color="accent" (click)="page = 'a' ">
                     <mat-icon>local_offer</mat-icon>
                 </button>
 
-                <button mat-icon-button color="primary" (click)="page = 'edit' ">
+                <button mat-icon-button color="primary" (click)="editPage(element)">
                     <mat-icon>edit</mat-icon>
                 </button>
 
-                <button mat-icon-button color="warn">
+                <button mat-icon-button color="warn" (click)="removeProduct(element)">
                     <mat-icon>delete</mat-icon>
                 </button>
             </td>
@@ -48,5 +48,5 @@
     </div>
 </div>
 
-<app-edit-product *ngIf="page === 'edit' " (teste)="recive($event)"></app-edit-product>
+<app-edit-product *ngIf="page === 'edit' " (back)="recive($event)" [oldProduct]="editProduct"></app-edit-product>
 <app-new-product *ngIf="page === 'new' " (teste)="recive($event)"></app-new-product>

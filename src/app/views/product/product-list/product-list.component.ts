@@ -1,6 +1,10 @@
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { ProductService } from 'src/app/services/product.service';
+import { MatSort } from '@angular/material/sort';
+import { promises, resolve } from 'dns';
+import { rejects } from 'assert';
 
 @Component({
   selector: 'app-product-list',
@@ -9,40 +13,57 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class ProductListComponent implements OnInit {
 
-  page:any = ''
-  @ViewChild (MatPaginator) paginator: any ;
-  columns:Array<String> = ['id', 'nome', 'preco', 'categorias', 'actions']
-  teste:Array<object> = [
-    // { id: 1, nome: 'Teclado mecanico redragon, switch brown', preco: 400.99, category: 'Eletronicos'},
-    { id: 2, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
-    { id: 3, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
-    { id: 4, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
-    { id: 5, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
-    { id: 6, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
-    { id: 7, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
-    { id: 8, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
-    { id: 9, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
-    { id: 10, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
-    { id: 11, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
-    { id: 12, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
-    { id: 13, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
-    { id: 14, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
-    { id: 15, nome: 'Mouse', preco: 299.99, category: 'Eletronicos'},
-  ]
+  page: any = ''
+  @ViewChild(MatPaginator) paginator: any;
+  @ViewChild(MatSort) sort: any;
+  columns: Array<String> = ['id', 'name', 'price', 'category', 'actions']
 
-  dataSource = new MatTableDataSource<any>(this.teste);
+  dataSource: any;
+  editProduct: any
+  productId: any
 
-  constructor() { }
+  constructor(private db: ProductService,) { }
 
   ngOnInit(): void {
+    this.product()
   }
 
-  ngAfterViewInit(){
-    this.dataSource.paginator = this.paginator;
-}
+  product() {
+    this.db.getProducts().subscribe((res: any) => {
 
-  recive(event:any) {
+      const products: any = []
+
+      res.docs.map((res: any) => {
+        products.push(res.data())
+      })
+
+      this.dataSource = new MatTableDataSource(products)
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator
+    })
+  }
+
+  editPage(product: any) {
+    this.db.getProductId(product)
+
+    setTimeout(() => {
+      product.id = this.db.productId
+      this.editProduct = product
+      this.page = 'edit'
+    }, 500);
+  }
+
+  removeProduct(product: any) {
+    this.db.getProductId(product)
+
+    setTimeout(() => {
+      this.db.deleteProduct(this.db.productId)
+        .then(() => this.product())
+    }, 500);
+  }
+
+  recive(event: any) {
+    this.product()
     this.page = event
   }
-
 }

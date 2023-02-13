@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 //Componentes
 import { AppRoutingModule } from './app-routing.module';
@@ -34,10 +35,16 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table'
 import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatSortModule } from '@angular/material/sort'
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
+
+// Firebase
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
+import { AngularFireModule } from '@angular/fire/compat'
+import { environment } from './../environments/environment';
 
 @NgModule({
   declarations: [
@@ -64,6 +71,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -74,13 +82,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatDividerModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
     MatSelectModule,
     MatExpansionModule,
     MatCheckboxModule,
     MatTooltipModule,
 
+    AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.firebase)
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

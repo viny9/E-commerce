@@ -1,4 +1,6 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-product',
@@ -9,10 +11,22 @@ export class ProductComponent implements OnInit {
 
   amount: any = 1
   favorite: any = false
+  product:any
 
-  constructor() { }
+  constructor(private db:ProductService, private router:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.productInfos()
+  }
+
+  productInfos() {
+    this.router.params.subscribe((data:any) => {
+      const id = data.productId
+      
+      this.db.getProductById(id).subscribe((res:any) => {
+        this.product = res.data()
+      })
+    })
   }
 
   subAmount() {

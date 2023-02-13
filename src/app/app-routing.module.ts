@@ -6,11 +6,10 @@ import { FavoriteListComponent } from './components/favorite-list/favorite-list.
 import { MainComponent } from './components/main/main.component';
 import { ProductComponent } from './components/product/product.component';
 import { UserComponentComponent } from './components/user-component/user-component.component';
-import { OrdersListComponent } from './views/orders/orders-list/orders-list.component';
 
 const routes: Routes = [
   { path: "", component: MainComponent },
-  { path: 'product', component: ProductComponent },
+  { path: 'product/:productId', component: ProductComponent },
   { path: 'favoriteList', component: FavoriteListComponent },
   { path: 'cart', component:  CartComponent },
   { path: 'user', component:  UserComponentComponent },

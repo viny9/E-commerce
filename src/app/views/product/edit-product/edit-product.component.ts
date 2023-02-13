@@ -1,4 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -7,22 +9,39 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class EditProductComponent implements OnInit {
 
-  @Output() teste:any = new EventEmitter()
+  @Output() back: any = new EventEmitter()
+  @Input() oldProduct: any
 
-  constructor() { }
+  editForm: any
+
+  constructor(private db: ProductService) { }
 
   ngOnInit(): void {
+    this.createForm()
+  }
+
+  createForm() {
+    this.editForm = new FormGroup({
+      name: new FormControl(this.oldProduct.name),
+      price: new FormControl(this.oldProduct.price),
+      category: new FormControl(this.oldProduct.category),
+      img: new FormControl(),
+    })
+  }
+
+  updateProduct() {
+    this.db.editProduct(this.oldProduct.id, this.editForm.value)
+      .then(() => this.back.emit(''))
   }
 
   return() {
-    this.teste.emit('')
+    this.back.emit('')
   }
 
-  teste2(event:Event) {
-    
-  }
+  teste2(event: Event) {
 
-  teste3(event:Event) {
+  }
+  teste3(event: Event) {
 
   }
 
