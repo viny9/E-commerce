@@ -5,8 +5,8 @@
         </div>
 
         <div class="productInfos">
-            <h1 class="productName">{{product.name}}</h1>
-            <h2 class="productPrice">R$ {{product.price}}</h2>
+            <h1 class="productName">{{product?.name}}</h1>
+            <h2 class="productPrice">R$ {{product?.price}}</h2>
 
             <div>
                 <p>Quantidade: </p>
@@ -19,7 +19,7 @@
 
             <div class="icons">
                 <div>
-                    <button mat-icon-button color="warn" (click)="favorite = !favorite">
+                    <button mat-icon-button color="warn" (click)="addFavorites()">
                         <mat-icon>{{favorite? "favorite" : "favorite_border"}}</mat-icon>
                     </button>
                 </div>

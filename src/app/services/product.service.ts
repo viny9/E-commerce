@@ -10,6 +10,7 @@ export class ProductService {
 
   productId: string = ''
 
+  // Metodos de Produto
   createProduct(product: Object) {
     return this.firebase.collection('products').add(product)
   }
@@ -18,7 +19,7 @@ export class ProductService {
     return this.firebase.collection('products').get()
   }
 
-  getProductById(id:any) {
+  getProductById(id: any) {
     return this.firebase.collection('products').doc(id).get()
   }
 
@@ -42,4 +43,32 @@ export class ProductService {
       this.productId = ids[index].id
     })
   }
+
+  // Metodos da lista
+  getFavoriteList() {
+    return this.firebase.collection('list').get()
+  }
+
+  addProductInList(product: any) {
+    return this.firebase.collection('list').add(product)
+  }
+
+  deleteFromList(productId: string) {
+    return this.firebase.collection('list').doc(productId).delete()
+  }
+
+  getListProductId(product: any) {
+    this.getFavoriteList().subscribe((res: any) => {
+      const ids = res.docs
+
+      const products = res.docs.map((res: any) => {
+        return res.data().name
+      })
+
+      const index = products.indexOf(product.name)
+      this.productId = ids[index].id
+    })
+  }
+
+
 }

@@ -11,21 +11,41 @@ export class ProductComponent implements OnInit {
 
   amount: any = 1
   favorite: any = false
-  product:any
+  product: any
+  listFavorites: Array<any> = []
 
-  constructor(private db:ProductService, private router:ActivatedRoute) { }
+  constructor(private db: ProductService, private router: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.productInfos()
+    this.isFavorite()
   }
 
   productInfos() {
-    this.router.params.subscribe((data:any) => {
+    this.router.params.subscribe((data: any) => {
       const id = data.productId
-      
-      this.db.getProductById(id).subscribe((res:any) => {
+
+      this.db.getProductById(id).subscribe((res: any) => {
         this.product = res.data()
       })
+    })
+  }
+
+  isFavorite() {
+    this.db.getFavoriteList().subscribe((res: any) => {
+      res.docs.forEach((element: any) => {
+        this.listFavorites.push(element.data())
+      });
+
+      const filter = this.listFavorites.filter((product: any) => {
+        return product.name === this.product.name
+      })
+
+      if (filter.length === 0) {
+        this.favorite = false
+      } else if (filter.length >= 1) {
+        this.favorite = true
+      }
     })
   }
 
@@ -40,7 +60,24 @@ export class ProductComponent implements OnInit {
 
     if (this.amount < max) {
       this.amount += 1
-    } 
+    }
+  }
+
+  addFavorites() {
+    if (this.favorite === false) {
+      this.db.addProductInList(this.product)
+        .then(() => this.favorite = true)
+        .then(() => console.log('adicionado'))
+
+    } else if (this.favorite === true) {
+      this.db.getListProductId(this.product)
+
+      setTimeout(() => {
+        this.db.deleteFromList(this.db.productId)
+          .then(() => this.favorite = false)
+          .then(() => console.log('removido'))
+      }, 500);
+    }
   }
 
   // navigator.clipboard.writeText(window.location.href)

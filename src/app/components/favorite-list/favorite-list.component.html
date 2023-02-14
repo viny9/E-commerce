@@ -1,16 +1,18 @@
 <div class="favoriteListComponent">
-    <mat-card class="productContainer" *ngIf="!empty">
-        <div class="productInfos">
-            <img src="https://www.shutterstock.com/image-photo/varna-bulgaria-18-november-2016-260nw-553415794.jpg"
+    <div *ngIf="empty === false">
+        <mat-card class="productContainer" *ngFor="let product of list">
+            <div class="productInfos">
+                <img src="https://www.shutterstock.com/image-photo/varna-bulgaria-18-november-2016-260nw-553415794.jpg"
                 alt="">
-            <h1 routerLink="/product">Product Name</h1>
-        </div>
-        <button mat-icon-button (click)="favorite = !favorite">
-            <mat-icon color="warn">{{favorite? "favorite" : "favorite_border"}}</mat-icon>
-        </button>
-    </mat-card>
-
-    <mat-card class="empty">
+                <h1 routerLink="/product">{{product.name}}</h1>
+            </div>
+            <button mat-icon-button (click)="remove(product)">
+                <mat-icon color="warn">favorite</mat-icon>
+            </button>
+        </mat-card>
+    </div>
+        
+    <mat-card class="empty" *ngIf="empty === true">
         <h1>Sua Lista está vazia</h1>
         <h2>Deixe aqui os produtos que você possa desejar no futuro.</h2>
         <button mat-flat-button routerLink="">Início</button>
