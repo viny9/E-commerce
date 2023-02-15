@@ -29,7 +29,10 @@ export class NewProductComponent implements OnInit {
   }
 
   createProduct() {
-    this.db.createProduct(this.form.value)
+    const product = this.form.value
+    product.price = Number(product.price)
+    
+    this.db.createProduct(product)
       .then(() => console.log('criado'))
       .then(() => this.return())
   }

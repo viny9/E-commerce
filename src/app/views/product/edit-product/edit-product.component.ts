@@ -30,6 +30,9 @@ export class EditProductComponent implements OnInit {
   }
 
   updateProduct() {
+    const product = this.editForm.value
+    product.price = Number(product.price)
+
     this.db.editProduct(this.oldProduct.id, this.editForm.value)
       .then(() => this.back.emit(''))
   }

@@ -13,12 +13,15 @@ export class ProductComponent implements OnInit {
   favorite: any = false
   product: any
   listFavorites: Array<any> = []
+  cart: any = []
+  inCart: any
 
   constructor(private db: ProductService, private router: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.productInfos()
     this.isFavorite()
+    this.isOnCart()
   }
 
   productInfos() {
@@ -65,9 +68,15 @@ export class ProductComponent implements OnInit {
 
   addFavorites() {
     if (this.favorite === false) {
-      this.db.addProductInList(this.product)
-        .then(() => this.favorite = true)
-        .then(() => console.log('adicionado'))
+      this.db.getProductId(this.product)
+
+      setTimeout(() => {
+        this.product.id = this.db.productId
+
+        this.db.addProductInList(this.product)
+          .then(() => this.favorite = true)
+          .then(() => this.db.userMessages('Adicionado a sua lista'))
+      }, 500);
 
     } else if (this.favorite === true) {
       this.db.getListProductId(this.product)
@@ -75,9 +84,45 @@ export class ProductComponent implements OnInit {
       setTimeout(() => {
         this.db.deleteFromList(this.db.productId)
           .then(() => this.favorite = false)
-          .then(() => console.log('removido'))
+          .then(() => this.db.userMessages('Foi removido da sua lista'))
       }, 500);
     }
+  }
+
+  addCart() {
+    if (this.inCart === false) {
+      this.db.getProductId(this.product)
+
+      setTimeout(() => {
+        this.product.amount = 1
+        this.product.id = this.db.productId
+
+        this.db.addInCart(this.product)
+          .then(() => this.inCart = true)
+          .then(() => this.db.userMessages('Adicionado ao carrinho'))
+      }, 500);
+
+    } else {
+      this.db.userMessages('Produto já está no carrinho')
+    }
+  }
+
+  isOnCart() {
+    this.db.getCart().subscribe((res: any) => {
+      res.docs.forEach((element: any) => {
+        this.cart.push(element.data())
+      });
+
+      const filter = this.cart.filter((product: any) => {
+        return product.name === this.product.name
+      })
+
+      if (filter.length === 0) {
+        this.inCart = false
+      } else if (filter.length >= 1) {
+        this.inCart = true
+      }
+    })
   }
 
   // navigator.clipboard.writeText(window.location.href)
