@@ -43,10 +43,10 @@
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="columns"></tr>
-            <tr mat-row *matRowDef="let row; columns: columns;" (click)="order = true"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns;" routerLink="orderInfos"></tr>
         </mat-table>
         <mat-paginator #paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
     </div>
 </div>
 
-<app-order-infos *ngIf="order === true"></app-order-infos>
+<router-outlet></router-outlet>

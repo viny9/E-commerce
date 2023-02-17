@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-head',
@@ -8,12 +9,16 @@ import { Component, OnInit } from '@angular/core';
 export class HeadComponent implements OnInit {
 
   theme: any
+  admin:any
 
-  constructor() { }
+  constructor(private db:ProductService) { }
 
   ngOnInit(): void {
     this.themeStatus()
   }
+
+  // Colocando função de Admin no sistema
+
 
   themeStatus() {
     this.theme = localStorage.getItem('theme')

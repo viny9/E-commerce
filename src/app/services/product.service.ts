@@ -1,15 +1,19 @@
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  constructor(private firebase: AngularFirestore, private snackBar: MatSnackBar) { }
+  constructor(private firebase: AngularFirestore, private snackBar: MatSnackBar, private router: Router) { }
 
   productId: string = ''
+  admin: any
+  logged:any = false
+
 
   // Metodos de Produto
   createProduct(product: Object) {
@@ -98,6 +102,33 @@ export class ProductService {
     })
   }
 
+  signUp(userInfos: any) {
+    return this.firebase.collection('user').add(userInfos)
+  }
+
+  singIn(userInfos: any) {
+    this.firebase.collection('user').get().subscribe((res: any) => {
+
+      const users = res.docs.map((user: any) => {
+        return user.data()
+      })
+
+      const filter = users.filter((user: any) => {
+        return user.email === userInfos.email && user.password == userInfos.password
+      })
+
+      if (filter.length >= 1) {
+        this.admin = filter[0].admin
+        this.logged = true
+        this.router.navigate([''])
+        // .then(() => this.admin = filter[0].admin)
+      } else {
+        this.userMessages('Email ou senha incorretos')
+      }
+
+    })
+  }
+
   // Metodo de Mensagens  
   userMessages(message: string) {
     this.snackBar.open(message, 'X', {
@@ -106,6 +137,10 @@ export class ProductService {
       verticalPosition: 'top',
       panelClass: 'snackBar'
     })
+  }
+
+  navegate(path:string) {
+    return this.router.navigate([path])
   }
 
 }

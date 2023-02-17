@@ -1,3 +1,5 @@
+import { ProductService } from './../../services/product.service';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,10 +10,23 @@ import { Component, OnInit } from '@angular/core';
 export class SignInComponent implements OnInit {
 
   hide:any = true
+  signinForm:any
 
-  constructor() { }
+  constructor(private db:ProductService) { }
 
   ngOnInit(): void {
+    this.createForm()
+  }
+
+  createForm() {
+    this.signinForm = new FormGroup({
+      email: new FormControl(),
+      password: new FormControl()
+    })
+  }
+
+  login() {
+    this.db.singIn(this.signinForm.value)
   }
 
 }

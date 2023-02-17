@@ -46,12 +46,12 @@
 
 .productForm ::ng-deep.mat-form-field {
   width: 90%;
-  color: var(--secondary-text-color) !important;
+  color: var(--text-color) !important;
 }
 
 .categorys {
   background-color: transparent;
-  color: white;
+  color: var(--text-color);
   width: 90%;
   border-radius: 5px;
   margin: 1rem 0;

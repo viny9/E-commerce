@@ -1,5 +1,5 @@
 import { ProductService } from './../../../services/product.service';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class NewProductComponent implements OnInit {
 
-  @Output() teste: any = new EventEmitter()
   form: any
   products: any = []
 
@@ -33,12 +32,8 @@ export class NewProductComponent implements OnInit {
     product.price = Number(product.price)
     
     this.db.createProduct(product)
-      .then(() => console.log('criado'))
-      .then(() => this.return())
-  }
-
-  return() {
-    this.teste.emit('')
+      .then(() => this.db.userMessages('Produto criado'))
+      .then(() => this.db.navegate('admin/products'))
   }
 
   teste2(event: Event | any) {

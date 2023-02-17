@@ -1,30 +1,31 @@
 <mat-sidenav-container class="adminComponent">
     <mat-sidenav opened class="sidenav" mode="side">
         <mat-nav-list class="nav">
-            <a mat-list-item [ngClass]="selected === 'products' ? 'selected' : '' " (click)="selected = 'products' ">
+            <a mat-list-item (click)="selected = 'products' " routerLink="products"
+                [ngClass]="selected === 'products' ? 'selected' : '' ">
                 <mat-icon>storefront</mat-icon>
                 Produtos
             </a>
 
-            <a mat-list-item [ngClass]="selected === 'orders' ? 'selected' : '' " (click)="selected = 'orders' ">
+            <a mat-list-item (click)="selected = 'orders' " routerLink="orders"
+                [ngClass]="selected === 'orders' ? 'selected' : '' ">
                 <mat-icon>list_alt</mat-icon>
                 Pedidos
             </a>
 
-            <a mat-list-item [ngClass]="selected === 'notifications' ? 'selected' : '' " (click)="selected = 'notifications' ">
+            <a mat-list-item (click)="selected = 'notifications' " routerLink="notifications"
+                [ngClass]="selected === 'notifications' ? 'selected' : '' ">
                 <mat-icon>notifications_active</mat-icon>
                 Notificações
             </a>
 
-            <a mat-list-item [ngClass]="selected === 'exit' ? 'selected' : '' " (click)="selected = 'exit' ">
+            <a mat-list-item>
                 <mat-icon>exit_to_app</mat-icon>
                 Sair
             </a>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="main">
-        <app-product-list *ngIf="selected === 'products'"></app-product-list>
-        <app-orders-list *ngIf="selected === 'orders'"></app-orders-list>
-        <app-notifications *ngIf="selected === 'notifications'"></app-notifications>
+        <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

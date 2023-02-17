@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -9,36 +10,44 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class EditProductComponent implements OnInit {
 
-  @Output() back: any = new EventEmitter()
-  @Input() oldProduct: any
-
   editForm: any
+  product: any
 
-  constructor(private db: ProductService) { }
+  constructor(private db: ProductService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.getProduct()
     this.createForm()
   }
 
-  createForm() {
+  getProduct() {
+    this.route.params.subscribe((res: any) => {
+      const id = res.productId
+      this.db.getProductById(id).subscribe((res: any) => {
+        this.product = res.data()
+        this.createForm(this.product)
+      })
+    })
+  }
+
+  createForm(product?: any) {
     this.editForm = new FormGroup({
-      name: new FormControl(this.oldProduct.name),
-      price: new FormControl(this.oldProduct.price),
-      category: new FormControl(this.oldProduct.category),
+      name: new FormControl(product?.name),
+      price: new FormControl(product?.price),
+      category: new FormControl(product?.category),
       img: new FormControl(),
     })
   }
 
-  updateProduct() {
+  updateProduct() { 
     const product = this.editForm.value
     product.price = Number(product.price)
 
-    this.db.editProduct(this.oldProduct.id, this.editForm.value)
-      .then(() => this.back.emit(''))
-  }
-
-  return() {
-    this.back.emit('')
+    this.route.params.subscribe((res: any) => {
+      this.db.editProduct(res.productId, this.editForm.value)
+        .then(() => this.db.navegate('admin/products'))
+        .then(() => this.db.userMessages('Produto Editado'))
+    })
   }
 
   teste2(event: Event) {

@@ -1,10 +1,9 @@
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { MatSort } from '@angular/material/sort';
-import { promises, resolve } from 'dns';
-import { rejects } from 'assert';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -22,7 +21,7 @@ export class ProductListComponent implements OnInit {
   editProduct: any
   productId: any
 
-  constructor(private db: ProductService,) { }
+  constructor(private db: ProductService, private route:Router) { }
 
   ngOnInit(): void {
     this.product()
@@ -47,9 +46,12 @@ export class ProductListComponent implements OnInit {
     this.db.getProductId(product)
 
     setTimeout(() => {
-      product.id = this.db.productId
-      this.editProduct = product
-      this.page = 'edit'
+      // product.id = this.db.productId
+      // this.editProduct = product
+      // this.route.navigate(['editProduct']).then(() => console.log('teste'))
+      this.page = 'a'
+      this.route.navigate([`admin/products/editProduct/${this.db.productId}`])
+
     }, 500);
   }
 

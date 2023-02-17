@@ -20,7 +20,7 @@
                 <input type="text" matInput formControlName="price">
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="categorys">
+            <mat-form-field appearance="outline" class="category">
                 <mat-label>Categoria</mat-label>
                 <mat-select formControlName="category">
                     <mat-option value="teste">teste</mat-option>
@@ -29,7 +29,7 @@
 
             <div class="actionBtns">
                 <button type="button" mat-flat-button (click)="updateProduct()">Atualizar produto</button>
-                <button type="button" mat-flat-button color="warn" (click)="return()">Cancelar</button>
+                <button type="button" mat-flat-button color="warn" routerLink="../..">Cancelar</button>
             </div>
         </form>
     </div>
