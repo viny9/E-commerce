@@ -26,7 +26,7 @@ export class SignInComponent implements OnInit {
   }
 
   login() {
-    this.db.singIn(this.signinForm.value)
+    this.db.signIn(this.signinForm.value)
   }
 
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth/auth.guard';
 import { AdminComponent } from './components/admin/admin.component';
 import { CartComponent } from './components/cart/cart.component';
 import { FavoriteListComponent } from './components/favorite-list/favorite-list.component';
@@ -18,8 +19,8 @@ import { ProductListComponent } from './views/product/product-list/product-list.
 const routes: Routes = [
   { path: "", component: MainComponent },
   { path: "signIn", component: SignInComponent },
-  { path: "signUp", component: SignUpComponent },
   { path: 'product/:productId', component: ProductComponent },
+  { path: "signUp", component: SignUpComponent },
   { path: 'favoriteList', component: FavoriteListComponent },
   { path: 'cart', component: CartComponent },
   { path: 'user', component: UserComponentComponent },
@@ -27,6 +28,7 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: 'products', component: ProductListComponent },
       { path: 'products/newProduct', component: NewProductComponent },

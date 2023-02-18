@@ -1,18 +1,20 @@
+import { environment } from './../../environments/environment';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-
+import { getAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  constructor(private firebase: AngularFirestore, private snackBar: MatSnackBar, private router: Router) { }
+  constructor(private firebase: AngularFirestore, private snackBar: MatSnackBar, private router: Router, private auth: AngularFireAuth) { }
 
   productId: string = ''
   admin: any
-  logged:any = false
+  logged: any = false
 
 
   // Metodos de Produto
@@ -102,31 +104,100 @@ export class ProductService {
     })
   }
 
-  signUp(userInfos: any) {
-    return this.firebase.collection('user').add(userInfos)
+  // Login e cadastro
+  signUp(user: any) {
+    this.auth.createUserWithEmailAndPassword(user.email, user.password)
+      .then(() => {
+        delete user.password
+        this.createUser(user)
+      })
+
+      .then(() => {
+        getAuth().currentUser?.getIdToken()
+          .then((token: any) => localStorage.setItem('token', token))
+      })
+
+      .then(() => this.userMessages('Usuário criado'))
+      .then(() => this.navegate(''))
   }
 
-  singIn(userInfos: any) {
-    this.firebase.collection('user').get().subscribe((res: any) => {
+  createUser(userInfos: any) {
+    this.firebase.collection('users').add(userInfos)
+  }
 
-      const users = res.docs.map((user: any) => {
-        return user.data()
+  getUser() {
+    return this.firebase.collection('users').get()
+  }
+
+  signIn(user: any) {
+    this.auth.signInWithEmailAndPassword(user.email, user.password)
+      .then(() => {
+        getAuth().currentUser?.getIdToken()
+          .then((token: any) => localStorage.setItem('token', token))
+          .then(() => this.setAdmin(user))
+          .then(() => this.navegate(''))
+          .then(() => setTimeout(() => window.location.reload(), 500))
+      })
+      .catch((e: any) => {
+        this.userMessages(e)
+      })
+  }
+
+  logOut() {
+    this.auth.signOut()
+      .then(() => localStorage.clear())
+      .then(() => this.navegate(''))
+      .then(() => window.location.reload())
+  }
+
+  deleteUser() {
+    this.auth.onAuthStateChanged((user?: any) => {
+      return getAuth().currentUser?.delete()
+    })
+  }
+
+  // User status
+  setAdmin(userInfos?: any) {
+    this.getUser().subscribe((res: any) => {
+      const users = res.docs.map((users: any) => {
+        return users.data()
       })
 
       const filter = users.filter((user: any) => {
-        return user.email === userInfos.email && user.password == userInfos.password
+        return user.email === userInfos.email
       })
 
-      if (filter.length >= 1) {
-        this.admin = filter[0].admin
-        this.logged = true
-        this.router.navigate([''])
-        // .then(() => this.admin = filter[0].admin)
-      } else {
-        this.userMessages('Email ou senha incorretos')
-      }
-
+      localStorage.setItem('admin', filter[0]?.admin)
     })
+  }
+
+  userStatus() {
+    const status = {
+      logged: this.isLogged(),
+      admin: this.isAdmin(),
+    }
+
+    return status
+  }
+
+  isAdmin() {
+    const admin = eval(localStorage['admin'])
+
+    if (admin === true) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  isLogged() {
+    const token = localStorage['token']
+
+    if (token) {
+      return true
+    } else {
+      return false
+    }
   }
 
   // Metodo de Mensagens  
@@ -139,7 +210,7 @@ export class ProductService {
     })
   }
 
-  navegate(path:string) {
+  navegate(path: string) {
     return this.router.navigate([path])
   }
 

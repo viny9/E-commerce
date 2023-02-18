@@ -9,16 +9,17 @@ import { ProductService } from 'src/app/services/product.service';
 export class HeadComponent implements OnInit {
 
   theme: any
-  admin:any
+  admin: any = false
+  logged: any = false
 
-  constructor(private db:ProductService) { }
+  constructor(private db: ProductService) { }
 
   ngOnInit(): void {
     this.themeStatus()
+    
+    this.logged = this.db.userStatus().logged
+    this.admin = this.db.userStatus().admin
   }
-
-  // Colocando função de Admin no sistema
-
 
   themeStatus() {
     this.theme = localStorage.getItem('theme')

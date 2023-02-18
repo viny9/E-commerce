@@ -7,16 +7,21 @@
         </button>
     </div>
     <div class="options">
+        <div *ngIf="logged === false" class="logged" >
+            <a routerLink="signUp">Cadastro</a>
+            /
+            <a routerLink="signIn">Login</a>
+        </div>
         <button mat-icon-button>
             <mat-icon class="icons" routerLink="cart">shopping_cart</mat-icon>
         </button>
         <button mat-icon-button routerLink="favoriteList">
             <mat-icon class="icons">favorite</mat-icon>
         </button>
-        <button mat-icon-button>
+        <button mat-icon-button *ngIf="logged === true">
             <mat-icon class="icons" routerLink="user">person</mat-icon>
         </button>
-        <button mat-icon-button>
+        <button mat-icon-button *ngIf="admin === true">
             <mat-icon class="icons" routerLink="admin/products">settings</mat-icon>
         </button>
         <div class="themeIcons" (click)="themeIconToggle()">
@@ -28,7 +33,4 @@
             </button>
         </div>
     </div>
-    <!-- <div class="logged">
-        Cadastro/Login
-    </div> -->
 </div>

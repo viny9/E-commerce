@@ -2,20 +2,20 @@
     <div class="userInfos">
 
         <h2>Meus dados</h2>
-        <form class="formContainer">
+        <form class="formContainer" [formGroup]="userForm">
             <mat-form-field>
                 <mat-label>Nome completo</mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput formControlName="name">
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Email</mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput formControlName="email">
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Telefone</mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput formControlName="telephone">
             </mat-form-field>
         </form>
         <button mat-flat-button disabled>Atualizar perfil</button>
@@ -62,6 +62,10 @@
             </mat-form-field>
         </form>
         <button mat-flat-button disabled>Editar senha </button>
+
+        <h2>Sair da conta</h2>
+        <p>Assim que você apertar o botão, você será encaminhado para tela de login.</p>
+        <button mat-flat-button color="warn" (click)="signOut()">Sair da Conta</button>
 
         <h2>Deletar conta</h2>
         <p>Assim que você apertar o botão, sua conta ira ser deletada permanentemente. Após

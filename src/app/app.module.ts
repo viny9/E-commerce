@@ -42,8 +42,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Firebase
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
 import { AngularFireModule } from '@angular/fire/compat'
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
+import { AngularFireAuthModule } from '@angular/fire/compat/auth'
 import { environment } from './../environments/environment';
 
 @NgModule({
@@ -89,7 +90,8 @@ import { environment } from './../environments/environment';
     MatSnackBarModule,
 
     AngularFirestoreModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [],
   bootstrap: [AppComponent],

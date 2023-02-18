@@ -33,9 +33,8 @@ export class SignUpComponent implements OnInit {
 
     if (user.password === user.confirmPassword) {
       delete user.confirmPassword
-
       this.db.signUp(user)
-        .then(() => this.db.userMessages('Usuário criado com sucesso'))
+
     } else {
       this.db.userMessages('As senhas são diferentes')
     }
