@@ -13,9 +13,11 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const token = localStorage['token']
     const admin = eval(localStorage['admin'])
+
     if (token && admin === true) {
       return true
     } else {
+      this.db.navegate('')
       return false
     }
   }

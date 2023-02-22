@@ -21,6 +21,14 @@
 
             <mat-form-field>
                 <mat-label>
+                    <mat-icon matPrefix>phone</mat-icon>
+                    Telefone
+                </mat-label>
+                <input type="text" matInput formControlName="phone" [textMask]="{mask: mask.phone}">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>
                     <mat-icon>lock</mat-icon>
                     Senha
                 </mat-label>

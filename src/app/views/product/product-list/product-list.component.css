@@ -17,6 +17,18 @@ h1 {
   margin-top: 1rem;
 }
 
+.actionHead {  
+  padding-left: 2.1rem;
+}
+
+.name {
+  white-space: nowrap;
+  overflow: hidden ; 
+  text-overflow: ellipsis;
+  max-width: 20rem;
+  padding-right: 2rem;
+}
+
 .tableFooter {
   display: flex;
   align-items: center;

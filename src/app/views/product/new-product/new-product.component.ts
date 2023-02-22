@@ -1,6 +1,7 @@
 import { ProductService } from './../../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { createTextMaskInputElement } from 'text-mask-core';
 
 @Component({
   selector: 'app-new-product',
@@ -11,6 +12,7 @@ export class NewProductComponent implements OnInit {
 
   form: any
   products: any = []
+  value: any
 
   constructor(private db: ProductService) { }
 
@@ -29,11 +31,25 @@ export class NewProductComponent implements OnInit {
 
   createProduct() {
     const product = this.form.value
-    product.price = Number(product.price)
-    
+    let price: any = Number(product.price)
+
+    if (Number.isNaN(price)) {
+      price = this.form.value.price
+      price = price.replace(',', '.')
+      price = Number(price)
+    }
+
+    product.price = price
+
     this.db.createProduct(product)
       .then(() => this.db.userMessages('Produto criado'))
       .then(() => this.db.navegate('admin/products'))
+  }
+
+  teste() {
+    let x: any = Number(this.form.value.price)
+
+
   }
 
   teste2(event: Event | any) {

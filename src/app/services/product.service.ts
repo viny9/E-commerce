@@ -1,4 +1,3 @@
-import { environment } from './../../environments/environment';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -14,7 +13,7 @@ export class ProductService {
 
   productId: string = ''
   admin: any
-  logged: any = false
+  userId: any = localStorage['userId']
 
 
   // Metodos de Produto
@@ -53,15 +52,15 @@ export class ProductService {
 
   // Metodos da lista
   getFavoriteList() {
-    return this.firebase.collection('list').get()
+    return this.firebase.collection('users').doc(this.userId).collection('list').get()
   }
 
   addProductInList(product: any) {
-    return this.firebase.collection('list').add(product)
+    return this.firebase.collection('users').doc(this.userId).collection('list').add(product)
   }
 
   deleteFromList(productId: string) {
-    return this.firebase.collection('list').doc(productId).delete()
+    return this.firebase.collection('users').doc(this.userId).collection('list').doc(productId).delete()
   }
 
   getListProductId(product: any) {
@@ -80,15 +79,15 @@ export class ProductService {
   // Metodos do carrinho
 
   getCart() {
-    return this.firebase.collection('cart').get()
+    return this.firebase.collection('users').doc(this.userId).collection('cart').get()
   }
 
   addInCart(product: any) {
-    return this.firebase.collection('cart').add(product)
+    return this.firebase.collection('users').doc(this.userId).collection('cart').add(product)
   }
 
   deleteCartProduct(productId: any) {
-    return this.firebase.collection('cart').doc(productId).delete()
+    return this.firebase.collection('users').doc(this.userId).collection('cart').doc(productId).delete()
   }
 
   getCartProductId(product: any) {
@@ -135,8 +134,18 @@ export class ProductService {
         getAuth().currentUser?.getIdToken()
           .then((token: any) => localStorage.setItem('token', token))
           .then(() => this.setAdmin(user))
-          .then(() => this.navegate(''))
-          .then(() => setTimeout(() => window.location.reload(), 500))
+          .then(() => this.setUserId(user))
+      })
+      .then(() => {
+        setTimeout(() => {
+          const admin = this.userStatus().admin
+
+          if (admin === true) {
+            this.navegate('admin/products')
+          } else if (admin === false) {
+            this.navegate('')
+          }
+        }, 500);
       })
       .catch((e: any) => {
         this.userMessages(e)
@@ -146,13 +155,30 @@ export class ProductService {
   logOut() {
     this.auth.signOut()
       .then(() => localStorage.clear())
-      .then(() => this.navegate(''))
+      .then(() => this.navegate('signIn'))
       .then(() => window.location.reload())
+  }
+
+  updateUser(userId: any, updatedInfos: any) {
+    return this.firebase.collection('users').doc(userId).update(updatedInfos)
   }
 
   deleteUser() {
     this.auth.onAuthStateChanged((user?: any) => {
       return getAuth().currentUser?.delete()
+    })
+  }
+
+  setUserId(user: any) {
+    this.getUser().subscribe((res: any) => {
+      const ids = res.docs
+
+      const users = res.docs.map((res: any) => {
+        return res.data().email
+      })
+
+      const index = users.indexOf(user.email)
+      localStorage.setItem('userId', ids[index].id)
     })
   }
 
@@ -212,6 +238,18 @@ export class ProductService {
 
   navegate(path: string) {
     return this.router.navigate([path])
+  }
+
+  inputMasks() {
+    const maskPhone: any = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    const maskCep: any = [/[1-9]/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]
+
+    const masks = {
+      phone: maskPhone,
+      cep: maskCep,
+    }
+
+    return masks
   }
 
 }

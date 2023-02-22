@@ -4,11 +4,13 @@ import { AuthGuard } from './auth/auth.guard';
 import { AdminComponent } from './components/admin/admin.component';
 import { CartComponent } from './components/cart/cart.component';
 import { FavoriteListComponent } from './components/favorite-list/favorite-list.component';
+import { HomeComponent } from './components/home/home.component';
 import { MainComponent } from './components/main/main.component';
 import { ProductComponent } from './components/product/product.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { UserComponentComponent } from './components/user-component/user-component.component';
+import { NotFoundComponent } from './views/not-found/not-found.component';
 import { NotificationsComponent } from './views/notifications/notifications.component';
 import { OrderInfosComponent } from './views/orders/order-infos/order-infos.component';
 import { OrdersListComponent } from './views/orders/orders-list/orders-list.component';
@@ -17,14 +19,18 @@ import { NewProductComponent } from './views/product/new-product/new-product.com
 import { ProductListComponent } from './views/product/product-list/product-list.component';
 
 const routes: Routes = [
-  { path: "", component: MainComponent },
-  { path: "signIn", component: SignInComponent },
-  { path: 'product/:productId', component: ProductComponent },
-  { path: "signUp", component: SignUpComponent },
-  { path: 'favoriteList', component: FavoriteListComponent },
-  { path: 'cart', component: CartComponent },
-  { path: 'user', component: UserComponentComponent },
-  // { path: '**', component: PageNotFound }, Os ** servem para paginas que não foram encontradas. Depois criar um componente para essa mensagem
+  {
+    path: '',
+    component: MainComponent,
+    children: [
+      { path: '', component: HomeComponent },
+      { path: 'favoriteList', component: FavoriteListComponent },
+      { path: 'cart', component: CartComponent },
+      { path: 'user', component: UserComponentComponent },
+      { path: 'product/:productId', component: ProductComponent },
+    ]
+  },
+
   {
     path: 'admin',
     component: AdminComponent,
@@ -38,6 +44,11 @@ const routes: Routes = [
       { path: 'notifications', component: NotificationsComponent },
     ]
   },
+  
+  { path: "signIn", component: SignInComponent },
+  { path: "signUp", component: SignUpComponent },
+  { path: 'pageNotFound', component: NotFoundComponent },
+  { path: '**', redirectTo: 'pageNotFound' },
 ];
 
 @NgModule({

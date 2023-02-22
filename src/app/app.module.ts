@@ -40,12 +40,16 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { TextMaskModule } from 'angular2-text-mask';
 
 // Firebase
 import { AngularFireModule } from '@angular/fire/compat'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
 import { AngularFireAuthModule } from '@angular/fire/compat/auth'
 import { environment } from './../environments/environment';
+import { HomeComponent } from './components/home/home.component';
+import { NotFoundComponent } from './views/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +70,8 @@ import { environment } from './../environments/environment';
     OrderInfosComponent,
     OrdersListComponent,
     NotificationsComponent,
+    HomeComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,10 +94,13 @@ import { environment } from './../environments/environment';
     MatExpansionModule,
     MatCheckboxModule,
     MatSnackBarModule,
-
+    MatSlideToggleModule,
+    TextMaskModule,
+    
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase),
+
   ],
   providers: [],
   bootstrap: [AppComponent],
