@@ -1,9 +1,36 @@
+h1 {
+  margin: 0;
+}
+
 .productComponent {
   max-width: 100%;
 }
 
 .title {
-  margin-left: 1rem;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btns button{
+  margin-right: 15px;
+}
+
+.table {
+  margin-top: 1rem;
+}
+
+.actionHead {  
+  padding-left: 2.1rem;
+}
+
+.name {
+  white-space: nowrap;
+  overflow: hidden ; 
+  text-overflow: ellipsis;
+  max-width: 20rem;
+  padding-right: 2rem;
 }
 
 .tableFooter {
@@ -25,9 +52,4 @@
 ::ng-deep .mat-select-value,
 ::ng-deep .mat-select-arrow {
   color: var(--text-color) !important;
-}
-
-::ng-deep .mat-form-field-underline {
-  background-color: #fff !important;
-  color: #fff !important;
 }

@@ -1,55 +1,59 @@
 <div class="userDatasComponent">
     <div class="userInfos">
-
         <h2>Meus dados</h2>
-        <form class="formContainer">
+        <form class="formContainer" [formGroup]="userForm" (change)="teste()">
             <mat-form-field>
                 <mat-label>Nome completo</mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput formControlName="name">
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Email</mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput formControlName="email">
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Telefone</mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput formControlName="telephone" [textMask]="{mask: mask.phone}">
             </mat-form-field>
         </form>
-        <button mat-flat-button disabled>Atualizar perfil</button>
+        <button mat-flat-button [disabled]="" (click)="updateInfos()">Atualizar perfil</button>
 
         <h2>Endereço</h2>
-        <form class="formContainer">
+        <form class="formContainer" [formGroup]="addressForm">
             <mat-form-field>
                 <mat-label>Cep</mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput formControlName="cep" [textMask]="{mask: mask.cep}">
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Número</mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput formControlName="number">
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Bairro</mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput formControlName="neighborhood">
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Cidade</mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput formControlName="city">
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Estado</mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput formControlName="state">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Extra</mat-label>
+                <input type="text" matInput formControlName="extra">
             </mat-form-field>
         </form>
-        <button mat-flat-button disabled>Atualizar Endereço</button>
+        <button mat-flat-button [disabled]="" (click)="updateInfos()">Atualizar Endereço</button>
 
-        <h2>Editar Senha</h2>
+        <!-- <h2>Editar Senha</h2>
         <form class="formContainer">
             <mat-form-field>
                 <mat-label>Senha</mat-label>
@@ -61,7 +65,11 @@
                 <input type="text" matInput>
             </mat-form-field>
         </form>
-        <button mat-flat-button disabled>Editar senha </button>
+        <button mat-flat-button disabled>Editar senha </button> -->
+
+        <h2>Sair da conta</h2>
+        <p>Assim que você apertar o botão, você será encaminhado para tela de login.</p>
+        <button mat-flat-button color="warn" (click)="signOut()">Sair da Conta</button>
 
         <h2>Deletar conta</h2>
         <p>Assim que você apertar o botão, sua conta ira ser deletada permanentemente. Após

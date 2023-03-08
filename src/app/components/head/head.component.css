@@ -22,8 +22,9 @@
   color: var(--text-color);
   background-color: var(--card-color);
   margin-left: 20px;
-  border:none;
-  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  border: none;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+    0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 }
 
 .search input:focus {
@@ -41,13 +42,15 @@
   display: flex;
   align-items: center;
   padding-right: 10px;
-  border:none;
-  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  border: none;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+    0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 }
 
 .options {
   width: 30%;
   display: flex;
+  align-items: center;
 }
 
 .icons {
@@ -55,12 +58,23 @@
 }
 
 .logged {
+  margin-right: 1rem;
   color: #ffba00;
+}
+
+.logged a {
+  color: #ffba00;
+  text-decoration: none;
+}
+
+.logged a:hover {
+  text-decoration: underline;
 }
 
 .sun,
 .moon {
   position: absolute;
+  top: 17%;
   color: #ffba00;
 }
 

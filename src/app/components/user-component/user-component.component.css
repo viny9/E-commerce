@@ -33,6 +33,10 @@ p {
   color: var(--secondary-text-color);
 }
 
+::ng-deep .mat-form-field {
+  color: var(--text-color);
+}
+
 ::ng-deep .mat-form-field-label {
   color: var(--secondary-text-color) !important;
 }

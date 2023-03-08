@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-favorite-list',
@@ -7,12 +8,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FavoriteListComponent implements OnInit {
 
-  favorite:boolean = false
-  empty:boolean = true
+  empty: any
+  list: any = []
 
-  constructor() { }
+  constructor(private db: ProductService) { }
 
   ngOnInit(): void {
+    this.favoriteList()
+  }
+
+  isEmpty() {
+    if (this.list.length === 0) {
+      this.empty = true
+    } else {
+      this.empty = false
+    }
+  }
+
+  favoriteList() {
+    this.db.getFavoriteList().subscribe((res: any) => {
+      res.docs.forEach((element: any) => {
+        this.list.push(element.data())
+      });
+
+      this.isEmpty()
+    })
+  }
+
+  remove(product: any) {
+    this.db.getListProductId(product)
+
+    setTimeout(() => {
+      this.db.deleteFromList(this.db.productId)
+        .then(() => console.log('removido'))
+        .then(() => window.location.reload())
+    }, 500);
   }
 
 }

@@ -35,11 +35,13 @@ body {
   --hover-color: #f0f0f0;
 }
 
+
+
 /* Table base style */
 .table {
   width: 100%;
-  border-radius: 5px;
   background-color: transparent;
+  border-top: 1px solid var(--disabled-color);
   /* background-color: var(--card-color); */
 }
 
@@ -55,7 +57,7 @@ td {
 }
 
 .tableId {
-  width: 9%;
+  width: 8%;
 }
 
 .mat-row:hover {
@@ -69,4 +71,9 @@ td {
 
 .mat-row:nth-child(even) {
   background-color: var(--secondary-card-color);
+}
+
+.snackBar {
+  background-color: var(--card-color);
+  color: var(--text-color);
 }

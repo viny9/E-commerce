@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 //Componentes
 import { AppRoutingModule } from './app-routing.module';
@@ -34,10 +35,25 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table'
 import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatSortModule } from '@angular/material/sort'
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDialogModule } from '@angular/material/dialog';
+
+import { TextMaskModule } from 'angular2-text-mask';
+
+// Firebase
+import { AngularFireModule } from '@angular/fire/compat'
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
+import { AngularFireAuthModule } from '@angular/fire/compat/auth'
+import { environment } from './../environments/environment';
+import { HomeComponent } from './components/home/home.component';
+import { NotFoundComponent } from './views/not-found/not-found.component';
+import { SearchComponent } from './components/search/search.component';
+import { DialogCategoryComponent } from './views/product/dialog-category/dialog-category.component';
 
 @NgModule({
   declarations: [
@@ -58,12 +74,17 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     OrderInfosComponent,
     OrdersListComponent,
     NotificationsComponent,
+    HomeComponent,
+    NotFoundComponent,
+    SearchComponent,
+    DialogCategoryComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -74,13 +95,21 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatDividerModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
     MatSelectModule,
     MatExpansionModule,
     MatCheckboxModule,
-    MatTooltipModule,
+    MatSnackBarModule,
+    MatSlideToggleModule,
+    MatDialogModule,
+    TextMaskModule,
+    
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(environment.firebase),
 
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

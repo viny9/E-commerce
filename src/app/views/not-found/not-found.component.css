@@ -1,0 +1,16 @@
+h1 {
+    margin: 0;
+}
+
+.notFoundPage {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.notFoundPage h1:first-child {
+    height: 10rem;
+    font-size: 10rem;
+}

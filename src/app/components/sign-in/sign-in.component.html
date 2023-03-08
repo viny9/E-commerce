@@ -1,5 +1,5 @@
 <div class="signIn">
-    <form class="form">
+    <form class="form" [formGroup]="signinForm">
         <h1>Login</h1>
 
         <div class="fields">
@@ -8,7 +8,7 @@
                     <mat-icon matPrefix>email</mat-icon>
                     Email
                 </mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput formControlName="email">
             </mat-form-field>
 
             <mat-form-field>
@@ -16,7 +16,7 @@
                     <mat-icon>lock</mat-icon>
                     Senha
                 </mat-label>
-                <input [type]="hide? 'password': 'text'" matInput>
+                <input [type]="hide? 'password': 'text'" matInput formControlName="password" autocomplete="false">
                 <button mat-icon-button matSuffix (click)="hide = !hide">
                     <mat-icon> {{hide? 'visibility_off' : 'visibility'}} </mat-icon>
                 </button>
@@ -24,8 +24,8 @@
         </div>
         <p class="forgotPassword">Esqueceu sua senha ?</p>
         <div class="btnContainer">
-            <button mat-stroked-button class="btn"> Entrar </button>
+            <button mat-stroked-button class="btn" (click)="login()"> Entrar </button>
         </div>
-        <p class="login">Ainda não tem conta ? <a> Cadastrar</a> </p>
+        <p class="login">Ainda não tem conta ? <a routerLink="/signUp"> Cadastrar</a> </p>
     </form>
 </div>

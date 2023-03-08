@@ -46,7 +46,7 @@
 
 .productForm ::ng-deep.mat-form-field {
   width: 90%;
-  color: var(--secondary-text-color) !important;
+  color: var(--text-color) !important;
 }
 
 .categorys {
@@ -61,11 +61,13 @@
   margin-right: 20px;
 }
 
-
+.actionBtns button:first-child {
+  background-color: var(--orange);
+}
 
 /* Angular Inputs styles */
 ::ng-deep .mat-form-field-label {
-  color: var(--secondary-text-color) !important;
+  color: var(--text-color) !important;
 }
 
 ::ng-deep .mat-form-field-underline {
@@ -78,7 +80,7 @@
 
 /* Outline Inputs */
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-  color: var(--disabled-color) !important;
+  color: var(--text-color) !important;
 }
 
 /* mat-input focused color */
@@ -91,4 +93,12 @@
 /* mat-label normal state style */
 ::ng-deep .mat-form-field-label {
   color: var(--text-color) !important;
+}
+
+input::placeholder {
+  color: var(--text-color) !important;
+}
+
+.teste {
+  display: flex;
 }
