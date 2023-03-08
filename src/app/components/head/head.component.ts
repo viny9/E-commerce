@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-head',
@@ -11,12 +12,13 @@ export class HeadComponent implements OnInit {
   theme: any
   admin: any = false
   logged: any = false
+  searchInput: any
 
-  constructor(private db: ProductService) { }
+  constructor(private db: ProductService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.themeStatus()
-    
+
     this.logged = this.db.userStatus().logged
     this.admin = this.db.userStatus().admin
   }
@@ -62,5 +64,9 @@ export class HeadComponent implements OnInit {
       localStorage.setItem('theme', 'dark')
     }
 
+  }
+
+  search() {
+    this.db.navegate(`search/${this.searchInput}`)
   }
 }

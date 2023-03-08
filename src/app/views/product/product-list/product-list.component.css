@@ -13,6 +13,10 @@ h1 {
   justify-content: space-between;
 }
 
+.btns button{
+  margin-right: 15px;
+}
+
 .table {
   margin-top: 1rem;
 }
@@ -48,9 +52,4 @@ h1 {
 ::ng-deep .mat-select-value,
 ::ng-deep .mat-select-arrow {
   color: var(--text-color) !important;
-}
-
-::ng-deep .mat-form-field-underline {
-  background-color: #fff !important;
-  color: #fff !important;
 }

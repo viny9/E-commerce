@@ -12,12 +12,14 @@ export class EditProductComponent implements OnInit {
 
   editForm: any
   product: any
+  categorys: any
 
   constructor(private db: ProductService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getProduct()
     this.createForm()
+    this.categoryList()
   }
 
   getProduct() {
@@ -30,6 +32,17 @@ export class EditProductComponent implements OnInit {
     })
   }
 
+  categoryList() {
+    this.db.getCategorys().subscribe((res: any) => {
+
+      const categorys = res.docs.map((doc: any) => {
+        return doc.data()
+      })
+
+      this.categorys = categorys
+    })
+  }
+
   createForm(product?: any) {
     this.editForm = new FormGroup({
       name: new FormControl(product?.name),
@@ -39,7 +52,7 @@ export class EditProductComponent implements OnInit {
     })
   }
 
-  updateProduct() { 
+  updateProduct() {
     const product = this.editForm.value
     product.price = Number(product.price)
 

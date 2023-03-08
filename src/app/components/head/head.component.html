@@ -1,8 +1,8 @@
 <div class="head">
     <a href="">Logo</a>
     <div class="search">
-        <input type="text" placeholder="Pesquisar">
-        <button>
+        <input type="text" placeholder="Pesquisar" [(ngModel)]="searchInput">
+        <button (click)="search()" [disabled]="searchInput === undefined">
             <mat-icon>search</mat-icon>
         </button>
     </div>

@@ -38,6 +38,7 @@ export class ProductService {
   }
 
   getProductId(product: any) {
+    console.log(product)
     this.getProducts().subscribe((res: any) => {
       const ids = res.docs
 
@@ -224,6 +225,36 @@ export class ProductService {
     } else {
       return false
     }
+  }
+
+  // Categorias 
+  addCategory(category: any) {
+    return this.firebase.collection('productsCategorys').add(category)
+  }
+
+  getCategorys() {
+    return this.firebase.collection('productsCategorys').get()
+  }
+
+  updateCategory(categoryId: any, updatedCategory: any) {
+    return this.firebase.collection('productsCategorys').doc(categoryId).update(updatedCategory)
+  }
+
+  removeCategory(categoryId: any) {
+    return this.firebase.collection('productsCategorys').doc(categoryId).delete()
+  }
+
+  getCategoryId(category: any) {
+    this.getCategorys().subscribe((res: any) => {
+      const ids = res.docs
+
+      const categorys = res.docs.map((res: any) => {
+        return res.data().name
+      })
+
+      const index = categorys.indexOf(category)
+      this.productId = ids[index].id
+    })
   }
 
   // Metodo de Mensagens  

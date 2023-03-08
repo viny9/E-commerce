@@ -1,9 +1,12 @@
-<div class="productComponent" *ngIf="page === '' ">
+<div class="productComponent">
     <div class="title">
         <h1>Produtos</h1>
-        <button mat-fab color="primary" (click)="page = 'new' " routerLink="newProduct">
-            <mat-icon>add</mat-icon>
-        </button>
+        <div class="btns">
+            <button mat-flat-button (click)="openDialog()" color="primary">Categorias</button>
+            <button mat-fab color="primary" routerLink="newProduct">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
     </div>
     <mat-table [dataSource]="dataSource" class="table" matSort>
         <ng-container matColumnDef="id">
@@ -29,7 +32,7 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef class="actionHead">Ações</th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button color="accent" (click)="page = 'a' ">
+                <button mat-icon-button color="accent">
                     <mat-icon>local_offer</mat-icon>
                 </button>
 
@@ -37,7 +40,7 @@
                     <mat-icon>edit</mat-icon>
                 </button>
 
-                <button mat-icon-button color="warn" (click)="removeProduct(element)" >
+                <button mat-icon-button color="warn" (click)="removeProduct(element)">
                     <mat-icon>delete</mat-icon>
                 </button>
             </td>
@@ -48,6 +51,3 @@
     </mat-table>
     <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons class="paginator"></mat-paginator>
 </div>
-
-<!-- <app-edit-product *ngIf="page === 'edit' " (back)="recive($event)" [oldProduct]="editProduct"></app-edit-product>
-<app-new-product *ngIf="page === 'new' " (teste)="recive($event)"></app-new-product> -->

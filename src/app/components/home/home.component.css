@@ -1,3 +1,5 @@
+/* Colocar de um jeito que os botões aparessam e o carroseul funcione */
+
 h2 {
   margin: 0;
 }
@@ -8,32 +10,53 @@ h2 {
   color: #ffffff8a;
 }
 
-.teste {
+.alerts {
+  display: block;
   width: 100%;
   height: 400px;
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    url(https://thumbs.dreamstime.com/b/panorama-horizontal-do-c%C3%A9u-das-nuvens-wispy-o-vento-da-alta-altitude-varreu-no-com-azul-147437736.jpg),
-    no-repeat;
-  background-size: cover;
-  display: grid;
-  place-items: center;
   margin-bottom: 20px;
 }
 
-.imgText {
-  font-size: 20px;
+.imgs {
+  display: flex;
+  width: 100%;
+  right: 0;
+}
+
+.imgs img {
+  width: 100%;
+  height: 400px;
+  right: 0%;
+  position: absolute;
+  top: 4rem;
+}
+
+.alertBtns {
+  width: 100%;
+  height: 46%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 4rem;
+  left: 0;
+}
+
+.alertBtns > button {
+  color: #fff;
+  background-color: transparent;
+  border: 0;
+}
+
+.alertBtns > button:hover {
+  transition: 0.4s;
+  background-color: #00000028;
+  border: 0;
 }
 
 .productsContainer {
   display: grid;
   grid-template-columns: repeat(4, 17rem);
   gap: 50px 30px;
-}
-
-.product img {
-  margin-bottom: 10px;
-  width: 100%;
-  height: 11rem;
 }
 
 .product {
@@ -48,6 +71,14 @@ h2 {
 
 .product:hover {
   background-color: var(--hover-color);
+}
+
+.product img {
+  margin-bottom: 10px;
+  width: 100%;
+  height: 11rem;
+  width: 210px;
+  border-radius: 3px;
 }
 
 .productInfos {
@@ -74,43 +105,62 @@ h2 {
   font-size: 20px;
 }
 
-img {
-  width: 210px;
-  border-radius: 3px;
+.nextShow {
+  animation: both 1s next1;
 }
 
-.teste {
-  animation: 1s forwards toLeft;
+.nextHide {
+  animation: both 1s next2;
 }
 
-.teste3 {
-  animation: 1s forwards toRight;
+.backShow {
+  animation: both 1s back1;
 }
 
-@keyframes toLeft {
+.backHide {
+  animation: both 1s back2;
+}
+
+@keyframes next1 {
   from {
-    opacity: 0;
-    display: none;
     right: -100%;
+    width: 100%;
   }
 
   to {
-    opacity: 100%;
-    right: 0;
-    display: block;
+    right: 0%;
+    width: 100%;
   }
 }
 
-@keyframes toRight {
+@keyframes next2 {
   from {
-    opacity: 100%;
-    right: 0;
-    display: block;
+    left: 0%;
+  }
+  
+  to {
+    left: -100%;
+  }
+}
+
+@keyframes back1 {
+  from {
+    left: -100%;
+    width: 100%;
   }
 
   to {
-    opacity: 0;
+    left: 0%;
+    width: 100%;
+  }
+}
+
+@keyframes back2 {
+  from {
+    right: 0%;
+  }
+
+  to {
     right: -100%;
-    display: none;
   }
 }

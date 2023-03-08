@@ -1,0 +1,31 @@
+<div class="categoryComponent">
+    <h1>Categorias</h1>
+    <div *ngIf="inputStatus === 'new' " class="teste">
+        <mat-form-field>
+            <mat-label>Nova categoria</mat-label>
+            <input type="text" matInput [(ngModel)]="newCategoryInput">
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)="newCategory()">Adicionar</button>
+    </div>
+
+    <div *ngIf="inputStatus === 'edit' " class="teste">
+        <mat-form-field>
+            <mat-label>Editar Categoria</mat-label>
+            <input type="text" matInput [(ngModel)]="editCategoryInput">
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)="updateCategory ()">Atualizar</button>
+    </div>
+
+    <mat-nav-list class="list">
+        <span class="listItem" mat-list-item *ngFor="let category of categorys">
+            <p (click)="selectCategory(category)" (click)="inputStatus = 'edit' ">{{category.name}}</p>
+            <button mat-icon-button color="warn" (click)="deleteCategory(category)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </span>
+        <p *ngIf="inputStatus === 'edit' " class="listItem" mat-list-item (click)="inputStatus = 'new' ">Novo Categoria +</p>
+    </mat-nav-list>
+
+    <button mat-flat-button color="warn" class="returnBtn" (click)="close()">Voltar</button>
+
+</div>

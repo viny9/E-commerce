@@ -7,6 +7,7 @@ import { FavoriteListComponent } from './components/favorite-list/favorite-list.
 import { HomeComponent } from './components/home/home.component';
 import { MainComponent } from './components/main/main.component';
 import { ProductComponent } from './components/product/product.component';
+import { SearchComponent } from './components/search/search.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { UserComponentComponent } from './components/user-component/user-component.component';
@@ -28,6 +29,7 @@ const routes: Routes = [
       { path: 'cart', component: CartComponent },
       { path: 'user', component: UserComponentComponent },
       { path: 'product/:productId', component: ProductComponent },
+      { path: 'search/:searchWord', component: SearchComponent, data: {someData: 'teste'} },
     ]
   },
 

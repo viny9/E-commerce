@@ -9,7 +9,7 @@
         </label>
         <input type="file" id="addImg">
 
-        <form class="productForm" [formGroup]="form">
+        <form  class="productForm" [formGroup]="form">
             <mat-form-field>
                 <mat-label>Nome</mat-label>
                 <input type="text" matInput formControlName="name">
@@ -17,13 +17,14 @@
 
             <mat-form-field>
                 <mat-label>Preço</mat-label>
-                <input type="text" matInput formControlName="price" placeholder="00.00" >
+                <input type="text" matInput formControlName="price" placeholder="00.00">
             </mat-form-field>
-
+            
             <mat-form-field appearance="outline" class="categorys">
                 <mat-label>Categoria</mat-label>
                 <mat-select formControlName="category">
-                    <mat-option value="teste">teste</mat-option>
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let category of categorys" [value]="category.name">{{category.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
 

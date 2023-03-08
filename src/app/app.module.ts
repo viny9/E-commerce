@@ -41,6 +41,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDialogModule } from '@angular/material/dialog';
+
 import { TextMaskModule } from 'angular2-text-mask';
 
 // Firebase
@@ -50,6 +52,8 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth'
 import { environment } from './../environments/environment';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './views/not-found/not-found.component';
+import { SearchComponent } from './components/search/search.component';
+import { DialogCategoryComponent } from './views/product/dialog-category/dialog-category.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +76,8 @@ import { NotFoundComponent } from './views/not-found/not-found.component';
     NotificationsComponent,
     HomeComponent,
     NotFoundComponent,
+    SearchComponent,
+    DialogCategoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,6 +101,7 @@ import { NotFoundComponent } from './views/not-found/not-found.component';
     MatCheckboxModule,
     MatSnackBarModule,
     MatSlideToggleModule,
+    MatDialogModule,
     TextMaskModule,
     
     AngularFirestoreModule,

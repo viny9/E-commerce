@@ -4,6 +4,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogCategoryComponent } from '../dialog-category/dialog-category.component';
 
 @Component({
   selector: 'app-product-list',
@@ -12,7 +14,6 @@ import { Router } from '@angular/router';
 })
 export class ProductListComponent implements OnInit {
 
-  page: any = ''
   @ViewChild(MatPaginator) paginator: any;
   @ViewChild(MatSort) sort: any;
   columns: Array<String> = ['id', 'name', 'price', 'category', 'actions']
@@ -21,7 +22,7 @@ export class ProductListComponent implements OnInit {
   editProduct: any
   productId: any
 
-  constructor(private db: ProductService, private route:Router) { }
+  constructor(private db: ProductService, private route: Router, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.product()
@@ -46,12 +47,7 @@ export class ProductListComponent implements OnInit {
     this.db.getProductId(product)
 
     setTimeout(() => {
-      // product.id = this.db.productId
-      // this.editProduct = product
-      // this.route.navigate(['editProduct']).then(() => console.log('teste'))
-      this.page = 'a'
       this.route.navigate([`admin/products/editProduct/${this.db.productId}`])
-
     }, 500);
   }
 
@@ -61,11 +57,20 @@ export class ProductListComponent implements OnInit {
     setTimeout(() => {
       this.db.deleteProduct(this.db.productId)
         .then(() => this.product())
+        .then(() => this.db.userMessages('Produto removido'))
     }, 500);
   }
 
-  recive(event: any) {
-    this.product()
-    this.page = event
+  openDialog() {
+    const ref = this.dialog.open(DialogCategoryComponent, {
+      width: '500px',
+      panelClass: 'dialog'
+    })
+
+    ref.afterClosed().subscribe((res: any) => {
+      if (res === true) {
+        document.location.reload()
+      }
+    })
   }
 }

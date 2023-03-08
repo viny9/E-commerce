@@ -1,7 +1,20 @@
 <div class="main">
-    <div class="teste">
-        <span class="imgText">Confira os últimos lançamentos</span>
+    <div class="alerts">
+        <div class="imgs">
+            <img *ngFor="let img of imgss" [src]="img.url" alt="" class="img{{img.imgNumber}}">
+        </div>
+        
+        <div class="alertBtns">
+            <button class="navBtn1" (click)="prev()">
+                <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+            
+            <button class="navBtn2" (click)="next()">
+                <mat-icon>arrow_forward_ios</mat-icon>
+            </button>
+        </div>
     </div>
+
 
     <h1>Produtos</h1>
 

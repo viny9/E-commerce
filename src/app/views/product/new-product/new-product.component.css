@@ -98,3 +98,7 @@
 input::placeholder {
   color: var(--text-color) !important;
 }
+
+.teste {
+  display: flex;
+}

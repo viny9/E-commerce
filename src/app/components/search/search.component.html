@@ -1,0 +1,55 @@
+<mat-sidenav-container class="searchComponent">
+    <mat-sidenav class="sidenav" opened mode="side">
+        <div class="filterContainer">
+            <h2>Filtros:</h2>
+            <div>
+                <section class="filter">
+                    <h3>Preço</h3>
+                    <mat-checkbox>Até R$100</mat-checkbox>
+                    <mat-checkbox>De R$100 até R$250</mat-checkbox>
+                    <mat-checkbox>De R$250 até R$500</mat-checkbox>
+                    <mat-checkbox>De R$500 até R$1000</mat-checkbox>
+                    <div class="priceFilter">
+                        <input type="text" placeholder="min" [(ngModel)]="specialPriceFilter.min">
+                        <input type="text" placeholder="max" [(ngModel)]="specialPriceFilter.max">
+                        <button mat-raised-button>Ir</button>
+                    </div>
+                </section>
+
+                <section class="filter">
+                    <h3>Categorias</h3>
+                    <mat-checkbox>Eletronica</mat-checkbox>
+                    <mat-checkbox>Roupas</mat-checkbox>
+                    <mat-checkbox>Canecas</mat-checkbox>
+                </section>
+
+                <section class="filter">
+                    <h3>Estrelas</h3>
+                    <mat-checkbox *ngFor="let i of [1, 2, 3, 4, 5]">
+                        <mat-icon *ngIf="i >= 1">star</mat-icon>
+                        <mat-icon *ngIf="i >= 2">star</mat-icon>
+                        <mat-icon *ngIf="i >= 3">star</mat-icon>
+                        <mat-icon *ngIf="i >= 4">star</mat-icon>
+                        <mat-icon *ngIf="i >= 5">star</mat-icon>
+                    </mat-checkbox>
+
+                </section>
+            </div>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content class="main">
+        <h2 *ngIf="products?.length > 0">Resultados para: "{{searchWord}}"</h2>
+        <h2 *ngIf="products?.length === 0">Não foi possível encontrar um produto com nome: "{{searchWord}}"</h2>
+        <p *ngIf="products?.length === 0">Verifique se está escrito corretamente ou tente um termo mais genérico</p>
+        <div class="productsContainer">
+            <mat-card class="product" *ngFor="let product of products" (click)="selectProduct(product)">
+                <img src="https://www.shutterstock.com/image-photo/varna-bulgaria-18-november-2016-260nw-553415794.jpg"
+                    alt="">
+                <div class="productInfos">
+                    <h2>{{product.name}}</h2>
+                    <p>R$ {{product.price}}</p>
+                </div>
+            </mat-card>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
