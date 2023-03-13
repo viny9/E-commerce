@@ -1,6 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
+import { StipeService } from 'src/app/services/stipe.service';
 
 @Component({
   selector: 'app-product',
@@ -16,7 +17,7 @@ export class ProductComponent implements OnInit {
   cart: any = []
   inCart: any
 
-  constructor(private db: ProductService, private router: ActivatedRoute) { }
+  constructor(private db: ProductService, private router: ActivatedRoute, public pay: StipeService) { }
 
   ngOnInit(): void {
     this.productInfos()
@@ -123,6 +124,10 @@ export class ProductComponent implements OnInit {
         this.inCart = true
       }
     })
+  }
+
+  buy (productInfos:any){
+    this.pay.teste(productInfos)
   }
 
   // navigator.clipboard.writeText(window.location.href)

@@ -4,6 +4,9 @@
 
 export const environment = {
   production: false,
+  stripeBaseUrl: 'http://localhost:3000',
+  stripeApiKey: 'pk_test_51MjQSrFr4ZXQgrGIbUnTX1tbVmHKZsCBEFkcFmSlLb2LnAveHp9pr2cLd96RzdFMr2Xar4VuvABwG3r9PC3B5GqV00cYSKKcF2',
+  stripeApiKey2: 'sk_test_51MjQSrFr4ZXQgrGI1bOieWjmrKv4xXNfTMqlYhOrIOL9lqt6rJtmRPhYBVXC4sNGGZ8R1XjU6gS2lV18g4WQt46T00s2ggbFvj',
   firebase: {
     apiKey: "AIzaSyA7cjQnpE8s94cppkpA6roIhpj13OZC5X4",
     authDomain: "e-commerce-c23e8.firebaseapp.com",
