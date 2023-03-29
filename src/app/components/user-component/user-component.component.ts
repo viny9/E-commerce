@@ -42,7 +42,7 @@ export class UserComponentComponent implements OnInit {
   }
 
   userInfos() {
-    this.db.getUser().subscribe((res: any) => {
+    this.db.getUsers().subscribe((res: any) => {
 
       const users = res.docs.map((user: any) => {
         return user.data()

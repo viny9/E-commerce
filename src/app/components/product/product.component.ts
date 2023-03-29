@@ -1,8 +1,7 @@
+import { StipeService } from 'src/app/services/stipe.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
-import { StipeService } from 'src/app/services/stipe.service';
-
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -17,7 +16,7 @@ export class ProductComponent implements OnInit {
   cart: any = []
   inCart: any
 
-  constructor(private db: ProductService, private router: ActivatedRoute, public pay: StipeService) { }
+  constructor(private db: ProductService, private router: ActivatedRoute, private pay: StipeService) { }
 
   ngOnInit(): void {
     this.productInfos()
@@ -95,7 +94,7 @@ export class ProductComponent implements OnInit {
       this.db.getProductId(this.product)
 
       setTimeout(() => {
-        this.product.amount = 1
+        this.product.amount = this.amount
         this.product.id = this.db.productId
 
         this.db.addInCart(this.product)
@@ -126,8 +125,14 @@ export class ProductComponent implements OnInit {
     })
   }
 
-  buy (productInfos:any){
-    this.pay.teste(productInfos)
+  buy() {
+    this.db.getProductId(this.product)
+
+    setTimeout(() => {
+      this.product.id = this.db.productId
+      this.product.amount = this.amount
+      this.pay.productPayment(this.product)
+    }, 500);
   }
 
   // navigator.clipboard.writeText(window.location.href)

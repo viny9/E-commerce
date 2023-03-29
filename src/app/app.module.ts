@@ -54,7 +54,10 @@ import { TextMaskModule } from 'angular2-text-mask';
 // Firebase
 import { AngularFireModule } from '@angular/fire/compat'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
-import { AngularFireAuthModule } from '@angular/fire/compat/auth'
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { SuccessComponent } from './views/payment/success/success.component';
+import { AllOrdersComponent } from './components/user-orders/all-orders/all-orders.component';
+import { UserOrderDetailComponent } from './components/user-orders/user-order-detail/user-order-detail.component'
 
 @NgModule({
   declarations: [
@@ -79,6 +82,9 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth'
     NotFoundComponent,
     SearchComponent,
     DialogCategoryComponent,
+    SuccessComponent,
+    AllOrdersComponent,
+    UserOrderDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -105,7 +111,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth'
     MatDialogModule,
     TextMaskModule,
     HttpClientModule,
-    
+
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase),

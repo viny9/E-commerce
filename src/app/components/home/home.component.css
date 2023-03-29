@@ -42,12 +42,13 @@ h2 {
 }
 
 .alertBtns > button {
-  color: #fff;
   background-color: transparent;
   border: 0;
+  color: transparent;
 }
 
 .alertBtns > button:hover {
+  color: #fff;
   transition: 0.4s;
   background-color: #00000028;
   border: 0;
