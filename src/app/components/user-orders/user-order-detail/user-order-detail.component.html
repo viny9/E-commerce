@@ -1,0 +1,59 @@
+<!-- Adicionar os detalhes do pagamento  -->
+<!-- Pegar recibo -->
+<!-- Adicionar opção de reembolso -->
+
+<div class="OrderDetailsComponent">
+    <div class="orderHead">
+        <span>
+            <h1 id="status">{{status}}</h1>
+            <p>Numero do pedido: #{{order?.order_number}}</p>
+            <p>Pedido em: {{date}} </p>
+        </span>
+        <button mat-flat-button>Recibo</button>
+    </div>
+    <mat-expansion-panel hideToggle class="paymentDetailsContainer">
+        <mat-expansion-panel-header>
+            <mat-panel-title> Informações de pagamento </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="paymentFieldContainer">
+            <div class="fields">
+                <h3>Endereço de envio</h3>
+                <span>Cep: {{address?.cep}}</span>
+                <span>Número: {{address?.number}} </span>
+                <span>Bairro: {{address?.neighborhood}}</span>
+                <span>Cidade: {{address?.city}} </span>
+                <span>Estado: {{address?.state}}</span>
+                <span>Extra: {{address?.extra}}</span>
+            </div>
+            <div class="fields">
+                <h3>Metodo de pagamento:</h3>
+                <h3>{{paymentInfos?.card.brand}} terminado em: {{paymentInfos?.card.last4}}</h3>
+            </div>
+            <div class="fields">
+                <h3>Resumo do pedido</h3>
+                <span>Frete: R$ 10</span>
+                <span>Produto(s): R$ 10</span>
+                <span>Promoção: - R$ 10</span>
+                <span>Total: R$ 200</span>
+            </div>
+        </div>
+    </mat-expansion-panel>
+
+    <mat-card class="products">
+        <h2>Produtos</h2>
+        <div class="orderProductsContainer">
+            <div class="orderProduct" *ngFor="let product of order?.products">
+                <img src="https://www.shutterstock.com/image-photo/varna-bulgaria-18-november-2016-260nw-553415794.jpg"
+                    alt="">
+                <span>
+                    <p>{{product?.name}}</p>
+                    <p>{{product?.price / 100 | currency: 'BRL'}}</p>
+                    <button mat-flat-button routerLink="/product/{{product.id}}">
+                        <mat-icon>update</mat-icon>
+                        Comprar novamente
+                    </button>
+                </span>
+            </div>
+        </div>
+    </mat-card>
+</div>

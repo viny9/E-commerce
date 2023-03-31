@@ -1,0 +1,86 @@
+.adminComponent {
+  width: 100%;
+  height: 100%;
+}
+
+.sidenav {
+  width: 20%;
+  background-color: var(--card-color);
+  color: var(--text-color);
+}
+
+.nav a {
+  color: var(--text-color);
+}
+
+.nav a:hover {
+  background-color: var(--hover-color);
+}
+
+mat-icon {
+  margin-right: 10px;
+}
+
+.teste {
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;
+}
+
+.teste mat-icon{
+  position: absolute;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: #ffbb006c;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: var(--orange);
+}
+
+.selected {
+  color: var(--orange) !important;
+}
+
+.main {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  width: 80%;
+  padding: 2rem 0rem;
+}
+
+.hideAnimation {
+  animation: both alternate 0.5s hide;
+}
+
+.showAnimation {
+  animation: both alternate 0.5s show;
+}
+
+.hide {
+  opacity: 0;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 100%;
+    /* transform: rotate(360deg); */
+  }
+}
+
+@keyframes hide {
+  from {
+    opacity: 100%;
+  }
+
+  to {
+    opacity: 0;
+    /* transform: rotate(360deg); */
+    display: none;
+  }
+}

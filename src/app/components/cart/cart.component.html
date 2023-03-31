@@ -1,0 +1,37 @@
+<div class="cartComponent">
+    <mat-card class="emptyCart" *ngIf="empty">
+        <h1>O seu carrinho está vazio</h1>
+        <h2>Dê uma olhada em nosso produtos ou os que ja estão em sua lista.</h2>
+        <button mat-flat-button routerLink="">Início</button>
+    </mat-card>
+
+    <div class="fullCart" *ngIf="!empty">
+        <div class="productsContainer">
+            <mat-card class="product" *ngFor="let product of products">
+                <div class="productInfos">
+                    <img src="https://www.shutterstock.com/image-photo/varna-bulgaria-18-november-2016-260nw-553415794.jpg"
+                        alt="">
+                    <h1 class=" productName" routerLink="/product/{{product.id}}">{{product.name}}</h1>
+                </div>
+                <div>
+                    <div class="amountContainer">
+                        <button (click)="subAmount(product)" mat-icon-button>-</button>
+                        <p>{{product.amount}}</p>
+                        <button (click)="addAmount(product)" mat-icon-button>+</button>
+                    </div>
+                </div>
+                <h1>R$ {{product.price}}</h1>
+                <button mat-icon-button color="warn" (click)="removeCartItem(product)">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-card>
+        </div>
+        <div class="total">
+            <h2>Frete: R$ 0</h2>
+            <h2>Produtos: R$ {{all}}</h2>
+            <h1>Total: R$ {{all}}</h1>
+            <button mat-flat-button (click)="pay()">Fechar pedido</button>
+        </div>
+    </div>
+
+</div>

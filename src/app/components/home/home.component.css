@@ -1,0 +1,167 @@
+/* Colocar de um jeito que os botões aparessam e o carroseul funcione */
+
+h2 {
+  margin: 0;
+}
+
+.main {
+  height: auto;
+  min-height: 100%;
+  color: #ffffff8a;
+}
+
+.alerts {
+  display: block;
+  width: 100%;
+  height: 400px;
+  margin-bottom: 20px;
+}
+
+.imgs {
+  display: flex;
+  width: 100%;
+  right: 0;
+}
+
+.imgs img {
+  width: 100%;
+  height: 400px;
+  right: 0%;
+  position: absolute;
+  top: 4rem;
+}
+
+.alertBtns {
+  width: 100%;
+  height: 46%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 4rem;
+  left: 0;
+}
+
+.alertBtns > button {
+  background-color: transparent;
+  border: 0;
+  color: transparent;
+}
+
+.alertBtns > button:hover {
+  color: #fff;
+  transition: 0.4s;
+  background-color: #00000028;
+  border: 0;
+}
+
+.productsContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 17rem);
+  gap: 50px 30px;
+}
+
+.product {
+  background-color: var(--card-color);
+  color: var(--text-color);
+  width: 15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 20rem;
+}
+
+.product:hover {
+  background-color: var(--hover-color);
+}
+
+.product img {
+  margin-bottom: 10px;
+  width: 100%;
+  height: 11rem;
+  width: 210px;
+  border-radius: 3px;
+}
+
+.productInfos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.productInfos h2 {
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  width: 100%;
+  min-height: 4rem;
+}
+
+.productInfos p {
+  color: var(--secondary-text-color);
+  margin-top: 1rem;
+  font-size: 20px;
+}
+
+.nextShow {
+  animation: both 1s next1;
+}
+
+.nextHide {
+  animation: both 1s next2;
+}
+
+.backShow {
+  animation: both 1s back1;
+}
+
+.backHide {
+  animation: both 1s back2;
+}
+
+@keyframes next1 {
+  from {
+    right: -100%;
+    width: 100%;
+  }
+
+  to {
+    right: 0%;
+    width: 100%;
+  }
+}
+
+@keyframes next2 {
+  from {
+    left: 0%;
+  }
+  
+  to {
+    left: -100%;
+  }
+}
+
+@keyframes back1 {
+  from {
+    left: -100%;
+    width: 100%;
+  }
+
+  to {
+    left: 0%;
+    width: 100%;
+  }
+}
+
+@keyframes back2 {
+  from {
+    right: 0%;
+  }
+
+  to {
+    right: -100%;
+  }
+}

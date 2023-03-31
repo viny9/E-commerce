@@ -1,0 +1,6 @@
+.body {
+  background-color: var(--background-color);
+  padding: 100px 50px 50px;
+  height: auto;
+  min-height: 85%;
+}

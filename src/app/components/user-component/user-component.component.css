@@ -1,0 +1,50 @@
+h2 {
+  margin: 10px 0 5px 0;
+  color: var(--text-color);
+}
+
+.userDatasComponent {
+  display: flex;
+  justify-content: center;
+}
+
+.userInfos {
+  width: 50%;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  width: 100%;
+  background-color: var(--orange);
+  margin: 1.5rem 0 2.5rem 0;
+}
+
+::ng-deep.mat-flat-button:disabled {
+    background-color: var(--disabled-color) !important;
+    color: var(--secondary-text-color) !important;
+    /* color: #00000042 !important; */
+}
+
+p {
+  color: var(--secondary-text-color);
+}
+
+::ng-deep .mat-form-field {
+  color: var(--text-color);
+}
+
+::ng-deep .mat-form-field-label {
+  color: var(--secondary-text-color) !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  background-color: var(--text-color) !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  background-color: #ffba00 !important;
+}

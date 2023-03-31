@@ -1,0 +1,43 @@
+.fullTable {
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden !important;
+  }
+  
+  .title {
+    margin-left: 1rem;
+  }
+
+  td.mat-cell:first-of-type  {
+    padding-right: 2rem;
+    width: 10%;
+  }
+  td.mat-cell {
+    padding-right: 2rem;
+  }
+
+  .status {
+    color: var(--success-color);
+    width: 40%;
+    margin-bottom: 0;
+  }
+  
+  mat-paginator {
+    background-color: transparent;
+    color: var(--text-color);
+  }
+  
+  ::ng-deep.mat-button-disabled {
+    color: var(--disabled-color) !important;
+  }
+  
+  ::ng-deep .mat-select-value,
+  ::ng-deep .mat-select-arrow {
+    color: var(--text-color) !important;
+  }
+  
+  ::ng-deep .mat-form-field-underline {
+    background-color: white !important;
+    color: white !important;
+  }
+

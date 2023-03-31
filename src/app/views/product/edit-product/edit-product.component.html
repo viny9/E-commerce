@@ -1,0 +1,37 @@
+<div class="editProduct">
+    <h1>Editar produto</h1>
+    <div class="productInfos">
+        <label for="selectImg">
+            <div class="fileUploadLabel" (drop)="teste2($event)" (dragover)="teste3($event)">
+                <mat-icon class="a">add_photo_alternate</mat-icon>
+                <h2>Arraste ou selecione uma imagem</h2>
+            </div>
+        </label>
+        <input type="file" id="selectImg">
+
+        <form class="productForm" [formGroup]="editForm">
+            <mat-form-field>
+                <mat-label>Nome</mat-label>
+                <input type="text" matInput formControlName="name">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Preço</mat-label>
+                <input type="text" matInput formControlName="price" placeholder="00.00">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="category">
+                <mat-label>Categoria</mat-label>
+                <mat-select formControlName="category">
+                    <mat-option ></mat-option>
+                    <mat-option *ngFor="let category of categorys" [value]="category.name">{{category.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div class="actionBtns">
+                <button type="button" mat-flat-button (click)="updateProduct()">Atualizar produto</button>
+                <button type="button" mat-flat-button color="warn" routerLink="../..">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="orderDetails">
+    <button mat-icon-button class="backBtn" routerLink="..">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <mat-card class="orderInfos">
+        <div class="userInfos">
+            <div>
+                <h2>Usuário</h2>
+                <p>Nome: {{orderInfos?.customer_details.name}}</p>
+                <p>email: {{orderInfos?.customer_details.email}}</p>
+                <p>Telefone: {{orderInfos?.customer_details.telephone}}</p>
+            </div>
+
+            <div>
+                <h2>Endereço</h2>
+                <p>CEP: {{orderInfos?.customer_details.address.cep}}</p>
+                <p>Cidade: {{orderInfos?.customer_details.address.city}}</p>
+                <p>Estado: {{orderInfos?.customer_details.address.state}}</p>
+                <p>Número: {{orderInfos?.customer_details.address.number}}</p>
+                <p>Extra: {{orderInfos?.customer_details.address.extra}}</p>
+            </div>
+
+            <div>
+                <h2>Informações do pedido</h2>
+                <p>Numero do pedido: {{orderInfos?.order_number}}</p>
+                <p>Feito em: {{date(orderInfos?.created)}}</p>
+            </div>
+        </div>
+
+        <h2>Produtos</h2>
+
+        <mat-accordion *ngFor="let product of orderInfos?.products">
+            <mat-expansion-panel hideToggle class="product">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{product.name}}
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                        R$ {{product.price / 100}}
+                    </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <!-- Proxima atualização color detalhes de produtos -->
+                <!-- <div class="row">
+                    <p>Detalhe 1:</p>
+                    <p>Detalhe 2:</p>
+                    <p>Detalhe 3:</p>
+                </div> -->
+                <h2> Price: R$ {{product.price / 100}} </h2>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <h2 class="amount">Total: R$ {{orderInfos?.total}}</h2>
+    </mat-card>
+</div>

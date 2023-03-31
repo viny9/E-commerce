@@ -1,0 +1,114 @@
+.head {
+  width: 92%;
+  padding: 10px 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #b3b3b3;
+  position: absolute;
+}
+
+.search {
+  width: 40%;
+  height: 50%;
+  display: flex;
+}
+
+.search input {
+  width: 100%;
+  height: 33px;
+  padding: 0 10px;
+  border-radius: 50px 0 0 50px;
+  color: var(--text-color);
+  background-color: var(--card-color);
+  margin-left: 20px;
+  border: none;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+    0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
+
+.search input:focus {
+  outline: none;
+}
+
+.search input::placeholder {
+  color: #b3b3b3;
+}
+
+.search button {
+  background-color: var(--orange);
+  border-radius: 0 50px 50px 0;
+  color: #000;
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+  border: none;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+    0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
+
+.options {
+  width: 30%;
+  display: flex;
+  align-items: center;
+}
+
+.icons {
+  color: #ffba00;
+}
+
+.logged {
+  margin-right: 1rem;
+  color: #ffba00;
+}
+
+.logged a {
+  color: #ffba00;
+  text-decoration: none;
+}
+
+.logged a:hover {
+  text-decoration: underline;
+}
+
+.sun,
+.moon {
+  position: absolute;
+  top: 17%;
+  color: #ffba00;
+}
+
+.hideAnimation {
+  animation: both alternate 1s hide;
+}
+
+.showAnimation {
+  animation: both alternate 1s show;
+}
+
+.hide {
+  opacity: 0;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 100%;
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hide {
+  from {
+    opacity: 100%;
+  }
+
+  to {
+    opacity: 0;
+    transform: rotate(360deg);
+    display: none;
+  }
+}

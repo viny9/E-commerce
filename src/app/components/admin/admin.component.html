@@ -1,0 +1,39 @@
+<mat-sidenav-container class="adminComponent">
+    <mat-sidenav opened class="sidenav" mode="side">
+        <mat-nav-list class="nav">
+            <a mat-list-item (click)="selected = 'products' " routerLink="products"
+                [ngClass]="selected === 'products' ? 'selected' : '' ">
+                <mat-icon>storefront</mat-icon>
+                Produtos
+            </a>
+
+            <a mat-list-item (click)="selected = 'orders' " routerLink="orders"
+                [ngClass]="selected === 'orders' ? 'selected' : '' ">
+                <mat-icon>list_alt</mat-icon>
+                Pedidos
+            </a>
+
+            <a mat-list-item (click)="selected = 'notifications' " routerLink="notifications"
+                [ngClass]="selected === 'notifications' ? 'selected' : '' ">
+                <mat-icon>notifications_active</mat-icon>
+                Notificações
+            </a>
+
+            <a mat-list-item>
+                <div class="teste">
+                    <mat-icon class="sun">wb_sunny</mat-icon>
+                    <mat-icon class="moon">brightness_4</mat-icon>
+                </div>
+                <mat-slide-toggle class="slideToggle" (change)="themeIconToggle()" [checked]="checked"></mat-slide-toggle>
+            </a>
+
+            <a mat-list-item (click)="signOut()">
+                <mat-icon>exit_to_app</mat-icon>
+                Sair
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="main">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,119 @@
+p,
+h1,
+h2 {
+  margin: 0;
+}
+
+.notificationsComponent {
+  width: 90%;
+  padding: 0 3rem 2rem;
+}
+
+.controlPanel {
+  background-color: var(--card-color);
+  border-radius: 5px 5px 0 0;
+  padding: 1rem 2rem;
+  border: 1px solid var(--disabled-color);
+}
+
+.controlPanel button {
+  margin-left: 1rem;
+}
+
+.archived {
+  width: 100%;
+  background-color: var(--card-color);
+  color: var(--text-color);
+  border: 1px solid var(--disabled-color);
+  border-top: 1px solid transparent;
+  border-radius: 0 0 5px 5px;
+  margin-bottom: 2rem;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.archived:hover {
+  background-color: var(--hover-color);
+}
+
+.notificationsContainer {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.notification {
+  border: 1px solid var(--disabled-color);
+  border-top: none;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 2rem;
+  cursor: pointer;
+}
+
+.notification:first-child {
+  border-top: 1px solid var(--disabled-color);
+}
+
+.notification:hover {
+  background-color: var(--hover-color);
+}
+
+.messageContainer {
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+
+.new {
+  background-color: blue;
+  border-radius: 50%;
+  display: block;
+  width: 6px;
+  height: 6px;
+  margin: 0;
+  position: relative;
+  left: -1rem;
+}
+
+.date {
+  font-size: 13px;
+  width: 70px;
+  text-align: end;
+}
+
+.actions {
+  display: none;
+}
+
+.notification:hover > .actions {
+  display: block;
+}
+
+.notification:hover > .date {
+  display: none;
+}
+
+.checkbox {
+  margin-right: 1rem;
+}
+
+::ng-deep.mat-checkbox-frame {
+  border-color: var(--secondary-text-color);
+}
+
+.return {
+  display: flex;
+  align-items: center;
+}
+
+.backBtn {
+  margin: 0 1rem;
+}
+
+.noNotification {
+  background-color: var(--card-color);
+  color: var(--text-color);
+}
