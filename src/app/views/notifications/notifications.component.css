@@ -6,7 +6,7 @@ h2 {
 
 .notificationsComponent {
   width: 90%;
-  padding: 0 3rem;
+  padding: 0 3rem 2rem;
 }
 
 .controlPanel {
@@ -39,6 +39,7 @@ h2 {
 
 .notificationsContainer {
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .notification {
@@ -48,6 +49,8 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 2rem;
+  cursor: pointer;
 }
 
 .notification:first-child {
@@ -75,8 +78,30 @@ h2 {
   left: -1rem;
 }
 
+.date {
+  font-size: 13px;
+  width: 70px;
+  text-align: end;
+}
+
+.actions {
+  display: none;
+}
+
+.notification:hover > .actions {
+  display: block;
+}
+
+.notification:hover > .date {
+  display: none;
+}
+
 .checkbox {
   margin-right: 1rem;
+}
+
+::ng-deep.mat-checkbox-frame {
+  border-color: var(--secondary-text-color);
 }
 
 .return {
@@ -88,4 +113,7 @@ h2 {
   margin: 0 1rem;
 }
 
-
+.noNotification {
+  background-color: var(--card-color);
+  color: var(--text-color);
+}

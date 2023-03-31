@@ -48,7 +48,7 @@ const routes: Routes = [
       { path: 'products/newProduct', component: NewProductComponent },
       { path: 'products/editProduct/:productId', component: EditProductComponent },
       { path: 'orders', component: OrdersListComponent },
-      { path: 'orders/orderInfos', component: OrderInfosComponent },
+      { path: 'orders/:orderId', component: OrderInfosComponent },
       { path: 'notifications', component: NotificationsComponent },
     ]
   },

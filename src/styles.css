@@ -51,6 +51,7 @@ body {
 
 tr {
   vertical-align: middle;
+  cursor: pointer;
 }
 
 th,

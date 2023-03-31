@@ -1,4 +1,6 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-order-infos',
@@ -7,9 +9,48 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderInfosComponent implements OnInit {
 
-  constructor() { }
+  orderInfos: any
+
+  constructor(private db: ProductService, private router: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.getOrder()
+  }
+
+  getOrder() {
+    this.router.params.subscribe((param: any) => {
+      const id = param.orderId
+
+      this.db.getOrders().subscribe((res: any) => {
+        const orders = res.docs.map((doc: any) => {
+          return doc.data()
+        })
+
+        const filter = orders.filter((order: any) => {
+          return order.id === id
+        })
+
+        this.orderInfos = filter[0]
+
+        this.total()
+
+      })
+    })
+  }
+
+  total() {
+    let total: any = 0
+
+    this.orderInfos.products.forEach((product: any) => {
+      total += (product.price * product.amount) / 100
+
+      this.orderInfos.total = total
+    });
+  }
+
+  date(miliseconds:any) {
+    const date = new Date(miliseconds * 1000)
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
   }
 
 }

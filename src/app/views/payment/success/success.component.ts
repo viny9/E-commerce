@@ -23,8 +23,13 @@ export class SuccessComponent implements OnInit {
       this.stripeService.paymentStatus(id).subscribe((res: any) => {
 
         this.db.getUser().subscribe((doc: any) => {
+          const user = doc.data()
+          
+          res.customer_details.address = user.address
+          res.customer_details.name = user.name
+          res.customer_details.email = user.email
+          res.customer_details.telephone = user.telephone
 
-          res.customer_details.address = doc.data().address
           this.savePayment(res)
         })
       })
@@ -54,6 +59,9 @@ export class SuccessComponent implements OnInit {
 
         this.stripeService.savePaymentInfosOnFirebase(paymentStatus)
           .then(() => this.db.emptyCart())
+
+          this.db.sendAdminOrder(paymentStatus)
+            .then(() => console.log('foi'))
       }
     })
   }
