@@ -1,8 +1,8 @@
-<div class="notificationsComponent" *ngIf="teste">
+<div class="notificationsComponent" *ngIf="componentSelect === false">
     <div class="controlPanel">
         <mat-checkbox></mat-checkbox>
 
-        <button mat-icon-button>
+        <button mat-icon-button (click)="getNotifications()">
             <mat-icon>update</mat-icon>
         </button>
 
@@ -14,22 +14,26 @@
             <mat-icon>delete_sweep</mat-icon>
         </button>
     </div>
-    <button class="archived" (click)="teste = false">
+    <button class="archived" *ngIf="archived?.length > 0 " (click)="componentSelect = true">
         <h2>Notificações arquivadas</h2>
     </button>
 
-    <div class="notificationsContainer">
-        <div class="notification" (click)="new = !new">
-            <span class="messageContainer">
-                <span class="new" *ngIf="new"></span>
-                <mat-checkbox class="checkbox"></mat-checkbox>
-                <p>Mais um pedido chegou clique para ver</p>
+    <div class="notificationsContainer" *ngIf="componentSelect === false">
+        <div class="notification" *ngFor="let notification of notifications"
+            routerLink="/admin/orders/{{notification.order}}">
+            <span class="messageContainer" (click)="checkNotification(notification)">
+                <span class="new" *ngIf="notification.new"></span>
+                <mat-checkbox class="checkbox" (click)="$event.stopPropagation()" (change)="selectedNotification(notification)"></mat-checkbox>
+                <p> {{ notification.message }}</p>
             </span>
-            <div>
-                <button mat-icon-button color="">
+            <div class="date">
+                {{notification.date}}
+            </div>
+            <div class="actions">
+                <button mat-icon-button color="" (click)="archiveNotification(notification, $event)">
                     <mat-icon>archive</mat-icon>
                 </button>
-                <button mat-icon-button color="warn">
+                <button mat-icon-button color="warn" (click)="deleteNotification(notification, $event)">
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>
@@ -38,27 +42,34 @@
 </div>
 
 <!-- Mini componente de notificações arquivadas -->
-<div *ngIf="teste === false">
+<div *ngIf="componentSelect" class="notificationsComponent">
     <div class="return">
-        <button mat-icon-button class="backBtn" (click)="teste = true">
+        <button mat-icon-button class="backBtn" (click)="componentSelect = false">
             <mat-icon> arrow_back </mat-icon>
         </button>
         <h1>Notificações arquivadas</h1>
     </div>
     <div class="notificationsContainer">
-        <div class="notification">
+        <div class="notification" *ngFor="let notification of archived"
+            routerLink="/admin/orders/{{notification.order}}">
             <span class="messageContainer">
                 <mat-checkbox class="checkbox"></mat-checkbox>
-                <p>Mais um pedido chegou clique para ver</p>
+                <p>{{notification.message}}</p>
             </span>
             <div>
-                <button mat-icon-button color="">
+                <button mat-icon-button (click)="unarchiveNotification(notification, $event)">
                     <mat-icon>unarchive</mat-icon>
                 </button>
-                <button mat-icon-button color="warn">
+                <!-- <button mat-icon-button color="warn" (click)="deleteNotification(notification)">
                     <mat-icon>delete</mat-icon>
-                </button>
+                </button> -->
             </div>
         </div>
     </div>
+</div>
+
+<div class="notificationsComponent" *ngIf="notifications?.length === 0">
+    <mat-card class="noNotification">
+        <h1>Sem notificações no momento</h1>
+    </mat-card>
 </div>

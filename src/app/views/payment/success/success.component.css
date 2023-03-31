@@ -1,0 +1,47 @@
+.successComponents {
+  height: 100%;
+  width: 100%;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main {
+  display: grid;
+  place-items: center;
+}
+
+.successIcon {
+  width: 10rem;
+  height: 10rem;
+  color: var(--success-color);
+  font-size: 10rem;
+  font-weight: 100;
+  margin: 3rem 0;
+}
+
+.mat-card {
+  background-color: var(--card-color);
+  color: var(--text-color);
+}
+
+.btns {
+  margin-top: 2rem;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.btns button {
+  margin-bottom: 1.5rem;
+}
+
+.btns button:first-child {
+  background-color: var(--success-color);
+}
+
+.btns button:nth-child(2) {
+  background-color: var(--orange);
+}

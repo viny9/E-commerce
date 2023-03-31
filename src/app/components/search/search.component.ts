@@ -35,7 +35,8 @@ export class SearchComponent implements OnInit {
         })
 
         const search = products.filter((product: any) => {
-          return product.name.toLowerCase().includes(searchWord)
+          console.log(product.name.toLowerCase())
+          return product.name.toLowerCase().includes(searchWord.toLowerCase())
         })
 
         this.products = search

@@ -1,9 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* Adicionar um transition */
 html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -21,6 +23,8 @@ body {
   --secondary-text-color: #ffffffb3;
   --disabled-color: #ffffff80;
   --hover-color: #505050;
+  --success-color: #007e33;
+  --error-color: #FF1744;
 }
 
 /* Light mode */
@@ -33,9 +37,9 @@ body {
   --secondary-text-color: #0000008a;
   --disabled-color: #00000034;
   --hover-color: #f0f0f0;
+  --success-color: #00c851;
+  --error-color:#DC143C ;
 }
-
-
 
 /* Table base style */
 .table {
@@ -47,6 +51,7 @@ body {
 
 tr {
   vertical-align: middle;
+  cursor: pointer;
 }
 
 th,

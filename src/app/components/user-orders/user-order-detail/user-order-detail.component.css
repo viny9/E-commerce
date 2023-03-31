@@ -1,0 +1,79 @@
+.OrderDetailsComponent {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.orderHead {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.orderHead > button {
+  background-color: var(--orange);
+}
+
+.paymentDetailsContainer {
+  margin-bottom: 1rem;
+  background-color: var(--card-color);
+  color: var(--text-color);
+}
+
+.mat-expansion-panel-header-title {
+  color: var(--text-color);
+}
+
+.paymentFieldContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
+.products {
+  background-color: var(--card-color);
+  color: var(--text-color);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+}
+
+.orderProductsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.orderProduct {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.orderProduct > img {
+  width: 150px;
+  border-radius: 5px;
+}
+
+.orderProduct > span {
+  margin-left: 1rem;
+}
+
+.orderProduct > span > p {
+  margin-bottom: 1px;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.orderProduct span > button {
+  margin-top: 10px;
+  background-color: var(--orange);
+}
+
+.paid {
+   color: var(--success-color); 
+}
+.unpaid {
+    color: var(--error-color); 
+}

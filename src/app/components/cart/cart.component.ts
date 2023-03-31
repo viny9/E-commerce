@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
+import { StipeService } from 'src/app/services/stipe.service';
 
 @Component({
   selector: 'app-cart',
@@ -12,7 +13,7 @@ export class CartComponent implements OnInit {
   products: any = []
   all: number = 0
 
-  constructor(private db: ProductService) { }
+  constructor(private db: ProductService, private stripe:StipeService) { }
 
   ngOnInit(): void {
     this.cartItens()
@@ -71,5 +72,9 @@ export class CartComponent implements OnInit {
       all += element.price * element.amount
     });
     this.all = all
+  }
+
+  pay() {
+    this.stripe.cartPayment(this.products)
   }
 }

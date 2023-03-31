@@ -38,7 +38,6 @@ export class ProductService {
   }
 
   getProductId(product: any) {
-    console.log(product)
     this.getProducts().subscribe((res: any) => {
       const ids = res.docs
 
@@ -104,6 +103,15 @@ export class ProductService {
     })
   }
 
+  emptyCart() {
+    this.getCart().subscribe((res: any) => {
+      res.docs.forEach((element: any) => {
+        this.deleteCartProduct(element.id)
+      });
+
+    })
+  }
+
   // Login e cadastro
   signUp(user: any) {
     this.auth.createUserWithEmailAndPassword(user.email, user.password)
@@ -125,8 +133,12 @@ export class ProductService {
     this.firebase.collection('users').add(userInfos)
   }
 
-  getUser() {
+  getUsers() {
     return this.firebase.collection('users').get()
+  }
+
+  getUser() {
+    return this.firebase.collection('users').doc(this.userId).get()
   }
 
   signIn(user: any) {
@@ -171,7 +183,7 @@ export class ProductService {
   }
 
   setUserId(user: any) {
-    this.getUser().subscribe((res: any) => {
+    this.getUsers().subscribe((res: any) => {
       const ids = res.docs
 
       const users = res.docs.map((res: any) => {
@@ -185,7 +197,7 @@ export class ProductService {
 
   // User status
   setAdmin(userInfos?: any) {
-    this.getUser().subscribe((res: any) => {
+    this.getUsers().subscribe((res: any) => {
       const users = res.docs.map((users: any) => {
         return users.data()
       })
@@ -281,6 +293,72 @@ export class ProductService {
     }
 
     return masks
+  }
+
+  //Notificações
+
+  getNotifications() {
+    return this.firebase.collection('notifications').get()
+  }
+
+  deleteNotification(notificationId: any) {
+    return this.firebase.collection('notifications').doc(notificationId).delete()
+  }
+
+  getNotificationId(notification: any) {
+    this.getNotifications().subscribe((res: any) => {
+      const ids = res.docs
+
+      const notifications = res.docs.map((res: any) => {
+        return res.data().id
+      })
+
+      const index = notifications.indexOf(notification.id)
+      this.productId = ids[index].id
+    })
+  }
+
+  updateNotificationStatus(notification: any, id: any) {
+    return this.firebase.collection('notifications').doc(id).update(notification)
+  }
+
+  // Notificações arquivadas
+  getArchivedNotification() {
+    return this.firebase.collection('archivedNotifications').get()
+  }
+
+  archiveNotification(notification: any) {
+    return this.firebase.collection('archivedNotifications').add(notification)
+  }
+
+  unachiveNotification(notification:any, id:any) {
+    return this.firebase.collection('archivedNotifications').doc(id).delete()
+      .then(() => {
+        this.firebase.collection('notifications').add(notification)
+      })
+  }
+
+  getArchivedNotificationId(notification: any) {
+    this.getArchivedNotification().subscribe((res: any) => {
+      const ids = res.docs
+
+      const notifications = res.docs.map((res: any) => {
+        return res.data().date
+      })
+
+      const index = notifications.indexOf(notification.date)
+      this.productId = ids[index].id
+    })
+  }
+
+  // Todos os pedidos
+
+  getOrders() {
+    return this.firebase.collection('allOrders').get()
+  }
+
+  sendAdminOrder(order:any) {
+    return this.firebase.collection('allOrders').add(order)
   }
 
 }

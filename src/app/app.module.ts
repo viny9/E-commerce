@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 //Componentes
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +24,11 @@ import { EditProductComponent } from './views/product/edit-product/edit-product.
 import { OrderInfosComponent } from './views/orders/order-infos/order-infos.component';
 import { OrdersListComponent } from './views/orders/orders-list/orders-list.component';
 import { NotificationsComponent } from './views/notifications/notifications.component';
+import { HomeComponent } from './components/home/home.component';
+import { NotFoundComponent } from './views/not-found/not-found.component';
+import { SearchComponent } from './components/search/search.component';
+import { DialogCategoryComponent } from './views/product/dialog-category/dialog-category.component';
+import { environment } from './../environments/environment';
 
 //Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -48,12 +54,10 @@ import { TextMaskModule } from 'angular2-text-mask';
 // Firebase
 import { AngularFireModule } from '@angular/fire/compat'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
-import { AngularFireAuthModule } from '@angular/fire/compat/auth'
-import { environment } from './../environments/environment';
-import { HomeComponent } from './components/home/home.component';
-import { NotFoundComponent } from './views/not-found/not-found.component';
-import { SearchComponent } from './components/search/search.component';
-import { DialogCategoryComponent } from './views/product/dialog-category/dialog-category.component';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { SuccessComponent } from './views/payment/success/success.component';
+import { AllOrdersComponent } from './components/user-orders/all-orders/all-orders.component';
+import { UserOrderDetailComponent } from './components/user-orders/user-order-detail/user-order-detail.component'
 
 @NgModule({
   declarations: [
@@ -78,6 +82,9 @@ import { DialogCategoryComponent } from './views/product/dialog-category/dialog-
     NotFoundComponent,
     SearchComponent,
     DialogCategoryComponent,
+    SuccessComponent,
+    AllOrdersComponent,
+    UserOrderDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -103,7 +110,8 @@ import { DialogCategoryComponent } from './views/product/dialog-category/dialog-
     MatSlideToggleModule,
     MatDialogModule,
     TextMaskModule,
-    
+    HttpClientModule,
+
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase),

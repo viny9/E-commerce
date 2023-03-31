@@ -15,10 +15,7 @@
 
 .userInfos {
   display: flex;
-}
-
-.userInfos div {
-  margin-right: 10rem;
+  justify-content: space-between;
 }
 
 .product {
@@ -29,6 +26,16 @@
 mat-expansion-panel {
   margin: 1rem 0;
   color: var(--text-color);
+}
+
+mat-panel-title {
+  width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 12rem;
 }
 
 .mat-accordion > .mat-expansion-panel-spacing:last-child {
