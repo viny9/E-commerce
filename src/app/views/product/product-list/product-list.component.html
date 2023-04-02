@@ -1,4 +1,4 @@
-<div class="productComponent">
+<div class="productComponent" *ngIf="!loading">
     <div class="title">
         <h1>Produtos</h1>
         <div class="btns">
@@ -32,11 +32,11 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef class="actionHead">Ações</th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button color="accent">
+                <button mat-icon-button>
                     <mat-icon>local_offer</mat-icon>
                 </button>
 
-                <button mat-icon-button color="primary" (click)="editPage(element)">
+                <button mat-icon-button class="editBtn" (click)="editPage(element)">
                     <mat-icon>edit</mat-icon>
                 </button>
 

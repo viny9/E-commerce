@@ -1,4 +1,4 @@
-import { ProductService } from './../../../services/product.service';
+import { ProductService } from '../../../services/product/product.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { createTextMaskInputElement } from 'text-mask-core';

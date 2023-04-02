@@ -60,7 +60,7 @@ img {
 .icons {
   margin: 20px 0 20px;
   display: flex;
-  color: #ffba00;
+  color: var(--main-color);
 }
 .actionButtons {
   display: flex;
@@ -69,6 +69,7 @@ img {
 
 .actionButtons button {
   padding: 5px 15px;
-  background-color: #ffba00;
+  background-color: var(--main-color);
+  color: var(--opposite-text-color);
   margin: 10px 0;
 }

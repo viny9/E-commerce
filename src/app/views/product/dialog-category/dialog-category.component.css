@@ -1,51 +1,59 @@
 p {
-    margin: 0;
+  margin: 0;
 }
 
 .categoryComponent {
-    /* background-color: var(--background-color); */
-    color: var(--text-color);
+  /* background-color: var(--background-color); */
+  color: var(--text-color);
 }
 
 .teste {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.teste button {
+  background-color: var(--main-color);
+  color: var(--opposite-text-color);
 }
 
 .list {
-    border-top: 1px solid var(--disabled-color);
+  border-top: 1px solid var(--disabled-color);
 }
 
 .listItem {
-    padding: 10px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
+  padding: 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 .listItem:hover {
-    background-color: var(--hover-color);
+  background-color: var(--hover-color);
 }
 
 .listItem p {
-    padding: 10px 0;
-    width: 80%;
+  padding: 10px 0;
+  width: 80%;
 }
 
 .returnBtn {
-    margin-top: 1rem;
-    float: right;
+  margin-top: 1rem;
+  float: right;
 }
-
 
 /* mat-label normal state style */
 ::ng-deep .mat-form-field-label {
-    color: var(--text-color) !important;
-  }
+  color: var(--text-color) !important;
+}
 
 ::ng-deep.mat-dialog-container {
-    background-color: var(--background-color) !important;
-    color: var(--text-color) !important;
-  }
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  background-color: var(--main-color) !important;
+}

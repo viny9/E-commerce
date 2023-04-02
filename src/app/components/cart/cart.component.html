@@ -1,4 +1,4 @@
-<div class="cartComponent">
+<div class="cartComponent" *ngIf="!loading">
     <mat-card class="emptyCart" *ngIf="empty">
         <h1>O seu carrinho está vazio</h1>
         <h2>Dê uma olhada em nosso produtos ou os que ja estão em sua lista.</h2>

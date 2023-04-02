@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { StipeService } from 'src/app/services/stipe.service';
+import { LoadService } from 'src/app/services/load/load.service';
+import { StripeService } from 'src/app/services/stripe/stripe.service';
 
 @Component({
   selector: 'app-all-orders',
@@ -9,15 +10,21 @@ import { StipeService } from 'src/app/services/stipe.service';
 export class AllOrdersComponent implements OnInit {
 
   payments: any
+  loading:any = false
 
-  constructor(private db: StipeService) { }
+  constructor(private stripeService: StripeService, private loadService: LoadService) {
+    loadService.isLoading.subscribe((res: any) => {
+      this.loading = res
+    })
+  }
 
   ngOnInit(): void {
     this.getUserPayments()
   }
 
   getUserPayments() {
-    this.db.getPayments().subscribe((res: any) => {
+    this.loadService.showLoading()
+    this.stripeService.getPayments().subscribe((res: any) => {
 
       const payments = res.docs.map((doc: any) => {
         return doc.data()
@@ -33,6 +40,8 @@ export class AllOrdersComponent implements OnInit {
         const c: any = new Date(b.created);
         return c - d;
       })
+
+      this.loadService.hideLoading()
     })
   }
 

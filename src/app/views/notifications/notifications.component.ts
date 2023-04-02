@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
+import { LoadService } from 'src/app/services/load/load.service';
+import { ProductService } from 'src/app/services/product/product.service';
 
 @Component({
   selector: 'app-notifications',
@@ -13,8 +14,16 @@ export class NotificationsComponent implements OnInit {
   notifications: any = []
   selectedNotifications: any = []
   date: any
+  loading: any = false
 
-  constructor(private db: ProductService) { }
+  constructor(private db: ProductService, private loadService: LoadService) {
+    loadService.isLoading.subscribe((res: any) => {
+      this.loading = res
+    })
+
+    db.selectComponent = 'notifications'
+
+  }
 
   ngOnInit(): void {
     this.getNotifications()
@@ -22,6 +31,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   getNotifications() {
+    this.loadService.showLoading()
     this.db.getNotifications().subscribe((res: any) => {
       this.notifications = res.docs.map((doc: any) => {
         return doc.data()
@@ -34,6 +44,7 @@ export class NotificationsComponent implements OnInit {
       })
 
       this.notificationDate()
+      this.loadService.hideLoading()
     })
   }
 
@@ -97,7 +108,7 @@ export class NotificationsComponent implements OnInit {
         this.db.getNotificationId(checkedNotification)
 
         setTimeout(() => {
-          this.db.updateNotificationStatus(filter[0], this.db.productId)
+          this.db.updateNotificationStatus(filter[0], this.db.id)
             .then(() => this.getNotifications())
         }, 500);
       })
@@ -111,7 +122,7 @@ export class NotificationsComponent implements OnInit {
 
     setTimeout(() => {
       this.db.archiveNotification(notification)
-        .then(() => this.deleteNotification(this.db.productId))
+        .then(() => this.deleteNotification(this.db.id))
         .then(() => this.getNotifications())
     }, 500);
   }
@@ -122,7 +133,7 @@ export class NotificationsComponent implements OnInit {
     this.db.getArchivedNotificationId(notification)
 
     setTimeout(() => {
-      this.db.unachiveNotification(notification, this.db.productId)
+      this.db.unachiveNotification(notification, this.db.id)
         .then(() => this.archivedNotifications())
     }, 500);
   }
@@ -133,7 +144,7 @@ export class NotificationsComponent implements OnInit {
     this.db.getNotificationId(notification)
 
     setTimeout(() => {
-      this.db.deleteNotification(this.db.productId)
+      this.db.deleteNotification(this.db.id)
         .then(() => this.getNotifications())
     }, 500);
   }
@@ -143,5 +154,5 @@ export class NotificationsComponent implements OnInit {
 
     console.log(this.selectedNotifications)
   }
-  
+
 }

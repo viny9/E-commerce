@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductService } from 'src/app/services/product.service';
+import { LoadService } from 'src/app/services/load/load.service';
+import { ProductService } from 'src/app/services/product/product.service';
 
 @Component({
   selector: 'app-search',
@@ -9,13 +10,18 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class SearchComponent implements OnInit {
 
-  constructor(private db: ProductService, private router: ActivatedRoute) { }
-
   products: any
   searchWord: any
+  loading: any = false
   specialPriceFilter: any = {
     min: '',
     max: ''
+  }
+
+  constructor(private db: ProductService, private loadService: LoadService, private router: ActivatedRoute) {
+    loadService.isLoading.subscribe((res: any) => {
+      this.loading = res
+    })
   }
 
   ngOnInit(): void {
@@ -24,6 +30,8 @@ export class SearchComponent implements OnInit {
 
 
   getProducts() {
+    this.loadService.showLoading()
+
     this.router.params.subscribe((word: any) => {
       const searchWord = word.searchWord
       this.searchWord = searchWord
@@ -35,11 +43,11 @@ export class SearchComponent implements OnInit {
         })
 
         const search = products.filter((product: any) => {
-          console.log(product.name.toLowerCase())
           return product.name.toLowerCase().includes(searchWord.toLowerCase())
         })
 
         this.products = search
+        this.loadService.hideLoading()
       })
     })
   }
@@ -48,7 +56,7 @@ export class SearchComponent implements OnInit {
     this.db.getProductId(product)
 
     setTimeout(() => {
-      this.db.navegate(`product/${this.db.productId}`)
+      this.db.navegate(`product/${this.db.id}`)
     }, 500);
 
   }

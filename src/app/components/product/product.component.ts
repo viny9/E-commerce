@@ -1,7 +1,8 @@
-import { StipeService } from 'src/app/services/stipe.service';
+import { StripeService } from 'src/app/services/stripe/stripe.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/services/product/product.service';
+import { LoadService } from 'src/app/services/load/load.service';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -15,13 +16,21 @@ export class ProductComponent implements OnInit {
   listFavorites: Array<any> = []
   cart: any = []
   inCart: any
+  loading: any = false
 
-  constructor(private db: ProductService, private router: ActivatedRoute, private pay: StipeService) { }
+  constructor(private db: ProductService, private loadService: LoadService, private router: ActivatedRoute, private stripeService: StripeService) {
+    loadService.isLoading.subscribe((res: any) => {
+      this.loading = res
+    })
+  }
 
   ngOnInit(): void {
+    this.loadService.showLoading()
+
     this.productInfos()
     this.isFavorite()
     this.isOnCart()
+
   }
 
   productInfos() {
@@ -36,6 +45,7 @@ export class ProductComponent implements OnInit {
 
   isFavorite() {
     this.db.getFavoriteList().subscribe((res: any) => {
+
       res.docs.forEach((element: any) => {
         this.listFavorites.push(element.data())
       });
@@ -71,7 +81,7 @@ export class ProductComponent implements OnInit {
       this.db.getProductId(this.product)
 
       setTimeout(() => {
-        this.product.id = this.db.productId
+        this.product.id = this.db.id
 
         this.db.addProductInList(this.product)
           .then(() => this.favorite = true)
@@ -82,7 +92,7 @@ export class ProductComponent implements OnInit {
       this.db.getListProductId(this.product)
 
       setTimeout(() => {
-        this.db.deleteFromList(this.db.productId)
+        this.db.deleteFromList(this.db.id)
           .then(() => this.favorite = false)
           .then(() => this.db.userMessages('Foi removido da sua lista'))
       }, 500);
@@ -95,7 +105,7 @@ export class ProductComponent implements OnInit {
 
       setTimeout(() => {
         this.product.amount = this.amount
-        this.product.id = this.db.productId
+        this.product.id = this.db.id
 
         this.db.addInCart(this.product)
           .then(() => this.inCart = true)
@@ -109,6 +119,7 @@ export class ProductComponent implements OnInit {
 
   isOnCart() {
     this.db.getCart().subscribe((res: any) => {
+
       res.docs.forEach((element: any) => {
         this.cart.push(element.data())
       });
@@ -122,6 +133,9 @@ export class ProductComponent implements OnInit {
       } else if (filter.length >= 1) {
         this.inCart = true
       }
+
+      this.loadService.hideLoading()
+
     })
   }
 
@@ -129,9 +143,9 @@ export class ProductComponent implements OnInit {
     this.db.getProductId(this.product)
 
     setTimeout(() => {
-      this.product.id = this.db.productId
+      this.product.id = this.db.id
       this.product.amount = this.amount
-      this.pay.productPayment(this.product)
+      this.stripeService.productPayment(this.product)
     }, 500);
   }
 

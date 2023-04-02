@@ -1,7 +1,9 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { StipeService } from 'src/app/services/stipe.service';
-import { ProductService } from 'src/app/services/product.service';
+import { StripeService } from 'src/app/services/stripe/stripe.service';
+import { ProductService } from 'src/app/services/product/product.service';
+import { UserService } from 'src/app/services/user/user.service';
+import { LoadService } from 'src/app/services/load/load.service';
 
 @Component({
   selector: 'app-success',
@@ -10,21 +12,28 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class SuccessComponent implements OnInit {
 
-  constructor(private db: ProductService, private stripeService: StipeService, private router: ActivatedRoute) { }
+  loading:any = false
+
+  constructor(private userService: UserService, private db: ProductService, private stripeService: StripeService, private loadService: LoadService, private router: ActivatedRoute) {
+    loadService.isLoading.subscribe((res: any) => {
+      this.loading = res
+    })
+  }
 
   ngOnInit(): void {
     this.status()
   }
 
   status() {
+    this.loadService.showLoading()
     this.router.params.subscribe((params: any) => {
       const id = params.paymentId
 
       this.stripeService.paymentStatus(id).subscribe((res: any) => {
 
-        this.db.getUser().subscribe((doc: any) => {
+        this.userService.getUser().subscribe((doc: any) => {
           const user = doc.data()
-          
+
           res.customer_details.address = user.address
           res.customer_details.name = user.name
           res.customer_details.email = user.email
@@ -47,6 +56,9 @@ export class SuccessComponent implements OnInit {
         return payment.id === paymentStatus.id
       })
 
+      this.loadService.hideLoading(
+        
+      )
       if (filter.length === 0) {
         const products = JSON.parse(paymentStatus.metadata.products)
         const orderNumber = Math.floor(Math.random() * 999999999) + 100000000
@@ -60,8 +72,8 @@ export class SuccessComponent implements OnInit {
         this.stripeService.savePaymentInfosOnFirebase(paymentStatus)
           .then(() => this.db.emptyCart())
 
-          this.db.sendAdminOrder(paymentStatus)
-            .then(() => console.log('foi'))
+        this.db.sendAdminOrder(paymentStatus)
+          .then(() => console.log('foi'))
       }
     })
   }

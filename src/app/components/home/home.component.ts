@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProductService } from 'src/app/services/product.service';
+import { LoadService } from 'src/app/services/load/load.service';
+import { ProductService } from 'src/app/services/product/product.service';
 
 @Component({
   selector: 'app-home',
@@ -26,8 +27,13 @@ export class HomeComponent implements OnInit {
   ]
   products: any = []
   imgNumber: any = 1
+  loading: any = false
 
-  constructor(private db: ProductService, private route: Router) { }
+  constructor(private db: ProductService, private loadService: LoadService, private route: Router) {
+    loadService.isLoading.subscribe((res: any) => {
+      this.loading = res
+    })
+  }
 
   // Quando fazer o componente de promoções e na hora do cliente bota a img para a promo no carrousel você adiciona um input para categoria 
   // Assim você adicina como param na url e redireciona para as promoções daquela categoria.
@@ -37,10 +43,13 @@ export class HomeComponent implements OnInit {
   }
 
   allProducts() {
+    this.loadService.showLoading()
+
     this.db.getProducts().subscribe((data: any) => {
       data.docs.map((data: any) => {
         this.products.push(data.data())
       })
+      this.loadService.hideLoading()
     })
   }
 
@@ -48,7 +57,7 @@ export class HomeComponent implements OnInit {
     this.db.getProductId(product)
 
     setTimeout(() => {
-      this.route.navigate([`product/${this.db.productId}`])
+      this.route.navigate([`product/${this.db.id}`])
     }, 500);
 
   }

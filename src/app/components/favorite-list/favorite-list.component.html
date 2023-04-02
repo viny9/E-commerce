@@ -1,4 +1,4 @@
-<div class="favoriteListComponent">
+<div class="favoriteListComponent" *ngIf="!loading">
     <div *ngIf="empty === false">
         <mat-card class="productContainer" *ngFor="let product of list">
             <div class="productInfos">

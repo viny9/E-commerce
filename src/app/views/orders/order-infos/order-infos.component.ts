@@ -1,6 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/services/product/product.service';
+import { LoadService } from 'src/app/services/load/load.service';
 
 @Component({
   selector: 'app-order-infos',
@@ -10,14 +11,22 @@ import { ProductService } from 'src/app/services/product.service';
 export class OrderInfosComponent implements OnInit {
 
   orderInfos: any
+  loading:any = false
 
-  constructor(private db: ProductService, private router: ActivatedRoute) { }
+  constructor(private db: ProductService, private loadService:LoadService, private router: ActivatedRoute) {
+    loadService.isLoading.subscribe((res: any) => {
+      this.loading = res
+    })
+
+    db.selectComponent = 'orders'
+   }
 
   ngOnInit(): void {
     this.getOrder()
   }
 
   getOrder() {
+    this.loadService.showLoading()
     this.router.params.subscribe((param: any) => {
       const id = param.orderId
 
@@ -33,7 +42,7 @@ export class OrderInfosComponent implements OnInit {
         this.orderInfos = filter[0]
 
         this.total()
-
+        this.loadService.hideLoading()
       })
     })
   }

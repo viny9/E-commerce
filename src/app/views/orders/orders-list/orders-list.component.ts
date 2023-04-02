@@ -1,6 +1,7 @@
 import { MatPaginator } from '@angular/material/paginator';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/services/product/product.service';
+import { LoadService } from 'src/app/services/load/load.service';
 
 @Component({
   selector: 'app-orders-list',
@@ -14,13 +15,24 @@ export class OrdersListComponent implements AfterViewInit {
   priceTotal: any
   @ViewChild(MatPaginator) paginator: any;
 
-  constructor(private db: ProductService) { }
+  loading: any = false
+
+  constructor(private db: ProductService, private loadService: LoadService) {
+    loadService.isLoading.subscribe((res: any) => {
+      this.loading = res
+    })
+
+    // Está dando o erro no rxjs 
+    // Embora não esteja afetando o site
+    db.selectComponent = 'orders'
+  }
 
   ngAfterViewInit() {
     this.allOrders()
   }
 
   allOrders() {
+    this.loadService.showLoading()
     this.db.getOrders().subscribe((res: any) => {
       this.dataSource = res.docs.map((doc: any) => {
         return doc.data()
@@ -38,6 +50,7 @@ export class OrdersListComponent implements AfterViewInit {
       this.notificationDate()
       this.paymentStatus()
       this.total()
+      this.loadService.hideLoading()
     })
   }
 
@@ -98,6 +111,4 @@ export class OrdersListComponent implements AfterViewInit {
       element.total = total
     });
   }
-
-    // window.open("https://wa.me/" + 61984977155, "_blank");
 }

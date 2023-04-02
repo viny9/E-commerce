@@ -1,8 +1,9 @@
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/services/product/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { StipeService } from 'src/app/services/stipe.service';
+import { StripeService } from 'src/app/services/stripe/stripe.service';
+import { LoadService } from 'src/app/services/load/load.service';
 
 @Component({
   selector: 'app-user-order-detail',
@@ -16,14 +17,20 @@ export class UserOrderDetailComponent implements OnInit {
   status: any
   paymentInfos: any
   address: any
+  loading:any = false
 
-  constructor(private stripe: StipeService, private db: ProductService, private router: ActivatedRoute, private auth: AngularFireAuth) { }
+  constructor(private stripe: StripeService, private loadService:LoadService, private router: ActivatedRoute) { 
+    loadService.isLoading.subscribe((res: any) => {
+      this.loading = res
+    })
+  }
 
   ngOnInit(): void {
     this.getOrder()
   }
 
   getOrder() {
+    this.loadService.showLoading()
     this.stripe.getPayments().subscribe((res: any) => {
       const orders = res.docs.map((doc: any) => {
         return doc.data()
@@ -37,7 +44,7 @@ export class UserOrderDetailComponent implements OnInit {
         })
 
         this.order = filter[0]
-        console.log(this.order)
+
         this.address = this.order.customer_details.address
 
         const date = new Date(this.order.created * 1000)
@@ -45,6 +52,7 @@ export class UserOrderDetailComponent implements OnInit {
 
         this.paymentStatus()
         this.teste()
+        this.loadService.hideLoading()
       })
     })
   }

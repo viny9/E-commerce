@@ -62,7 +62,8 @@
 }
 
 .actionBtns button:first-child {
-  background-color: var(--orange);
+  background-color: var(--main-color);
+  color: var(--opposite-text-color);
 }
 
 /* Angular Inputs styles */
@@ -75,7 +76,7 @@
 }
 
 ::ng-deep.mat-form-field-ripple {
-  background-color: #ffba00 !important;
+  background-color: var(--main-color) !important;
 }
 
 /* Outline Inputs */
@@ -87,7 +88,7 @@
 ::ng-deep
   .mat-form-field-appearance-outline.mat-focused
   .mat-form-field-outline-thick {
-  color: var(--orange) !important;
+  color: var(--main-color) !important;
 }
 
 /* mat-label normal state style */

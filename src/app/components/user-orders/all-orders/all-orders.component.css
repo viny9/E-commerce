@@ -37,8 +37,8 @@
 }
 
 button {
-  background-color: var(--orange);
-  color: black;
+  background-color: var(--main-color);
+  color: var(--opposite-text-color);
 }
 
 .teste {

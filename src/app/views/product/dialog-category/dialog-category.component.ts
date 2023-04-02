@@ -1,4 +1,4 @@
-import { ProductService } from './../../../services/product.service';
+import { ProductService } from '../../../services/product/product.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -48,7 +48,7 @@ export class DialogCategoryComponent implements OnInit {
     this.db.getCategoryId(this.selectedCategory)
 
     setTimeout(() => {
-      const id = this.db.productId
+      const id = this.db.id
       const upadatedCategory = { name: this.editCategoryInput }
 
       this.db.updateCategory(id, upadatedCategory)
@@ -96,7 +96,7 @@ export class DialogCategoryComponent implements OnInit {
     this.db.getCategoryId(category.name)
 
     setTimeout(() => {
-      this.db.removeCategory(this.db.productId)
+      this.db.removeCategory(this.db.id)
         .then(() => this.db.userMessages('Categoria removida'))
         .then(() => this.categorysList())
     }, 500);

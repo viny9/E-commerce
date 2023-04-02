@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ProductService } from 'src/app/services/product.service';
+import { LoadService } from 'src/app/services/load/load.service';
+import { ProductService } from 'src/app/services/product/product.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-user-component',
@@ -10,18 +12,44 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class UserComponentComponent implements OnInit {
 
-  constructor(private db: ProductService, private auth: AngularFireAuth) { }
-
   user: any
   userForm: any
   addressForm: any
   mask: any
+  loading: any = false
 
+  constructor(private userService: UserService, private db: ProductService, private auth: AngularFireAuth, private loadService: LoadService) {
+    loadService.isLoading.subscribe((res: any) => {
+      this.loading = res
+    })
+  }
 
   ngOnInit(): void {
     this.userInfos()
     this.createForms()
     this.mask = this.db.inputMasks()
+  }
+
+  userInfos() {
+    this.loadService.showLoading()
+
+    this.userService.getUsers().subscribe((res: any) => {
+
+      const users = res.docs.map((user: any) => {
+        return user.data()
+      })
+
+      this.auth.user.subscribe((res: any) => {
+        const filter = users.filter((user: any) => {
+          return user.email === res.email
+        })
+
+        this.user = filter[0]
+        this.createForms(this.user)
+      })
+
+      this.loadService.hideLoading()
+    })
   }
 
   createForms(userInfos?: any) {
@@ -41,26 +69,8 @@ export class UserComponentComponent implements OnInit {
     })
   }
 
-  userInfos() {
-    this.db.getUsers().subscribe((res: any) => {
-
-      const users = res.docs.map((user: any) => {
-        return user.data()
-      })
-
-      this.auth.user.subscribe((res: any) => {
-        const filter = users.filter((user: any) => {
-          return user.email === res.email
-        })
-
-        this.user = filter[0]
-        this.createForms(this.user)
-      })
-    })
-  }
-
   signOut() {
-    this.db.logOut()
+    this.userService.logOut()
   }
 
   updateInfos() {
@@ -70,7 +80,7 @@ export class UserComponentComponent implements OnInit {
 
     user.address = address
 
-    this.db.updateUser(userId, user)
+    this.userService.updateUser(userId, user)
       .then(() => this.db.userMessages('Informações atualizadas'))
   }
 

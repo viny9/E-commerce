@@ -28,6 +28,10 @@ import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './views/not-found/not-found.component';
 import { SearchComponent } from './components/search/search.component';
 import { DialogCategoryComponent } from './views/product/dialog-category/dialog-category.component';
+import { SuccessComponent } from './views/payment/success/success.component';
+import { AllOrdersComponent } from './components/user-orders/all-orders/all-orders.component';
+import { UserOrderDetailComponent } from './components/user-orders/user-order-detail/user-order-detail.component';
+import { LoadingComponent } from './views/loading/loading.component'
 import { environment } from './../environments/environment';
 
 //Angular Material
@@ -48,6 +52,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { TextMaskModule } from 'angular2-text-mask';
 
@@ -55,9 +60,6 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { AngularFireModule } from '@angular/fire/compat'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { SuccessComponent } from './views/payment/success/success.component';
-import { AllOrdersComponent } from './components/user-orders/all-orders/all-orders.component';
-import { UserOrderDetailComponent } from './components/user-orders/user-order-detail/user-order-detail.component'
 
 @NgModule({
   declarations: [
@@ -85,6 +87,7 @@ import { UserOrderDetailComponent } from './components/user-orders/user-order-de
     SuccessComponent,
     AllOrdersComponent,
     UserOrderDetailComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -111,6 +114,7 @@ import { UserOrderDetailComponent } from './components/user-orders/user-order-de
     MatDialogModule,
     TextMaskModule,
     HttpClientModule,
+    MatProgressBarModule,
 
     AngularFirestoreModule,
     AngularFireAuthModule,

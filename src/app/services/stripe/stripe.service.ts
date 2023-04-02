@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class StipeService {
+export class StripeService {
 
   baseUrl = environment.stripeBaseUrl
   userId: any = localStorage['userId']

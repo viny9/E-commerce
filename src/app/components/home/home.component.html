@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" *ngIf="!loading">
     <div class="alerts">
         <div class="imgs">
             <img *ngFor="let img of imgss" [src]="img.url" alt="" class="img{{img.imgNumber}}">

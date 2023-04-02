@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/services/product/product.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-admin',
@@ -8,12 +9,16 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class AdminComponent implements OnInit {
 
-  selected: string = 'products'
+  selected:any
   theme: any
-  checked:any = false
+  checked: any = false
 
 
-  constructor(private db: ProductService) { }
+  constructor(private userService: UserService, private db: ProductService) {
+    db.updatedComponent.subscribe((res:any) => {
+      this.selected = res
+    })
+  }
 
   ngOnInit(): void {
     this.themeStatus()
@@ -64,6 +69,6 @@ export class AdminComponent implements OnInit {
   }
 
   signOut() {
-    this.db.logOut()
+    this.userService.logOut()
   }
 }

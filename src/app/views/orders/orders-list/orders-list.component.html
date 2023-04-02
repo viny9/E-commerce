@@ -1,4 +1,4 @@
-<div class="ordersComponent">
+<div class="ordersComponent" *ngIf="!loading">
     <h1 class="title">Pedidos</h1>
     <div class="fullTable">
         <mat-table [dataSource]="dataSource" class="table">

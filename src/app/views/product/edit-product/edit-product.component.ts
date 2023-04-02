@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ProductService } from 'src/app/services/product.service';
+import { LoadService } from 'src/app/services/load/load.service';
+import { ProductService } from 'src/app/services/product/product.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -13,18 +14,26 @@ export class EditProductComponent implements OnInit {
   editForm: any
   product: any
   categorys: any
+  loading: any = false
 
-  constructor(private db: ProductService, private route: ActivatedRoute) { }
+  constructor(private db: ProductService, private loadService: LoadService, private route: ActivatedRoute) {
+    loadService.isLoading.subscribe((res: any) => {
+      this.loading = res
+    })
+  }
 
   ngOnInit(): void {
     this.getProduct()
-    this.createForm()
     this.categoryList()
   }
 
   getProduct() {
+    this.loadService.showLoading()
+
     this.route.params.subscribe((res: any) => {
+
       const id = res.productId
+
       this.db.getProductById(id).subscribe((res: any) => {
         this.product = res.data()
         this.createForm(this.product)
@@ -40,6 +49,8 @@ export class EditProductComponent implements OnInit {
       })
 
       this.categorys = categorys
+      
+      this.loadService.hideLoading()
     })
   }
 

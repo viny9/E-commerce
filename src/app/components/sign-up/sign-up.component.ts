@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/services/product/product.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,11 +15,11 @@ export class SignUpComponent implements OnInit {
   signupForm: any
   mask:any
 
-  constructor(private db: ProductService) { }
+  constructor(private userService: UserService, private productService:ProductService) { }
 
   ngOnInit(): void {
     this.createForm()
-    this.mask = this.db.inputMasks()
+    this.mask = this.productService.inputMasks()
   }
 
   createForm() {
@@ -37,10 +38,10 @@ export class SignUpComponent implements OnInit {
 
     if (user.password === user.confirmPassword) {
       delete user.confirmPassword
-      this.db.signUp(user)
+      this.userService.signUp(user)
 
     } else {
-      this.db.userMessages('As senhas são diferentes')
+      this.userService.userMessages('As senhas são diferentes')
     }
   }
 

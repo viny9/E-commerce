@@ -1,4 +1,4 @@
-<div class="userDatasComponent">
+<div class="userDatasComponent" *ngIf="!loading">
     <div class="userInfos">
         <h2>Meus dados</h2>
         <form class="formContainer" [formGroup]="userForm" (change)="teste()">

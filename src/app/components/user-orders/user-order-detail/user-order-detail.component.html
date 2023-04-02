@@ -2,7 +2,7 @@
 <!-- Pegar recibo -->
 <!-- Adicionar opção de reembolso -->
 
-<div class="OrderDetailsComponent">
+<div class="OrderDetailsComponent" *ngIf="!loading">
     <div class="orderHead">
         <span>
             <h1 id="status">{{status}}</h1>

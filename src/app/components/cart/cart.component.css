@@ -82,7 +82,7 @@ img {
 }
 
 .total button {
-  background-color: var(--orange);
+  background-color: var(--main-color);
   width: 90%;
   margin: 1.5rem 1rem 0;
 }
@@ -99,5 +99,6 @@ img {
 }
 
 .emptyCart button {
-  background-color: var(--orange);
+  background-color: var(--main-color);
+  color: var(--opposite-text-color);
 }
