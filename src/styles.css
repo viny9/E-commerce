@@ -20,12 +20,13 @@ body {
   --card-color: #282828;
   --secondary-card-color: #424242;
   --text-color: #fff;
-  --opposite-text-color:#000;
+  --opposite-text-color: #000;
   --secondary-text-color: #ffffffb3;
   --disabled-color: #ffffff80;
   --hover-color: #505050;
+  --scrollbar-hover: #555;
   --success-color: #007e33;
-  --error-color: #FF1744;
+  --error-color: #ff1744;
 }
 
 /* Light mode */
@@ -39,8 +40,36 @@ body {
   --secondary-text-color: #0000008a;
   --disabled-color: #00000034;
   --hover-color: #f0f0f0;
+  --scrollbar-hover: #00000061;
   --success-color: #00c851;
-  --error-color:#DC143C ;
+  --error-color: #dc143c;
+}
+
+/* Scrollbar style */
+
+/* width */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: var(--background-color);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: var(--disabled-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-hover);
+}
+
+/* Arrows */
+::-webkit-scrollbar-button {
+  display: none;
 }
 
 /* Table base style */
@@ -84,3 +113,5 @@ td {
   background-color: var(--card-color);
   color: var(--text-color);
 }
+
+/* Checkbox style */

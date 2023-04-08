@@ -1,7 +1,7 @@
-<div class="head">
+<div class="head mat-elevation-z3">
     <a href="">Logo</a>
     <div class="search">
-        <input type="text" placeholder="Pesquisar" [(ngModel)]="searchInput">
+        <input type="text" placeholder="Pesquisar" [(ngModel)]="searchInput" (keyup.enter)="search()">
         <button (click)="search()" [disabled]="searchInput === undefined">
             <mat-icon>search</mat-icon>
         </button>

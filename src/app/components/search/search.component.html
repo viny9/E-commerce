@@ -1,47 +1,49 @@
-<!-- Terminar o filtro -->
 <mat-sidenav-container class="searchComponent" *ngIf="!loading">
-    <mat-sidenav class="sidenav" opened mode="side">
+    <mat-sidenav class="sidenav mat-elevation-z8" opened mode="side" *ngIf="products?.length > 0">
         <div class="filterContainer">
-            <h2>Filtros:</h2>
-            <div>
-                <section class="filter">
-                    <h3>Preço</h3>
-                    <mat-checkbox>Até R$100</mat-checkbox>
-                    <mat-checkbox>De R$100 até R$250</mat-checkbox>
-                    <mat-checkbox>De R$250 até R$500</mat-checkbox>
-                    <mat-checkbox>De R$500 até R$1000</mat-checkbox>
-                    <div class="priceFilter">
+            <h1>Filtros:</h1>
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="filterTree">
+
+                <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                    <div class="mat-tree-node">
+                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                            <mat-icon class="mat-icon-rtl-mirror">
+                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                            </mat-icon>
+                        </button>
+                        {{node.name}}
+                    </div>
+                    <div [class.filterTree-invisible]="!treeControl.isExpanded(node)" role="group">
+                        <ng-container matTreeNodeOutlet></ng-container>
+                    </div>
+                </mat-nested-tree-node>
+
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle class="filter"
+                    (click)="selectedFilter(node)">
+                    <p>{{node.name}}</p>
+                </mat-tree-node>
+
+                <!-- <div class="priceFilter">
                         <input type="text" placeholder="min" [(ngModel)]="specialPriceFilter.min">
                         <input type="text" placeholder="max" [(ngModel)]="specialPriceFilter.max">
                         <button mat-raised-button>Ir</button>
-                    </div>
-                </section>
+                    </div> -->
 
-                <section class="filter">
-                    <h3>Categorias</h3>
-                    <mat-checkbox>Eletronica</mat-checkbox>
-                    <mat-checkbox>Roupas</mat-checkbox>
-                    <mat-checkbox>Canecas</mat-checkbox>
-                </section>
-
-                <section class="filter">
-                    <h3>Estrelas</h3>
-                    <mat-checkbox *ngFor="let i of [1, 2, 3, 4, 5]">
-                        <mat-icon *ngIf="i >= 1">star</mat-icon>
-                        <mat-icon *ngIf="i >= 2">star</mat-icon>
-                        <mat-icon *ngIf="i >= 3">star</mat-icon>
-                        <mat-icon *ngIf="i >= 4">star</mat-icon>
-                        <mat-icon *ngIf="i >= 5">star</mat-icon>
-                    </mat-checkbox>
-
-                </section>
-            </div>
+            </mat-tree>
         </div>
     </mat-sidenav>
-    <mat-sidenav-content class="main">
-        <h2 *ngIf="products?.length > 0">Resultados para: "{{searchWord}}"</h2>
-        <h2 *ngIf="products?.length === 0">Não foi possível encontrar um produto com nome: "{{searchWord}}"</h2>
-        <p *ngIf="products?.length === 0">Verifique se está escrito corretamente ou tente um termo mais genérico</p>
+    <mat-sidenav-content class="main" *ngIf="products?.length > 0">
+        <h2 >Resultados para: "{{searchWord}}"</h2>
+        <div class="selectedFilters">
+            <mat-chip-list>
+                <mat-chip *ngFor="let filter of selectedFilters" selected>
+                    {{filter.name}}
+                    <button matChipRemove (click)="removeFilter(filter)" class="removeChipBtn">
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip>
+            </mat-chip-list>
+        </div>
         <div class="productsContainer">
             <mat-card class="product" *ngFor="let product of products" (click)="selectProduct(product)">
                 <img src="https://www.shutterstock.com/image-photo/varna-bulgaria-18-november-2016-260nw-553415794.jpg"
@@ -54,3 +56,8 @@
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
+
+<div class="alert" *ngIf="products?.length === 0">
+    <h2>Não foi possível encontrar um produto com nome: "{{searchWord}}"</h2>
+    <p>Verifique se está escrito corretamente ou tente um termo mais genérico</p>
+</div>

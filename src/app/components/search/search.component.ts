@@ -1,4 +1,6 @@
+import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit } from '@angular/core';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { ActivatedRoute } from '@angular/router';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/services/product/product.service';
@@ -13,21 +15,32 @@ export class SearchComponent implements OnInit {
   products: any
   searchWord: any
   loading: any = false
-  specialPriceFilter: any = {
-    min: '',
-    max: ''
-  }
+  filtersOptions: any = []
+  selectedFilters: any = []
+  selected: any = -1
+  filterProducts: any = []
+  teste:any
+
+  dataSource = new MatTreeNestedDataSource()
+  treeControl = new NestedTreeControl((node: any) => node.children)
 
   constructor(private db: ProductService, private loadService: LoadService, private router: ActivatedRoute) {
     loadService.isLoading.subscribe((res: any) => {
       this.loading = res
     })
+
+    this.filters()
   }
+
+  hasChild = (_: number, node: any) => !!node.children && node.children.length > 0;
+
+  // Adicionar mais opções de filtro
+  // Melhorar este código
+  // Caso não tenha produtos por fato de filtro adicionar uma mensagem
 
   ngOnInit(): void {
     this.getProducts()
   }
-
 
   getProducts() {
     this.loadService.showLoading()
@@ -52,6 +65,73 @@ export class SearchComponent implements OnInit {
     })
   }
 
+  filters() {
+    this.filtersOptions = [
+      {
+        name: 'Preço',
+        children: [
+          {
+            name: 'Até 100',
+            type: 'price',
+            checked: false,
+            min: 0,
+            max: 100
+          },
+
+          {
+            type: 'price',
+            name: 'De 100 até 250',
+            checked: false,
+            min: 100,
+            max: 250,
+          },
+
+          {
+            type: 'price',
+            name: 'De 250 até 500',
+            checked: false,
+            min: 250,
+            max: 500,
+          },
+
+          {
+            type: 'price',
+            name: 'De 500 até 1000',
+            checked: false,
+            min: 500,
+            max: 1000,
+          },
+        ],
+      },
+
+      {
+        name: 'Categorias',
+        children: [
+          {
+            name: 'teste',
+            type: 'category',
+            checked: false,
+            value: 'teste'
+          },
+          {
+            name: 'Eletronicos',
+            type: 'category',
+            checked: false,
+            value: 'Eletronicos'
+          },
+          {
+            name: 'Mouses',
+            type: 'category',
+            checked: false,
+            value: 'Mouses'
+          },
+        ]
+      }
+    ]
+
+    this.dataSource.data = this.filtersOptions
+  }
+
   selectProduct(product: any) {
     this.db.getProductId(product)
 
@@ -61,50 +141,105 @@ export class SearchComponent implements OnInit {
 
   }
 
-  // filters(filters: any) {
-  //   this.router.params.subscribe((word: any) => {
-  //     const searchWord = word.searchWord
+  selectedFilter(selectedFilter: any) {
+    this.loadService.showLoading()
+    this.selectedFilters.push(selectedFilter)
 
-  //     this.db.getProducts().subscribe((res: any) => {
+    const duplicateFilter = this.selectedFilters.filter((filter: any) => {
+      return filter.name === selectedFilter.name
+    })
 
-  //       const products = res.docs.map((res: any) => {
-  //         return res.data()
-  //       })
+    const twoPriceFilter = this.selectedFilters.filter((filter: any) => {
+      return filter.type === 'price'
+    })
 
-  //       const search = products.filter((product: any) => {
-  //         return product.name.toLowerCase().includes(searchWord)
-  //       })
+    if (duplicateFilter.length <= 1 && twoPriceFilter.length <= 1) {
 
-  //       if (filters.price === true) {
-  //         this.priceFilter(search, filters.min, filters.max)
-  //       }
+      this.addFilter()
 
-  //       if (filters.price === true && filters.specialPriceFilter) {
-  //         this.priceFilter(search, filters.specialPriceFilter.min, filters.specialPriceFilter.max)
-  //       }
+      if (this.products.length === 0) {
+        this.getProducts()
+      }
 
-  //       // if (checkboxStatus === false) {
-  //       //   this.getProducts()  
-  //       // }
-  //     })
-  //   })
+    } else if (twoPriceFilter.length > 1) {
+      this.selectedFilters.pop();
+      this.db.userMessages('Só pode usar um filtro de preço por vez.')
 
-  // }
+    } else if (duplicateFilter.length > 1) {
+      this.selectedFilters.pop();
+      this.db.userMessages('Esse filtro já está em uso.')
+    }
+  }
 
-  // priceFilter(products: any, min: any, max: any) {
-  //   const filter = products.filter((product: any) => {
-  //     return product.price >= min && product.price <= max
-  //   })
+  addFilter() {
+    this.router.params.subscribe((word: any) => {
+      const searchWord = word.searchWord
 
-  //   this.products = filter
-  // }
+      this.db.getProducts().subscribe((res: any) => {
 
-  // categoryFilter(products: any, category: any) {
-  //   const filter = products.filter((product: any) => {
-  //     return product.category === category
-  //   })
+        const products = res.docs.map((doc: any) => {
+          return doc.data()
+        })
 
-  //   this.products = filter
-  // }
+        let search = products.filter((product: any) => {
+          return product.name.toLowerCase().includes(searchWord.toLowerCase())
+        })
+
+        const allProducts = search
+
+        for (let filter of this.selectedFilters) {
+
+          if (filter.type === 'category') {
+
+            // Remove os items duplicados do array
+            this.filterProducts = this.filterProducts.filter((value: any, index: any, self: any) =>
+              index === self.findIndex((t: any) => (
+                t.place === value.place && t.name === value.name
+              ))
+            )
+
+            search = allProducts.filter((product: any) => {
+              return product.category === filter.name
+            })
+
+            search.forEach((element: any) => {
+              this.filterProducts.push(element)
+            });
+
+            search = this.filterProducts
+
+          } else if (filter.type === 'price') {
+
+            search = search.filter((value: any, index: any, self: any) =>
+              index === self.findIndex((t: any) => (
+                t.place === value.place && t.name === value.name
+              ))
+            )
+
+            search = search.filter((product: any) => {
+              return product.price >= filter.min && product.price <= filter.max
+            })
+          }
+        }
+
+        this.products = search
+        this.loadService.hideLoading()
+
+      })
+    })
+  }
+
+  removeFilter(filter: any) {
+    const index = this.selectedFilters.findIndex((i: any) => i.name === filter.name);
+    this.selectedFilters.splice(index, 1);
+
+    if (this.selectedFilters.length === 0) {
+      this.getProducts()
+    } else if (this.selectedFilters.length > 0) {
+      this.loadService.showLoading()
+      this.filterProducts = []
+      this.addFilter();
+    }
+  }
 
 }

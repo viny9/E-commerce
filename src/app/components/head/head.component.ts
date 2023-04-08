@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/services/product/product.service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -18,9 +19,14 @@ export class HeadComponent implements OnInit {
 
   ngOnInit(): void {
     this.themeStatus()
+    this.getSearch()
 
     this.logged = this.userService.userStatus().logged
     this.admin = this.userService.userStatus().admin
+  }
+
+  getSearch() {
+    this.searchInput = localStorage.getItem('search')
   }
 
   themeStatus() {
@@ -67,6 +73,8 @@ export class HeadComponent implements OnInit {
   }
 
   search() {
+    localStorage.setItem('search', this.searchInput)
+    
     this.db.navegate(`search/${this.searchInput}`)
       .then(() => window.location.reload())
   }

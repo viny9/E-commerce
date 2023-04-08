@@ -53,6 +53,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTreeModule } from '@angular/material/tree';
 
 import { TextMaskModule } from 'angular2-text-mask';
 
@@ -115,6 +117,8 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
     TextMaskModule,
     HttpClientModule,
     MatProgressBarModule,
+    MatChipsModule,
+    MatTreeModule,
 
     AngularFirestoreModule,
     AngularFireAuthModule,

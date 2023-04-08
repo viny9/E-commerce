@@ -8,6 +8,7 @@ h2 {
   height: auto;
   min-height: 100%;
   color: #ffffff8a;
+  padding: 0 3rem;
 }
 
 .alerts {
@@ -138,7 +139,7 @@ h2 {
   from {
     left: 0%;
   }
-  
+
   to {
     left: -100%;
   }
