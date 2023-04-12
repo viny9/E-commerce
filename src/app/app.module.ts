@@ -62,6 +62,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { AngularFireModule } from '@angular/fire/compat'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
     AllOrdersComponent,
     UserOrderDetailComponent,
     LoadingComponent,
+    PasswordRecoveryComponent,
   ],
   imports: [
     BrowserModule,

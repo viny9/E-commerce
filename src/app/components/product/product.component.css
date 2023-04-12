@@ -5,9 +5,7 @@ p {
 .productComponent {
   background-color: var(--background-color);
   color: var(--text-color);
-  padding-top: 2rem;
-  padding: 0 3rem;
-
+  padding: 2rem 3rem;
 }
 
 .product {
@@ -22,7 +20,6 @@ img {
 
 .productInfos {
   width: 100%;
-  /* width: 534.670px; */
 }
 
 .productName {

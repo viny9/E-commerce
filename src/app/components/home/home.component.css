@@ -34,7 +34,7 @@ h2 {
 
 .alertBtns {
   width: 100%;
-  height: 46%;
+  height: 45.4%;
   display: flex;
   justify-content: space-between;
   position: absolute;
@@ -125,44 +125,40 @@ h2 {
 
 @keyframes next1 {
   from {
-    right: -100%;
-    width: 100%;
+    transform: translateX(100%);
   }
 
   to {
-    right: 0%;
-    width: 100%;
+    transform: translateX(0%);
   }
 }
 
 @keyframes next2 {
   from {
-    left: 0%;
+    transform: translateX(0%);
   }
 
   to {
-    left: -100%;
+    transform: translateX(-100%);
   }
 }
 
 @keyframes back1 {
   from {
-    left: -100%;
-    width: 100%;
+    transform: translateX(-100%);
   }
 
   to {
-    left: 0%;
-    width: 100%;
+    transform: translateX(0%);
   }
 }
 
 @keyframes back2 {
   from {
-    right: 0%;
+    transform: translateX(0%);
   }
 
   to {
-    right: -100%;
+    transform: translateX(100%);
   }
 }

@@ -1,9 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { getAuth } from '@angular/fire/auth';
+import { getAuth, updatePassword } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +14,9 @@ export class UserService {
 
   admin: any
   userId: any = localStorage['userId']
+  baseUrl = environment.stripeBaseUrl
 
-  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth, private snackBar: MatSnackBar, private router: Router) { }
+  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth, private snackBar: MatSnackBar, private router: Router, private http: HttpClient) { }
 
 
   // Login e cadastro
@@ -142,6 +145,22 @@ export class UserService {
     }
 
     return status
+  }
+
+  // Emails 
+
+  sendVerificationCodeEmail(email: any) {
+    const body = {
+      email: email
+    }
+
+    return this.http.post(`${this.baseUrl}/recoverPassword`, body)
+  }
+
+  sendPasswordResetEmail(email: any) {
+    this.auth.sendPasswordResetEmail(email)
+      .then(() => this.userMessages('Foi enviado um email para atualizar senha'))
+      .then(() => this.navegate('/signIn'))
   }
 
   // Extras

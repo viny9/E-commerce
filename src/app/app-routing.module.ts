@@ -21,6 +21,7 @@ import { SuccessComponent } from './views/payment/success/success.component';
 import { EditProductComponent } from './views/product/edit-product/edit-product.component';
 import { NewProductComponent } from './views/product/new-product/new-product.component';
 import { ProductListComponent } from './views/product/product-list/product-list.component';
+import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 
 const routes: Routes = [
   {
@@ -35,7 +36,7 @@ const routes: Routes = [
       { path: 'order/:orderId', component: UserOrderDetailComponent },
       { path: 'product/:productId', component: ProductComponent },
       { path: 'success/:paymentId', component: SuccessComponent },
-      { path: 'search/:searchWord', component: SearchComponent, data: {someData: 'teste'} },
+      { path: 'search/:searchWord', component: SearchComponent, data: { someData: 'teste' } },
     ]
   },
 
@@ -52,9 +53,10 @@ const routes: Routes = [
       { path: 'notifications', component: NotificationsComponent },
     ]
   },
-  
+
   { path: "signIn", component: SignInComponent },
   { path: "signUp", component: SignUpComponent },
+  { path: "passwordRecovery", component: PasswordRecoveryComponent },
   { path: 'pageNotFound', component: NotFoundComponent },
   { path: '**', redirectTo: 'pageNotFound' },
 ];

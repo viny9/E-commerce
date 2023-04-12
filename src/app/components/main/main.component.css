@@ -1,6 +1,7 @@
 .body {
   background-color: var(--background-color);
-  padding: 100px 0 50px;
+  padding: 1rem 0 50px;
   height: auto;
   min-height: 85%;
+  width: 100%;
 }
