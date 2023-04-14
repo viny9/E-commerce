@@ -17,7 +17,7 @@ export class PasswordRecoveryComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  componentChange(component: string) {
+  formChangeAnimationControl(component: string) {
     const emailForm = document.querySelector('.emailForm')
     const codeForm = document.querySelector('.codeForm')
     const backBtn = document.querySelector('.backIcon')
@@ -60,7 +60,7 @@ export class PasswordRecoveryComponent implements OnInit {
       }
     })
 
-    this.componentChange('code')
+    this.formChangeAnimationControl('code')
   }
 
   checkEmailCode() {
@@ -70,7 +70,7 @@ export class PasswordRecoveryComponent implements OnInit {
   }
 
   return() {
-    this.componentChange('email')
+    this.formChangeAnimationControl('email')
     this.code = ''
   }
 

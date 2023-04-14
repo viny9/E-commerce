@@ -6,6 +6,11 @@ h2 {
 .userDatasComponent {
   display: flex;
   justify-content: center;
+  overflow: hidden;
+}
+
+.cdk-overlay-container {
+  height: 10%;
 }
 
 .userInfos {

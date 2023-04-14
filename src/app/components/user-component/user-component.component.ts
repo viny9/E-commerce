@@ -1,9 +1,15 @@
+// Checar se tudo funcionando 
+// Ajeitar o código
+
+import { NoopScrollStrategy } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { DeleteAccountComponent } from 'src/app/views/delete-account/delete-account.component';
 
 @Component({
   selector: 'app-user-component',
@@ -18,7 +24,7 @@ export class UserComponentComponent implements OnInit {
   mask: any
   loading: any = false
 
-  constructor(private userService: UserService, private db: ProductService, private auth: AngularFireAuth, private loadService: LoadService) {
+  constructor(private userService: UserService, private db: ProductService, private auth: AngularFireAuth, private loadService: LoadService, private dialog: MatDialog) {
     loadService.isLoading.subscribe((res: any) => {
       this.loading = res
     })
@@ -56,7 +62,7 @@ export class UserComponentComponent implements OnInit {
     this.userForm = new FormGroup({
       name: new FormControl(userInfos?.name),
       email: new FormControl(userInfos?.email),
-      telephone: new FormControl(userInfos?.telephone),
+      phone: new FormControl(userInfos?.phone),
     })
 
     this.addressForm = new FormGroup({
@@ -73,19 +79,37 @@ export class UserComponentComponent implements OnInit {
     this.userService.logOut()
   }
 
-  updateInfos() {
-    const user = this.userForm.value
-    const userId = localStorage['userId']
-    const address = this.addressForm.value
+  updateUserInfos() {
+    this.userService.getUser().subscribe((res: any) => {
+      const email = res.data().email
 
-    user.address = address
+      const user = {
+        ...this.user,
+        ...this.userForm.value,
+        oldEmail: email
+      }
 
-    this.userService.updateUser(userId, user)
-      .then(() => this.db.userMessages('Informações atualizadas'))
+      const address = this.addressForm.value
+      user.address = address
+
+      user.address.cep = user.address.cep.replace(/\D/g, ''); //Removendo a mask do valor
+      user.phone = user.phone.replace(/\D/g, ''); //Removendo a mask do valor
+
+      this.userService.updateUser(user)
+        .then(() => this.userInfos())
+    })
   }
 
-  teste() {
-    console.log(this.userForm)
+  openDialog() {
+    this.userService.getUser().subscribe((res: any) => {
+      const user = res.data()
+
+      this.dialog.open(DeleteAccountComponent, {
+        data: user,
+        width: '500px',
+        scrollStrategy: new NoopScrollStrategy()
+      })
+    })
   }
 
 }

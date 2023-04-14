@@ -3,7 +3,6 @@ p {
 }
 
 .categoryComponent {
-  /* background-color: var(--background-color); */
   color: var(--text-color);
 }
 
@@ -50,7 +49,7 @@ p {
 }
 
 ::ng-deep.mat-dialog-container {
-  background-color: var(--background-color) !important;
+  background-color: var(--card-color) !important;
   color: var(--text-color) !important;
 }
 

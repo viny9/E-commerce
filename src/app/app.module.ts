@@ -63,6 +63,8 @@ import { AngularFireModule } from '@angular/fire/compat'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
+import { DeleteAccountComponent } from './views/delete-account/delete-account.component';
+import { DialogUpdateUserComponent } from './views/dialog-update-user/dialog-update-user.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +94,8 @@ import { PasswordRecoveryComponent } from './components/password-recovery/passwo
     UserOrderDetailComponent,
     LoadingComponent,
     PasswordRecoveryComponent,
+    DeleteAccountComponent,
+    DialogUpdateUserComponent,
   ],
   imports: [
     BrowserModule,

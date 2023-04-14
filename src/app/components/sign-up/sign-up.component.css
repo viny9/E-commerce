@@ -8,11 +8,20 @@
 
 .form {
   background-color: #151515d8;
-  height: 35rem;
+  height: 70%;
+  /* height: 35rem; */
   width: 30%;
   color: #fff;
-  padding: 3rem;
+  padding: 3rem 3rem 2rem;
   border-radius: 1rem;
+}
+
+.backIcon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  margin: 0.5rem;
 }
 
 .form h1 {
@@ -31,6 +40,7 @@
   margin: 5px 0;
 }
 
+/* input */
 ::ng-deep .mat-form-field-label {
   color: #fff !important;
 }
@@ -39,8 +49,16 @@
   background-color: #fff !important;
 }
 
-::ng-deep.mat-form-field-ripple {
+::ng-deep .mat-form-field-invalid .mat-form-field-ripple {
+  background-color: #ff3333 !important;
+}
+
+::ng-deep .mat-form-field-ripple {
   background-color: #ffba00 !important;
+}
+
+::ng-deep .mat-form-field-required-marker {
+  display: none;
 }
 
 .btnContainer {
@@ -65,4 +83,68 @@
 .login a {
   text-decoration: underline;
   color: #ffba00;
+}
+
+.showAddressForm {
+  animation: forwards 1s showAddress;
+}
+
+.showUserForm {
+  animation: forwards 1s showUserForm;
+}
+
+.hideUserForm {
+  animation: forwards 1s hideUserForm;
+}
+
+.hideAdressForm {
+  animation: forwards 1s hideAddress;
+}
+
+.none {
+  display: none;
+}
+
+@keyframes showAddress {
+  0% {
+    position: relative;
+    transform: translateX(200%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes hideUserForm {
+  0% {
+    position: relative;
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-200%);
+  }
+}
+
+@keyframes showUserForm {
+  0% {
+    position: relative;
+    transform: translateX(-200%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes hideAddress {
+  0% {
+    position: relative;
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(200%);
+  }
 }

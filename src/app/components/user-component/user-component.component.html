@@ -1,7 +1,7 @@
 <div class="userDatasComponent" *ngIf="!loading">
     <div class="userInfos">
         <h2>Meus dados</h2>
-        <form class="formContainer" [formGroup]="userForm" (change)="teste()">
+        <form class="formContainer" [formGroup]="userForm">
             <mat-form-field>
                 <mat-label>Nome completo</mat-label>
                 <input type="text" matInput formControlName="name">
@@ -14,10 +14,10 @@
 
             <mat-form-field>
                 <mat-label>Telefone</mat-label>
-                <input type="text" matInput formControlName="telephone" [textMask]="{mask: mask.phone}">
+                <input type="text" matInput formControlName="phone" [textMask]="{mask: mask.phone}">
             </mat-form-field>
         </form>
-        <button mat-flat-button [disabled]="" (click)="updateInfos()">Atualizar perfil</button>
+        <button mat-flat-button [disabled]="userForm.pristine" (click)="updateUserInfos()">Atualizar perfil</button>
 
         <h2>Endereço</h2>
         <form class="formContainer" [formGroup]="addressForm">
@@ -51,7 +51,8 @@
                 <input type="text" matInput formControlName="extra">
             </mat-form-field>
         </form>
-        <button mat-flat-button [disabled]="" (click)="updateInfos()">Atualizar Endereço</button>
+        <button mat-flat-button [disabled]="addressForm.pristine" (click)="updateUserInfos()">Atualizar
+            Endereço</button>
 
         <!-- <h2>Editar Senha</h2>
         <form class="formContainer">
@@ -72,8 +73,8 @@
         <button mat-flat-button color="warn" (click)="signOut()">Sair da Conta</button>
 
         <h2>Deletar conta</h2>
-        <p>Assim que você apertar o botão, sua conta ira ser deletada permanentemente. Após
-            um período de 3 meses você podera criar outra conta com seu email.</p>
-        <button mat-flat-button color="warn">Deletar Conta</button>
+        <p>Assim que você confirmar a exclusão, sua conta ira ser deletada permanentemente. Após
+            um período de 3 meses você podera criar outra conta com mesmo email.</p>
+        <button mat-flat-button color="warn" (click)="openDialog()">Deletar Conta</button>
     </div>
 </div>

@@ -1,11 +1,20 @@
+// Talvez criar um dialog para fazer o login, basicamente passar a senha 
+// Fazer um if para atualizar o email do authentic
+// revizar o código 
+// E enviar para o github
+
+import { NoopScrollStrategy } from '@angular/cdk/overlay';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { getAuth, updatePassword } from '@angular/fire/auth';
+import { getAuth, updateEmail } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { DialogUpdateUserComponent } from 'src/app/views/dialog-update-user/dialog-update-user.component';
 import { environment } from 'src/environments/environment';
+import { StripeService } from '../stripe/stripe.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +23,14 @@ export class UserService {
 
   admin: any
   userId: any = localStorage['userId']
-  baseUrl = environment.stripeBaseUrl
+  baseUrl = environment.backendBaseUrl
 
-  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth, private snackBar: MatSnackBar, private router: Router, private http: HttpClient) { }
+  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth, private snackBar: MatSnackBar, private router: Router, private http: HttpClient, private dialog: MatDialog, private stripeService: StripeService) { }
 
 
   // Login e cadastro
   signUp(user: any) {
-    this.auth.createUserWithEmailAndPassword(user.email, user.password)
+    return this.auth.createUserWithEmailAndPassword(user.email, user.password)
       .then(() => {
         delete user.password
         this.createUser(user)
@@ -31,6 +40,8 @@ export class UserService {
         getAuth().currentUser?.getIdToken()
           .then((token: any) => localStorage.setItem('token', token))
       })
+      .then(() => this.setAdmin(user))
+      .then(() => this.setUserId(user))
 
       .then(() => this.userMessages('Usuário criado'))
       .then(() => this.navegate(''))
@@ -53,7 +64,7 @@ export class UserService {
           } else if (admin === false) {
             this.navegate('')
           }
-        }, 500);
+        }, 700);
       })
       .catch((e: any) => {
         this.userMessages(e)
@@ -80,14 +91,52 @@ export class UserService {
     this.firestore.collection('users').add(userInfos)
   }
 
-  updateUser(userId: any, updatedInfos: any) {
-    return this.firestore.collection('users').doc(userId).update(updatedInfos)
+  updateUser(updatedInfos: any) {
+    const auth: any = getAuth().currentUser
+
+    if (updatedInfos.email != updatedInfos.oldEmail) {
+      return updateEmail(auth, updatedInfos.email)
+        .then(() => delete updatedInfos.oldEmail)
+        .then(() => this.firestore.collection('users').doc(this.userId).update(updatedInfos))
+        .then(() => {
+          this.stripeService.updateCustomer(updatedInfos).subscribe((res: any) => {
+            console.log(res)
+          })
+        })
+        .then(() => this.userMessages('Informações atualizadas'))
+        .catch((e) => {
+          this.dialog.open(DialogUpdateUserComponent, {
+            data: updatedInfos,
+            width: '500px',
+            scrollStrategy: new NoopScrollStrategy()
+          })
+        })
+    } else {
+      delete updatedInfos.oldEmail
+      return this.firestore.collection('users').doc(this.userId).update(updatedInfos)
+    }
   }
 
-  deleteUser() {
-    this.auth.onAuthStateChanged((user?: any) => {
-      return getAuth().currentUser?.delete()
-    })
+  updateUserWithLogin(user: any) {
+    const auth: any = getAuth()
+
+    return this.auth.signInWithEmailAndPassword(user.oldEmail, user.password)
+      .then(() => updateEmail(auth, user.email))
+      .then(() => delete user.oldEmail && delete user.password)
+      .then(() => this.firestore.collection('users').doc(this.userId).update(user))
+      .then(() => this.stripeService.updateCustomer(user).subscribe())
+      .then(() => this.userMessages('Dados atualizados'))
+      .catch((e) => this.userMessages(e))
+  }
+
+  deleteUser(user: any) {
+    return this.auth.signInWithEmailAndPassword(user.email, user.password)
+      .then(() => {
+        getAuth().currentUser?.delete() // Exclui o usuário no authentic 
+      })
+      .then(() => {
+        this.firestore.collection('users').doc(this.userId).delete() // Exclui o usuário da firestore
+      })
   }
 
   setUserId(user: any) {

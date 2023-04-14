@@ -2,6 +2,6 @@ import { firebase } from './../../env';
 
 export const environment = {
   production: true,
-  stripeBaseUrl: 'http://localhost:3000',
+  backendBaseUrl: 'https://ecommerce-back-0gyg.onrender.com',
   firebase: firebase,
 };
