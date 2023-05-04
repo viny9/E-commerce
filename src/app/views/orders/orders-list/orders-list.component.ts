@@ -2,6 +2,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from 'src/app/services/product/product.service';
 import { LoadService } from 'src/app/services/load/load.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-orders-list',
@@ -11,19 +13,15 @@ import { LoadService } from 'src/app/services/load/load.service';
 export class OrdersListComponent implements AfterViewInit {
 
   dataSource: any
+  products: any
   columns: any = ['id', 'email', 'value', 'status', 'data', 'actions']
   priceTotal: any
-  @ViewChild(MatPaginator) paginator: any;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   loading: any = false
 
   constructor(private db: ProductService, private loadService: LoadService) {
-    loadService.isLoading.subscribe((res: any) => {
-      this.loading = res
-    })
-
-    // Está dando o erro no rxjs 
-    // Embora não esteja afetando o site
     db.selectComponent = 'orders'
   }
 
@@ -34,18 +32,20 @@ export class OrdersListComponent implements AfterViewInit {
   allOrders() {
     this.loadService.showLoading()
     this.db.getOrders().subscribe((res: any) => {
-      this.dataSource = res.docs.map((doc: any) => {
+
+      this.products = res.docs.map((doc: any) => {
         return doc.data()
       })
 
-      this.dataSource = this.dataSource.sort((a: any, b: any) => {
+      this.products = this.products.sort((a: any, b: any) => {
         const d: any = new Date(a.created);
         const c: any = new Date(b.created);
         return c - d;
       })
 
-
+      this.dataSource = new MatTableDataSource(this.products)
       this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort
 
       this.notificationDate()
       this.paymentStatus()
@@ -57,7 +57,7 @@ export class OrdersListComponent implements AfterViewInit {
   notificationDate() {
     const date = new Date()
 
-    this.dataSource.forEach((element: any) => {
+    this.products.forEach((element: any) => {
       const orderDate = new Date(element.created * 1000)
 
       switch (date.getDate() == orderDate.getDate()) {
@@ -90,7 +90,7 @@ export class OrdersListComponent implements AfterViewInit {
   }
 
   paymentStatus() {
-    this.dataSource.forEach((element: any) => {
+    this.products.forEach((element: any) => {
 
       if (element.payment_intent.status === 'succeeded') {
         element.payment_intent.status = 'Pago'
@@ -101,7 +101,7 @@ export class OrdersListComponent implements AfterViewInit {
   }
 
   total() {
-    this.dataSource.forEach((element: any) => {
+    this.products.forEach((element: any) => {
       let total: any = 0
       for (let i = 0; i < element.products.length; i++) {
         const product = element.products[i];

@@ -12,20 +12,20 @@
             /
             <a routerLink="signIn">Login</a>
         </div>
-        <button mat-icon-button>
-            <mat-icon class="icons" routerLink="cart">shopping_cart</mat-icon>
+        <button mat-icon-button routerLink="cart">
+            <mat-icon class="icons">shopping_cart</mat-icon>
         </button>
         <button mat-icon-button routerLink="favoriteList">
             <mat-icon class="icons">favorite</mat-icon>
         </button>
-        <button mat-icon-button *ngIf="logged === true">
-            <mat-icon class="icons" routerLink="user">person</mat-icon>
+        <button mat-icon-button *ngIf="logged === true" routerLink="user">
+            <mat-icon class="icons">person</mat-icon>
         </button>
-        <button mat-icon-button *ngIf="admin === true">
-            <mat-icon class="icons" routerLink="admin/products">settings</mat-icon>
-        </button>
-        <button mat-icon-button *ngIf="logged === true">
-            <mat-icon class="icons" routerLink="allOrders">shopping_basket</mat-icon>
+        <!-- <button mat-icon-button *ngIf="admin === true" routerLink="admin/products">
+            <mat-icon class="icons">settings</mat-icon>
+        </button> -->
+        <button mat-icon-button *ngIf="logged === true" routerLink="allOrders">
+            <mat-icon class="icons">shopping_basket</mat-icon>
         </button>
         <div class="themeIcons" (click)="themeIconToggle()">
             <button mat-icon-button class="sun">

@@ -17,6 +17,7 @@ export class ProductComponent implements OnInit {
   cart: any = []
   inCart: any
   loading: any = false
+  selectedImg: any
 
   constructor(private db: ProductService, private loadService: LoadService, private router: ActivatedRoute, private stripeService: StripeService) {
     loadService.isLoading.subscribe((res: any) => {
@@ -39,6 +40,7 @@ export class ProductComponent implements OnInit {
 
       this.db.getProductById(id).subscribe((res: any) => {
         this.product = res.data()
+        this.selectedImg = this.product.imgs[0]?.url
       })
     })
   }

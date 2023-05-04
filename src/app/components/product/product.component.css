@@ -12,10 +12,24 @@ p {
   display: flex;
 }
 
-img {
-  min-height: 500px;
-  max-height: 550px;
+.selectedImg {
+  /* min-height: 500px; */
+  max-width: 550px;
   margin-right: 50px;
+}
+
+.allImgs {
+  display: flex;
+  align-items: flex-end;
+  overflow-x: auto;
+  max-width: 550px;
+  padding-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.allImgs > img {
+  width: 100px;
+  margin-right: 1rem;
 }
 
 .productInfos {

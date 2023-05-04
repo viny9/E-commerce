@@ -41,6 +41,7 @@ mat-icon {
 
 .selected {
   color: var(--main-color) !important;
+  background-color: var(--main-color-hover) !important;
 }
 
 .main {

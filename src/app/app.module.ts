@@ -55,12 +55,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTreeModule } from '@angular/material/tree';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { TextMaskModule } from 'angular2-text-mask';
 
 // Firebase
 import { AngularFireModule } from '@angular/fire/compat'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
+import { AngularFireStorageModule } from '@angular/fire/compat/storage'
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { DeleteAccountComponent } from './views/delete-account/delete-account.component';
@@ -125,8 +127,10 @@ import { DialogUpdateUserComponent } from './views/dialog-update-user/dialog-upd
     MatProgressBarModule,
     MatChipsModule,
     MatTreeModule,
+    DragDropModule,
 
     AngularFirestoreModule,
+    AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase),
 

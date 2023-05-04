@@ -3,8 +3,10 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { LoadService } from '../load/load.service';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { HttpClient } from '@angular/common/http';
+// import { getStorage, ref } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ export class ProductService {
   userId: any = localStorage['userId']
   private component: any = new BehaviorSubject<any>('products')
 
-  constructor(private firebase: AngularFirestore, private snackBar: MatSnackBar, private router: Router, private loadService: LoadService) { }
+  constructor(private firebase: AngularFirestore, private storage: AngularFireStorage, private snackBar: MatSnackBar, private router: Router, private loadService: LoadService, private http: HttpClient) { }
 
 
   // Metodos de Produto
@@ -151,6 +153,45 @@ export class ProductService {
     return this.firebase.collection('productsCategorys').doc(categoryId).delete()
   }
 
+  // Imgs
+  sendProductImg(path: any, file: any) {
+    const uploadTask = this.storage.upload(path, file)
+
+    uploadTask.percentageChanges().subscribe((percentage: any) => {
+      if (percentage === 100) {
+        this.loadService.hideLoading()
+      } else if (percentage < 100) {
+        this.loadService.showLoading()
+      }
+    })
+
+    return uploadTask
+  }
+
+
+  // Terminar depois
+  // updateProductImgRef(oldName: any, newName: any) {
+  //   const ref = this.storage.ref(oldName)
+
+  //   ref.listAll().subscribe((res: any) => {
+  //     res.items.forEach((item: any) => {
+  //       const path = `${newName}/${item.name}`
+
+  //       item.getDownloadURL().then((url: any) => {
+  //         this.storage.upload(path, url).snapshotChanges().subscribe()
+  //         console.log('teste')
+  //         // this.storage.ref(path).putString(url, 'data_url')
+
+  //         // item.delete()
+  //       });
+  //     })
+  //   })
+
+  // }
+
+  deleteProductImg(url: any) {
+    return this.storage.refFromURL(url).delete()
+  }
 
   // Metodo de Mensagens  
   userMessages(message: string) {

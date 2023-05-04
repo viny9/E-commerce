@@ -12,7 +12,7 @@ import { LoadService } from 'src/app/services/load/load.service';
 })
 export class SuccessComponent implements OnInit {
 
-  loading:any = false
+  loading: any = false
 
   constructor(private userService: UserService, private db: ProductService, private stripeService: StripeService, private loadService: LoadService, private router: ActivatedRoute) {
     loadService.isLoading.subscribe((res: any) => {
@@ -37,7 +37,7 @@ export class SuccessComponent implements OnInit {
           res.customer_details.address = user.address
           res.customer_details.name = user.name
           res.customer_details.email = user.email
-          res.customer_details.telephone = user.telephone
+          res.customer_details.phone = user.phone
 
           this.savePayment(res)
         })
@@ -57,7 +57,7 @@ export class SuccessComponent implements OnInit {
       })
 
       this.loadService.hideLoading(
-        
+
       )
       if (filter.length === 0) {
         const products = JSON.parse(paymentStatus.metadata.products)

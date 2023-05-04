@@ -1,23 +1,27 @@
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product/product.service';
-import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogCategoryComponent } from '../dialog-category/dialog-category.component';
 import { LoadService } from 'src/app/services/load/load.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit {
 
-  @ViewChild(MatPaginator) paginator: any;
-  @ViewChild(MatSort) sort: any;
-  columns: Array<String> = ['id', 'name', 'price', 'category', 'actions']
+
+export class ProductListComponent implements AfterViewInit {
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  columns: string[] = ['id', 'name', 'price', 'category', 'actions']
 
   dataSource: any;
   editProduct: any
@@ -25,14 +29,10 @@ export class ProductListComponent implements OnInit {
   loading: any = false
 
   constructor(private db: ProductService, private loadService: LoadService, private route: Router, private dialog: MatDialog) {
-    loadService.isLoading.subscribe((res: any) => {
-      this.loading = res
-    })
-
     db.selectComponent = 'products'
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.product()
   }
 
@@ -47,11 +47,12 @@ export class ProductListComponent implements OnInit {
       })
 
       this.dataSource = new MatTableDataSource(products)
-      this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator
+      this.dataSource.sort = this.sort;
 
       this.loadService.hideLoading()
     })
+
   }
 
   editPage(product: any) {
@@ -67,6 +68,11 @@ export class ProductListComponent implements OnInit {
 
     setTimeout(() => {
       this.db.deleteProduct(this.db.id)
+        .then(() => {
+          product.imgs.forEach((img: any) => {
+            this.db.deleteProductImg(img.url).subscribe()
+          });
+        })
         .then(() => this.product())
         .then(() => this.db.userMessages('Produto removido'))
     }, 500);
