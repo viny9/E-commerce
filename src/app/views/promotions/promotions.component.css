@@ -1,0 +1,116 @@
+.promotionComponent {
+  height: 100%;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.head > h1 {
+  margin: 0;
+}
+
+.head > button {
+  background-color: var(--main-color);
+  color: var(--opposite-text-color);
+}
+
+.tableContainer {
+  height: 50%;
+  overflow: auto;
+}
+
+.mat-table {
+  width: 100%;
+  margin-top: 1rem;
+  border-top: 1px solid var(--disabled-color);
+}
+
+tr {
+  background-color: var(--background-color);
+}
+
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type {
+  text-align: start;
+  max-width: 25rem;
+  min-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+th.mat-header-cell,
+td.mat-cell {
+  width: 15%;
+  text-align: center;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type {
+  width: 15%;
+}
+
+.form {
+  width: 100%;
+  padding: 2rem 0;
+  border-top: 1px solid var(--disabled-color);
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+form span {
+  display: flex;
+  justify-content: space-around;
+}
+
+.mat-form-field {
+  width: 40%;
+}
+
+::ng-deep .mat-form-field-label {
+  color: var(--text-color) !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  background-color: var(--text-color) !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  background-color: var(--main-color) !important;
+}
+
+.productButton {
+  width: 100%;
+  padding: 0 3rem;
+}
+
+.productButton button {
+  background-color: var(--main-color);
+  color: var(--opposite-text-color);
+  width: 30%;
+  margin: 1rem 0 2rem;
+}
+
+.actionsBtns {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.actionsBtns button:first-child {
+  background-color: var(--main-color);
+  color: var(--opposite-text-color);
+}
+
+.actionsBtns button {
+  width: 30%;
+  margin-right: 2rem;
+}

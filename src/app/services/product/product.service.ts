@@ -1,4 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -6,7 +7,6 @@ import { Router } from '@angular/router';
 import { LoadService } from '../load/load.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { HttpClient } from '@angular/common/http';
-// import { getStorage, ref } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -33,16 +33,17 @@ export class ProductService {
   }
 
   getProductId(product: any) {
-    this.loadService.loadingCount++
-    this.getProducts().subscribe((res: any) => {
-      const ids = res.docs
+    return new Promise((resolve, rejects) => {
+      this.getProducts().subscribe((res: any) => {
+        const ids = res.docs
 
-      const products = res.docs.map((res: any) => {
-        return res.data().name
+        const products = res.docs.map((res: any) => {
+          return res.data().name
+        })
+
+        const index = products.indexOf(product.name)
+        resolve(ids[index].id)
       })
-
-      const index = products.indexOf(product.name)
-      this.id = ids[index].id
     })
   }
 
@@ -168,29 +169,46 @@ export class ProductService {
     return uploadTask
   }
 
-
-  // Terminar depois
-  // updateProductImgRef(oldName: any, newName: any) {
-  //   const ref = this.storage.ref(oldName)
-
-  //   ref.listAll().subscribe((res: any) => {
-  //     res.items.forEach((item: any) => {
-  //       const path = `${newName}/${item.name}`
-
-  //       item.getDownloadURL().then((url: any) => {
-  //         this.storage.upload(path, url).snapshotChanges().subscribe()
-  //         console.log('teste')
-  //         // this.storage.ref(path).putString(url, 'data_url')
-
-  //         // item.delete()
-  //       });
-  //     })
-  //   })
-
-  // }
-
   deleteProductImg(url: any) {
     return this.storage.refFromURL(url).delete()
+  }
+
+  // Promotions
+  getPromotions() {
+    return this.firebase.collection('promotions').get()
+  }
+
+  getPromotionById(id: any) {
+    return this.firebase.collection('promotions').doc(id).get()
+  }
+
+  // COPY this to every method that is getting a firestore document id
+  getPromotionId(selectedPromotion: any) {
+    return new Promise((resolve, reject) => {
+
+      this.getPromotions().subscribe((res: any) => {
+        const ids = res.docs
+
+        const promotions = res.docs.map((res: any) => {
+          return res.data().name
+        })
+
+        const index = promotions.indexOf(selectedPromotion.name)
+        resolve(ids[index].id)
+      })
+    })
+  }
+
+  newPromotion(promotion: any) {
+    return this.firebase.collection('promotions').add(promotion)
+  }
+
+  updatePromotion(id: any, updatedPromotion: any) {
+    return this.firebase.collection('promotions').doc(id).update(updatedPromotion)
+  }
+
+  deletePromotion(id: any) {
+    return this.firebase.collection('promotions').doc(id).delete()
   }
 
   // Metodo de Mensagens  

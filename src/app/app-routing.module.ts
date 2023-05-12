@@ -22,6 +22,7 @@ import { EditProductComponent } from './views/product/edit-product/edit-product.
 import { NewProductComponent } from './views/product/new-product/new-product.component';
 import { ProductListComponent } from './views/product/product-list/product-list.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
+import { PromotionsComponent } from './views/promotions/promotions.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,7 @@ const routes: Routes = [
       { path: 'products', component: ProductListComponent },
       { path: 'products/newProduct', component: NewProductComponent },
       { path: 'products/editProduct/:productId', component: EditProductComponent },
+      { path: 'promotions', component: PromotionsComponent },
       { path: 'orders', component: OrdersListComponent },
       { path: 'orders/:orderId', component: OrderInfosComponent },
       { path: 'notifications', component: NotificationsComponent },

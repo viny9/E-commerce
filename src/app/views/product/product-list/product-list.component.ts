@@ -26,7 +26,6 @@ export class ProductListComponent implements AfterViewInit {
   dataSource: any;
   editProduct: any
   productId: any
-  loading: any = false
 
   constructor(private db: ProductService, private loadService: LoadService, private route: Router, private dialog: MatDialog) {
     db.selectComponent = 'products'

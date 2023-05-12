@@ -7,6 +7,12 @@
                 Produtos
             </a>
 
+            <a mat-list-item routerLink="promotions"
+                [ngClass]="selected === 'promotions' ? 'selected' : '' ">
+                <mat-icon>local_offer</mat-icon>
+                Promoções
+            </a>
+
             <a mat-list-item routerLink="orders"
                 [ngClass]="selected === 'orders' ? 'selected' : '' ">
                 <mat-icon>list_alt</mat-icon>
