@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth/auth.guard';
 import { AdminComponent } from './components/admin/admin.component';
 import { CartComponent } from './components/cart/cart.component';
 import { FavoriteListComponent } from './components/favorite-list/favorite-list.component';
@@ -23,11 +22,14 @@ import { NewProductComponent } from './views/product/new-product/new-product.com
 import { ProductListComponent } from './views/product/product-list/product-list.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { PromotionsComponent } from './views/promotions/promotions.component';
+import { AdminAuthGuard } from './auth/admin-auth.guard';
+import { UserAuthGuard } from './auth/user-auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: MainComponent,
+    canActivate: [UserAuthGuard],
     children: [
       { path: '', component: HomeComponent },
       { path: 'favoriteList', component: FavoriteListComponent },
@@ -44,7 +46,7 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AdminAuthGuard],
     children: [
       { path: 'products', component: ProductListComponent },
       { path: 'products/newProduct', component: NewProductComponent },

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { ProductService } from '../services/product/product.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AdminAuthGuard implements CanActivate {
 
   constructor(private db: ProductService, private auth: AngularFireAuth) { }
 
@@ -21,11 +21,5 @@ export class AuthGuard implements CanActivate {
       return false
     }
   }
-
-  // canActivateChild(
-  //   childRoute: ActivatedRouteSnapshot,
-  //   state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-  //   return true;
-  // }
 
 }
