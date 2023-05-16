@@ -19,7 +19,7 @@ export class SearchComponent implements OnInit {
   selectedFilters: any = []
   selected: any = -1
   filterProducts: any = []
-  teste:any
+  teste: any
 
   dataSource = new MatTreeNestedDataSource()
   treeControl = new NestedTreeControl((node: any) => node.children)
@@ -132,12 +132,10 @@ export class SearchComponent implements OnInit {
     this.dataSource.data = this.filtersOptions
   }
 
-  selectProduct(product: any) {
-    this.db.getProductId(product)
+  async selectProduct(product: any) {
+    const id = await this.db.getProductId(product)
 
-    setTimeout(() => {
-      this.db.navegate(`product/${this.db.id}`)
-    }, 500);
+    this.db.navegate(`product/${id}`)
 
   }
 

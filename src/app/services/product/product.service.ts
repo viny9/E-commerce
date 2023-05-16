@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { LoadService } from '../load/load.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { HttpClient } from '@angular/common/http';
-// import { getStorage, ref } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -23,26 +22,25 @@ export class ProductService {
 
   // Metodos de Produto
   getProducts() {
-    this.loadService.loadingCount++
     return this.firebase.collection('products').get()
   }
 
   getProductById(id: any) {
-    this.loadService.loadingCount++
     return this.firebase.collection('products').doc(id).get()
   }
 
   getProductId(product: any) {
-    this.loadService.loadingCount++
-    this.getProducts().subscribe((res: any) => {
-      const ids = res.docs
+    return new Promise((resolve, rejects) => {
+      this.getProducts().subscribe((res: any) => {
+        const ids = res.docs
 
-      const products = res.docs.map((res: any) => {
-        return res.data().name
+        const products = res.docs.map((res: any) => {
+          return res.data().name
+        })
+
+        const index = products.indexOf(product.name)
+        resolve(ids[index].id)
       })
-
-      const index = products.indexOf(product.name)
-      this.id = ids[index].id
     })
   }
 
@@ -60,12 +58,10 @@ export class ProductService {
 
   // Metodos da lista
   getFavoriteList() {
-    this.loadService.loadingCount++
     return this.firebase.collection('users').doc(this.userId).collection('list').get()
   }
 
   getListProductId(product: any) {
-    this.loadService.loadingCount++
     this.getFavoriteList().subscribe((res: any) => {
       const ids = res.docs
 
@@ -88,7 +84,6 @@ export class ProductService {
 
   // Metodos do carrinho
   getCart() {
-    this.loadService.loadingCount++
     return this.firebase.collection('users').doc(this.userId).collection('cart').get()
   }
 
@@ -124,7 +119,6 @@ export class ProductService {
 
   // Categorias 
   getCategorys() {
-    this.loadService.loadingCount++
     return this.firebase.collection('productsCategorys').get()
   }
 
@@ -168,29 +162,46 @@ export class ProductService {
     return uploadTask
   }
 
-
-  // Terminar depois
-  // updateProductImgRef(oldName: any, newName: any) {
-  //   const ref = this.storage.ref(oldName)
-
-  //   ref.listAll().subscribe((res: any) => {
-  //     res.items.forEach((item: any) => {
-  //       const path = `${newName}/${item.name}`
-
-  //       item.getDownloadURL().then((url: any) => {
-  //         this.storage.upload(path, url).snapshotChanges().subscribe()
-  //         console.log('teste')
-  //         // this.storage.ref(path).putString(url, 'data_url')
-
-  //         // item.delete()
-  //       });
-  //     })
-  //   })
-
-  // }
-
   deleteProductImg(url: any) {
     return this.storage.refFromURL(url).delete()
+  }
+
+  // Promotions
+  getPromotions() {
+    return this.firebase.collection('promotions').get()
+  }
+
+  getPromotionById(id: any) {
+    return this.firebase.collection('promotions').doc(id).get()
+  }
+
+  // COPY this to every method that is getting a firestore document id
+  getPromotionId(selectedPromotion: any) {
+    return new Promise((resolve, reject) => {
+
+      this.getPromotions().subscribe((res: any) => {
+        const ids = res.docs
+
+        const promotions = res.docs.map((res: any) => {
+          return res.data().name
+        })
+
+        const index = promotions.indexOf(selectedPromotion.name)
+        resolve(ids[index].id)
+      })
+    })
+  }
+
+  newPromotion(promotion: any) {
+    return this.firebase.collection('promotions').add(promotion)
+  }
+
+  updatePromotion(id: any, updatedPromotion: any) {
+    return this.firebase.collection('promotions').doc(id).update(updatedPromotion)
+  }
+
+  deletePromotion(id: any) {
+    return this.firebase.collection('promotions').doc(id).delete()
   }
 
   // Metodo de Mensagens  
@@ -221,7 +232,6 @@ export class ProductService {
 
   //Notificações
   getNotifications() {
-    this.loadService.loadingCount++
     return this.firebase.collection('notifications').get()
   }
 
@@ -248,7 +258,6 @@ export class ProductService {
 
   // Notificações arquivadas
   getArchivedNotification() {
-    this.loadService.loadingCount++
     return this.firebase.collection('archivedNotifications').get()
   }
 
@@ -278,7 +287,6 @@ export class ProductService {
 
   // Todos os pedidos
   getOrders() {
-    this.loadService.loadingCount++
     return this.firebase.collection('allOrders').get()
   }
 

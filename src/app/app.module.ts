@@ -31,7 +31,10 @@ import { DialogCategoryComponent } from './views/product/dialog-category/dialog-
 import { SuccessComponent } from './views/payment/success/success.component';
 import { AllOrdersComponent } from './components/user-orders/all-orders/all-orders.component';
 import { UserOrderDetailComponent } from './components/user-orders/user-order-detail/user-order-detail.component';
-import { LoadingComponent } from './views/loading/loading.component'
+import { LoadingComponent } from './views/loading/loading.component';
+import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
+import { DeleteAccountComponent } from './views/delete-account/delete-account.component';
+import { DialogUpdateUserComponent } from './views/dialog-update-user/dialog-update-user.component';
 import { environment } from './../environments/environment';
 
 //Angular Material
@@ -56,6 +59,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTreeModule } from '@angular/material/tree';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { TextMaskModule } from 'angular2-text-mask';
 
@@ -64,9 +68,9 @@ import { AngularFireModule } from '@angular/fire/compat'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
 import { AngularFireStorageModule } from '@angular/fire/compat/storage'
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
-import { DeleteAccountComponent } from './views/delete-account/delete-account.component';
-import { DialogUpdateUserComponent } from './views/dialog-update-user/dialog-update-user.component';
+import { PromotionsComponent } from './views/promotions/promotions.component';
+import { DialogAddProductPromotionComponent } from './views/dialog-add-product-promotion/dialog-add-product-promotion.component';
+
 
 @NgModule({
   declarations: [
@@ -98,6 +102,8 @@ import { DialogUpdateUserComponent } from './views/dialog-update-user/dialog-upd
     PasswordRecoveryComponent,
     DeleteAccountComponent,
     DialogUpdateUserComponent,
+    PromotionsComponent,
+    DialogAddProductPromotionComponent,
   ],
   imports: [
     BrowserModule,
@@ -127,6 +133,7 @@ import { DialogUpdateUserComponent } from './views/dialog-update-user/dialog-upd
     MatProgressBarModule,
     MatChipsModule,
     MatTreeModule,
+    MatAutocompleteModule,
     DragDropModule,
 
     AngularFirestoreModule,

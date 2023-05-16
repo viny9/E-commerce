@@ -4,13 +4,25 @@
             <img *ngIf="selectedImg != undefined" [src]="selectedImg" alt="" class="selectedImg">
             <img *ngIf="selectedImg === undefined" src="../../../assets/without img.jpg" alt="" class="selectedImg">
             <div class="allImgs">
-                <img *ngFor="let img of product.imgs" [src]="img.url" alt="" (click)="selectedImg = img.url">
+                <img *ngFor="let img of product?.imgs" [src]="img.url" alt="" (click)="selectedImg = img.url">
             </div>
         </div>
 
         <div class="productInfos">
             <h1 class="productName">{{product?.name}}</h1>
-            <h2 class="productPrice">R$ {{product?.price }}</h2>
+
+            <div class="priceContainer" *ngIf="product.promotionInfos === null || product.promotionInfos === undefined">
+                <p class="productPrice">R${{product?.price.toFixed(2).replace('.', ',')}}</p>
+            </div>
+
+            <div class="priceContainer" *ngIf="product.promotionInfos != null && product.promotionInfos != undefined">
+                <p class="oldPrice"><s>R${{product?.price.toFixed(2).replace('.', ',')}}</s></p>
+                <span>
+                    <h2 class="productPrice">R$ {{product.promotionInfos?.promotionPrice.toFixed(2).replace('.', ',')}}
+                    </h2>
+                    <p class="percentage"> {{product.promotionInfos?.percentage}}%</p>
+                </span>
+            </div>
             <!-- | currency:'BRL'}} -->
 
             <div>

@@ -16,6 +16,7 @@ p {
   /* min-height: 500px; */
   max-width: 550px;
   margin-right: 50px;
+  border-radius: 3px;
 }
 
 .allImgs {
@@ -38,15 +39,34 @@ p {
 
 .productName {
   width: 25rem;
-  height: 96px;
   max-height: 96px;
   font-size: 26px;
+}
+
+.priceContainer {
+  margin: 2rem 0;
+}
+.priceContainer > .oldPrice {
+  color: var(--error-color);
+  font-size: 20px;
+  margin-bottom: 1rem;
+}
+
+.priceContainer span {
+  display: flex;
+  align-items: center;
 }
 
 .productPrice {
   font-size: 30px;
   font-weight: 50;
-  margin: 50px 0 30px;
+  margin-right: 1rem;
+  margin-bottom: 0;
+}
+
+.percentage {
+  color: var(--success-color);
+  font-size: 17px;
 }
 
 .amountContainer {

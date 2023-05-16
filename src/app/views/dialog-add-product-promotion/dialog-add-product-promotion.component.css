@@ -1,0 +1,88 @@
+.head {
+  width: 100%;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-option {
+  color: var(--text-color);
+}
+
+.mat-option:hover {
+  background-color: var(--hover-color);
+}
+
+::ng-deep.mat-autocomplete-panel {
+  background-color: var(--card-color);
+}
+
+.selectedProducts {
+  margin-top: 1rem;
+  overflow: auto;
+}
+
+.product {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--hover-color);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+}
+
+.product p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 50%;
+  margin: 0;
+}
+
+.percentage {
+  display: flex;
+  width: 30%;
+}
+
+.percentage input {
+  background-color: transparent;
+  border: none;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--text-color);
+  width: 20%;
+}
+
+.percentage p {
+  width: 20%;
+}
+
+input:focus {
+  outline: none;
+}
+
+.editBtn {
+  color: var(--main-color);
+}
+
+.doneBtn {
+  color: var(--success-color);
+}
+
+::ng-deep.mat-dialog-container {
+  background-color: var(--card-color) !important;
+  color: var(--text-color) !important;
+  padding: 2rem;
+}
+
+.actionBtns button {
+  width: 45%;
+  margin-top: 1rem;
+}
+
+.actionBtns button:first-child {
+  background-color: var(--main-color);
+  color: var(--opposite-text-color);
+  margin-right: 1rem;
+}

@@ -11,9 +11,9 @@ export class FavoriteListComponent implements OnInit {
 
   empty: any
   list: any = []
-  loading:any = false
+  loading: any = false
 
-  constructor(private db: ProductService, private loadService:LoadService) { 
+  constructor(private db: ProductService, private loadService: LoadService) {
     loadService.isLoading.subscribe((res: any) => {
       this.loading = res
     })

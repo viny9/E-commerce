@@ -26,7 +26,6 @@ export class ProductListComponent implements AfterViewInit {
   dataSource: any;
   editProduct: any
   productId: any
-  loading: any = false
 
   constructor(private db: ProductService, private loadService: LoadService, private route: Router, private dialog: MatDialog) {
     db.selectComponent = 'products'
@@ -55,27 +54,22 @@ export class ProductListComponent implements AfterViewInit {
 
   }
 
-  editPage(product: any) {
-    this.db.getProductId(product)
-
-    setTimeout(() => {
-      this.route.navigate([`admin/products/editProduct/${this.db.id}`])
-    }, 500);
+  async editPage(product: any) {
+    const id = await this.db.getProductId(product)
+    this.route.navigate([`admin/products/editProduct/${id}`])
   }
 
-  removeProduct(product: any) {
-    this.db.getProductId(product)
+  async removeProduct(product: any) {
+    const id = await this.db.getProductId(product)
 
-    setTimeout(() => {
-      this.db.deleteProduct(this.db.id)
-        .then(() => {
-          product.imgs.forEach((img: any) => {
-            this.db.deleteProductImg(img.url).subscribe()
-          });
-        })
-        .then(() => this.product())
-        .then(() => this.db.userMessages('Produto removido'))
-    }, 500);
+    this.db.deleteProduct(id)
+      .then(() => {
+        product.imgs.forEach((img: any) => {
+          this.db.deleteProductImg(img.url).subscribe()
+        });
+      })
+      .then(() => this.product())
+      .then(() => this.db.userMessages('Produto removido'))
   }
 
   openDialog() {

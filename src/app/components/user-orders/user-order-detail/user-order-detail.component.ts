@@ -17,9 +17,10 @@ export class UserOrderDetailComponent implements OnInit {
   status: any
   paymentInfos: any
   address: any
-  loading:any = false
+  loading: any = false
+  priceDetails: any = {}
 
-  constructor(private stripe: StripeService, private loadService:LoadService, private router: ActivatedRoute) { 
+  constructor(private stripe: StripeService, private loadService: LoadService, private router: ActivatedRoute) {
     loadService.isLoading.subscribe((res: any) => {
       this.loading = res
     })
@@ -44,32 +45,51 @@ export class UserOrderDetailComponent implements OnInit {
         })
 
         this.order = filter[0]
-
+        this.paymentInfos = this.order.payment_intent.payment_method
         this.address = this.order.customer_details.address
 
         const date = new Date(this.order.created * 1000)
         this.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
 
         this.paymentStatus()
-        this.teste()
+        this.totalPrice()
         this.loadService.hideLoading()
       })
     })
   }
 
-  teste() {
-    this.paymentInfos = this.order.payment_intent.payment_method
+  totalPrice() {
+    let all: any = 0
+    let promotion: any = 0
+    let productsValue: any = 0
+
+    const products = this.order?.products
+    console.log(this.order)
+    products.forEach((product: any) => {
+      if (product.promotionInfos != null) {
+        promotion += (product.promotionInfos.oldPrice * product.promotionInfos.percentage) / 100
+        all += (product.price / 100) * product.amount
+        productsValue += product.promotionInfos.oldPrice * product.amount
+
+      } else {
+        all += (product.price / 100) * product.amount
+        productsValue += (product.price / 100) * product.amount
+      }
+
+    });
+
+    // Ajustar melhor depois esses valores
+    // E adicionar o frete
+    this.priceDetails.all = all.toFixed(2).replace('.', ',')
+    this.priceDetails.products = productsValue.toFixed(2).replace('.', ',')
+    this.priceDetails.promotions = promotion.toFixed(2).replace('.', ',')
   }
 
   paymentStatus() {
-    const status = document.querySelector('#status')
-
     if (this.order.payment_intent.status === 'succeeded') {
       this.status = 'Pago'
-      status?.classList.add('paid')
     } else {
       this.status = 'Aguardando pagamento'
-      status?.classList.add('unpaid')
     }
   }
 }

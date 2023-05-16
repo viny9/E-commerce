@@ -15,7 +15,7 @@ export class CartComponent implements OnInit {
   all: number = 0
   loading: any = false
 
-  constructor(private db: ProductService, private loadService:LoadService, private stripe: StripeService) {
+  constructor(private db: ProductService, private loadService: LoadService, private stripe: StripeService) {
     loadService.isLoading.subscribe((res: any) => {
       this.loading = res
     })
@@ -31,6 +31,7 @@ export class CartComponent implements OnInit {
       const productsArray = res.docs.map((element: any) => {
         return element.data()
       })
+
       this.products = productsArray
 
       this.isEmpty()
@@ -77,9 +78,14 @@ export class CartComponent implements OnInit {
   totalPrice() {
     let all: any = 0
     this.products.forEach((element: any) => {
-      all += element.price * element.amount
+      if (element.promotionInfos != null) {
+        all += element.promotionInfos.promotionPrice * element.amount
+      } else {
+        all += element.price * element.amount
+      }
     });
-    this.all = all
+
+    this.all = all.toFixed(2).replace('.', ',')
   }
 
   pay() {

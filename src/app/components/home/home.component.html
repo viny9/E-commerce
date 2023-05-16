@@ -24,9 +24,21 @@
             <img *ngIf="product.imgs.length === 0" src="../../../assets/without img.jpg" alt="">
             <div class="productInfos">
                 <h2>{{product.name}}</h2>
-                <p>R$ {{product.price.toFixed(2).replace('.', ',')}}</p>
+                <p class="priceContainer"
+                    *ngIf="product.promotionInfos === null || product.promotionInfos === undefined">R$
+                    {{product.price.toFixed(2).replace('.', ',')}}</p>
+                <span class="priceContainer"
+                    *ngIf="product.promotionInfos != null && product.promotionInfos != undefined">
+                    <p class="oldPrice"><s>R$ {{product.price.toFixed(2).replace('.', ',')}}</s></p>
+                    <p>R$ {{product.promotionInfos?.promotionPrice.toFixed(2).replace('.', ',')}}</p>
+                </span>
                 <!-- | currency:'BRL'}} -->
             </div>
         </mat-card>
     </div>
 </div>
+
+<!-- Adicionar categorias no lugar de todos os products -->
+<!-- Colocar um limite de quantas categorias aparecer -->
+<!-- No final um button para redirecionar o usuário para uma tela de todos os products da categoria -->
+<!-- Adicionar metodo para selecionar randomicamente as categorias -->
