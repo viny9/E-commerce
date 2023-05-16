@@ -74,11 +74,16 @@ export class PromotionsComponent implements OnInit {
   async updatePromotion() {
     const promotion = {
       ...this.form.value,
-      products: this.promotionProducts
+      products: this.promotionProducts.selectedProducts
+    }
+
+    if (this.promotionProducts.deletedProducts.length > 0) {
+      this.removeProductPromotion(this.promotionProducts.deletedProducts)
     }
 
     this.loadService.showLoading()
     this.db.updatePromotion(this.id, promotion)
+      .then(() => this.selectedPromotion = [])
       .then(() => this.getPromotions())
       .then(() => this.addProductPromotion())
       .then(() => this.cancel())
@@ -90,7 +95,7 @@ export class PromotionsComponent implements OnInit {
 
     const promotion = {
       ...this.form.value,
-      products: this.promotionProducts
+      products: this.promotionProducts.selectedProducts
     }
 
     this.db.newPromotion(promotion)
@@ -102,17 +107,31 @@ export class PromotionsComponent implements OnInit {
   }
 
   addProductPromotion() {
-    this.promotionProducts.forEach(async (product: any) => {
+    this.promotionProducts?.selectedProducts.forEach(async (product: any) => {
+
+      const percentage = product.promotionInfos?.percentage / 100
+      let promotionPrice = product.price - (product.price * percentage)
+      promotionPrice = Math.round(promotionPrice * 100) / 100
+
       delete product.edit
       product.promotionInfos.name = this.form.value.name
+      product.promotionInfos.promotionPrice = promotionPrice
 
       const id = await this.db.getProductId(product)
       this.db.editProduct(id, product)
-
+        .then(() => this.selectedPromotion = [])
         .catch((e: any) => console.log(e))
     });
-    // Ajustar a função de pegar o id do product
-    // Chamar ela aqui
+  }
+
+  removeProductPromotion(products: any) {
+    products.forEach(async (product: any) => {
+      product.promotionInfos = null
+      delete product.edit
+
+      const id = await this.db.getProductId(product)
+      this.db.editProduct(id, product)
+    });
   }
 
   async deletePromotion(promotion: any) {
@@ -121,6 +140,7 @@ export class PromotionsComponent implements OnInit {
     const id = await this.db.getPromotionId(promotion)
 
     this.db.deletePromotion(id)
+      .then(() => this.removeProductPromotion(promotion.products))
       .then(() => this.getPromotions())
       .then(() => this.cancel())
       .then(() => this.loadService.hideLoading())
@@ -143,5 +163,4 @@ export class PromotionsComponent implements OnInit {
       this.promotionProducts = res
     })
   }
-
 }

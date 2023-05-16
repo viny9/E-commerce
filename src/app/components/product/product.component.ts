@@ -40,7 +40,7 @@ export class ProductComponent implements OnInit {
 
       this.db.getProductById(id).subscribe((res: any) => {
         this.product = res.data()
-        this.selectedImg = this.product.imgs[0]?.url
+        this.selectedImg = this.product?.imgs[0]?.url
       })
     })
   }
@@ -78,19 +78,18 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  addFavorites() {
+  async addFavorites() {
     if (this.favorite === false) {
-      this.db.getProductId(this.product)
+      const id: any = await this.db.getProductId(this.product)
+      this.product.id = id
 
-      setTimeout(() => {
-        this.product.id = this.db.id
-
-        this.db.addProductInList(this.product)
-          .then(() => this.favorite = true)
-          .then(() => this.db.userMessages('Adicionado a sua lista'))
-      }, 500);
+      this.db.addProductInList(this.product)
+        .then(() => this.favorite = true)
+        .then(() => this.db.userMessages('Adicionado a sua lista'))
 
     } else if (this.favorite === true) {
+      const id: any = await this.db.getProductId(this.product)
+
       this.db.getListProductId(this.product)
 
       setTimeout(() => {
@@ -101,18 +100,16 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  addCart() {
+  async addCart() {
     if (this.inCart === false) {
-      this.db.getProductId(this.product)
+      const id = await this.db.getProductId(this.product)
 
-      setTimeout(() => {
-        this.product.amount = this.amount
-        this.product.id = this.db.id
+      this.product.amount = this.amount
+      this.product.id = id
 
-        this.db.addInCart(this.product)
-          .then(() => this.inCart = true)
-          .then(() => this.db.userMessages('Adicionado ao carrinho'))
-      }, 500);
+      this.db.addInCart(this.product)
+        .then(() => this.inCart = true)
+        .then(() => this.db.userMessages('Adicionado ao carrinho'))
 
     } else {
       this.db.userMessages('Produto já está no carrinho')
@@ -141,14 +138,12 @@ export class ProductComponent implements OnInit {
     })
   }
 
-  buy() {
-    this.db.getProductId(this.product)
+  async buy() {
+    const id = await this.db.getProductId(this.product)
 
-    setTimeout(() => {
-      this.product.id = this.db.id
-      this.product.amount = this.amount
-      this.stripeService.productPayment(this.product)
-    }, 500);
+    this.product.id = id
+    this.product.amount = this.amount
+    this.stripeService.productPayment(this.product)
   }
 
   // navigator.clipboard.writeText(window.location.href)

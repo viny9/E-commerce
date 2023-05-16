@@ -1,5 +1,4 @@
 import { BehaviorSubject } from 'rxjs';
-import { firstValueFrom } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -23,12 +22,10 @@ export class ProductService {
 
   // Metodos de Produto
   getProducts() {
-    this.loadService.loadingCount++
     return this.firebase.collection('products').get()
   }
 
   getProductById(id: any) {
-    this.loadService.loadingCount++
     return this.firebase.collection('products').doc(id).get()
   }
 
@@ -61,12 +58,10 @@ export class ProductService {
 
   // Metodos da lista
   getFavoriteList() {
-    this.loadService.loadingCount++
     return this.firebase.collection('users').doc(this.userId).collection('list').get()
   }
 
   getListProductId(product: any) {
-    this.loadService.loadingCount++
     this.getFavoriteList().subscribe((res: any) => {
       const ids = res.docs
 
@@ -89,7 +84,6 @@ export class ProductService {
 
   // Metodos do carrinho
   getCart() {
-    this.loadService.loadingCount++
     return this.firebase.collection('users').doc(this.userId).collection('cart').get()
   }
 
@@ -125,7 +119,6 @@ export class ProductService {
 
   // Categorias 
   getCategorys() {
-    this.loadService.loadingCount++
     return this.firebase.collection('productsCategorys').get()
   }
 
@@ -239,7 +232,6 @@ export class ProductService {
 
   //Notificações
   getNotifications() {
-    this.loadService.loadingCount++
     return this.firebase.collection('notifications').get()
   }
 
@@ -266,7 +258,6 @@ export class ProductService {
 
   // Notificações arquivadas
   getArchivedNotification() {
-    this.loadService.loadingCount++
     return this.firebase.collection('archivedNotifications').get()
   }
 
@@ -296,7 +287,6 @@ export class ProductService {
 
   // Todos os pedidos
   getOrders() {
-    this.loadService.loadingCount++
     return this.firebase.collection('allOrders').get()
   }
 

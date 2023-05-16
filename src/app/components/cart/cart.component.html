@@ -9,8 +9,8 @@
         <div class="productsContainer">
             <mat-card class="product" *ngFor="let product of products">
                 <div class="productInfos">
-                    <img src="https://www.shutterstock.com/image-photo/varna-bulgaria-18-november-2016-260nw-553415794.jpg"
-                        alt="">
+                    <img *ngIf="product.imgs[0]" [src]="product.imgs[0]?.url" alt="">
+                    <img *ngIf="product.imgs[0] === undefined" src="./../../../assets/without img.jpg">
                     <h1 class=" productName" routerLink="/product/{{product.id}}">{{product.name}}</h1>
                 </div>
                 <div>
@@ -20,7 +20,10 @@
                         <button (click)="addAmount(product)" mat-icon-button>+</button>
                     </div>
                 </div>
-                <h1>R$ {{product.price}}</h1>
+                <h1 *ngIf="product.promotionInfos === null || product.promotionInfos === undefined">R$
+                    {{product.price.toFixed(2).replace('.', ',')}}</h1>
+                <h1 *ngIf="product.promotionInfos != null && product.promotionInfos != undefined">R$
+                    {{product.promotionInfos?.promotionPrice.toFixed(2).replace('.', ',')}}</h1>
                 <button mat-icon-button color="warn" (click)="removeCartItem(product)">
                     <mat-icon>close</mat-icon>
                 </button>

@@ -14,13 +14,16 @@ export class DialogAddProductPromotionComponent implements OnInit {
   input: string = ''
   products: any
   teste: any
+  teste1: any = []
   selectedProducts: any = []
+  deletedProducts: any = []
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private db: ProductService, private dialog: MatDialogRef<PromotionsComponent>) { }
 
   ngOnInit(): void {
     this.getProducts()
-    this.selectedProducts = this.data.products
+    this.selectedProducts = this.data?.products || []
+    this.teste1 = this.data?.products || []
   }
 
   getProducts() {
@@ -29,7 +32,17 @@ export class DialogAddProductPromotionComponent implements OnInit {
         return doc.data()
       })
 
-      this.teste = this.products
+      const teste1 = []
+
+      for (let i = 0; i < this.products.length; i++) {
+        const element = this.products[i];
+
+        if (element.promotionInfos === undefined || element.promotionInfos === null) {
+          teste1.push(element)
+        }
+      }
+
+      this.teste = teste1
     })
   }
 
@@ -40,7 +53,7 @@ export class DialogAddProductPromotionComponent implements OnInit {
   }
 
   selectProduct(option: any) {
-    const products = this.selectedProducts.map((product: any) => {
+    const products: any = this.selectedProducts.map((product: any) => {
       return product.name
     })
 
@@ -86,16 +99,27 @@ export class DialogAddProductPromotionComponent implements OnInit {
   }
 
   removeProduct(product: any) {
-    const products = this.selectedProducts.map((product: any) => {
+    const products = this.selectedProducts?.map((product: any) => {
       return product.name
     })
 
     const index = products.indexOf(product.name)
+    const teste = this.selectedProducts[index]
+
+    if (this.teste1.includes(teste)) {
+      this.deletedProducts.push(teste)
+    }
+
     this.selectedProducts.splice(index, 1)
   }
 
   addPromotion() {
-    this.dialog.close(this.selectedProducts)
+    const updates = {
+      selectedProducts: this.selectedProducts,
+      deletedProducts: this.deletedProducts
+    }
+
+    this.dialog.close(updates)
   }
 
   cancel() {

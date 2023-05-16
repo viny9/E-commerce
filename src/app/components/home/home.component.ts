@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
   products: any = []
   imgNumber: any = 1
   loading: any = false
+  promotionPrice: any = []
 
   constructor(private db: ProductService, private loadService: LoadService, private route: Router) {
     loadService.isLoading.subscribe((res: any) => {
@@ -53,12 +54,9 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  selectProduct(product: any) {
-    this.db.getProductId(product)
-
-    setTimeout(() => {
-      this.route.navigate([`product/${this.db.id}`])
-    }, 500);
+  async selectProduct(product: any) {
+    const id = await this.db.getProductId(product)
+    this.route.navigate([`product/${id}`])
 
   }
 

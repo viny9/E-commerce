@@ -5,7 +5,7 @@
 <div class="OrderDetailsComponent" *ngIf="!loading">
     <div class="orderHead">
         <span>
-            <h1 id="status">{{status}}</h1>
+            <h1 [ngClass]="status === 'Pago'? 'paid' : 'unpaid'">{{status}}</h1>
             <p>Numero do pedido: #{{order?.order_number}}</p>
             <p>Pedido em: {{date}} </p>
         </span>
@@ -32,9 +32,9 @@
             <div class="fields">
                 <h3>Resumo do pedido</h3>
                 <span>Frete: R$ 10</span>
-                <span>Produto(s): R$ 10</span>
-                <span>Promoção: - R$ 10</span>
-                <span>Total: R$ 200</span>
+                <span>Produto(s): R$ {{priceDetails.products}}</span>
+                <span>Promoção: - R$ {{priceDetails.promotions}}</span>
+                <span>Total: R$ {{priceDetails.all}}</span>
             </div>
         </div>
     </mat-expansion-panel>
