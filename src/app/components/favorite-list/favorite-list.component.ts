@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GetIdTypes } from 'src/app/enums/get-id-types';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/services/product/product.service';
 
@@ -44,14 +45,12 @@ export class FavoriteListComponent implements OnInit {
     this.loadService.hideLoading()
   }
 
-  remove(product: any) {
-    this.db.getListProductId(product)
+  async remove(product: any) {
+    const id:any = await this.db.getId(GetIdTypes.list, product)
 
-    setTimeout(() => {
-      this.db.deleteFromList(this.db.id)
-        .then(() => console.log('removido'))
-        .then(() => window.location.reload())
-    }, 500);
+    this.db.deleteFromList(id)
+      .then(() => console.log('removido'))
+      .then(() => window.location.reload())
   }
 
 }

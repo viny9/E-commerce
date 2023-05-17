@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product/product.service';
 import { LoadService } from 'src/app/services/load/load.service';
+import { GetIdTypes } from 'src/app/enums/get-id-types';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -80,7 +81,7 @@ export class ProductComponent implements OnInit {
 
   async addFavorites() {
     if (this.favorite === false) {
-      const id: any = await this.db.getProductId(this.product)
+      const id: any = await this.db.getId(GetIdTypes.products, this.product)
       this.product.id = id
 
       this.db.addProductInList(this.product)
@@ -88,21 +89,17 @@ export class ProductComponent implements OnInit {
         .then(() => this.db.userMessages('Adicionado a sua lista'))
 
     } else if (this.favorite === true) {
-      const id: any = await this.db.getProductId(this.product)
+      const id: any = await this.db.getId(GetIdTypes.list, this.product)
 
-      this.db.getListProductId(this.product)
-
-      setTimeout(() => {
-        this.db.deleteFromList(this.db.id)
-          .then(() => this.favorite = false)
-          .then(() => this.db.userMessages('Foi removido da sua lista'))
-      }, 500);
+      this.db.deleteFromList(id)
+        .then(() => this.favorite = false)
+        .then(() => this.db.userMessages('Foi removido da sua lista'))
     }
   }
 
   async addCart() {
     if (this.inCart === false) {
-      const id = await this.db.getProductId(this.product)
+      const id: any = await this.db.getId(GetIdTypes.products, this.product)
 
       this.product.amount = this.amount
       this.product.id = id
@@ -139,7 +136,7 @@ export class ProductComponent implements OnInit {
   }
 
   async buy() {
-    const id = await this.db.getProductId(this.product)
+    const id: any = await this.db.getId(GetIdTypes.products, this.product)
 
     this.product.id = id
     this.product.amount = this.amount

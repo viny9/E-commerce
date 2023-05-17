@@ -1,6 +1,7 @@
 import { ProductService } from '../../../services/product/product.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { GetIdTypes } from 'src/app/enums/get-id-types';
 
 @Component({
   selector: 'app-dialog-category',
@@ -44,17 +45,14 @@ export class DialogCategoryComponent implements OnInit {
     this.selectedCategory = category.name
   }
 
-  updateCategory() {
-    this.db.getCategoryId(this.selectedCategory)
+  async updateCategory() {
+    const id = await this.db.getId(GetIdTypes.category, this.selectedCategory)
 
-    setTimeout(() => {
-      const id = this.db.id
-      const upadatedCategory = { name: this.editCategoryInput }
+    const upadatedCategory = { name: this.editCategoryInput }
 
-      this.db.updateCategory(id, upadatedCategory)
-        .then(() => this.categorysList())
-        .then(() => this.filterProducts())
-    }, 1000);
+    this.db.updateCategory(id, upadatedCategory)
+      .then(() => this.categorysList())
+      .then(() => this.filterProducts())
   }
 
   filterProducts() {
@@ -92,14 +90,12 @@ export class DialogCategoryComponent implements OnInit {
     })
   }
 
-  deleteCategory(category: any) {
-    this.db.getCategoryId(category.name)
+  async deleteCategory(category: any) {
+    const id = await this.db.getId(GetIdTypes.category, category)
 
-    setTimeout(() => {
-      this.db.removeCategory(this.db.id)
-        .then(() => this.db.userMessages('Categoria removida'))
-        .then(() => this.categorysList())
-    }, 500);
+    this.db.removeCategory(id)
+      .then(() => this.db.userMessages('Categoria removida'))
+      .then(() => this.categorysList())
   }
 
   close() {

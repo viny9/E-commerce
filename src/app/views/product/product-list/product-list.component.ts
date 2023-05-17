@@ -7,6 +7,7 @@ import { DialogCategoryComponent } from '../dialog-category/dialog-category.comp
 import { LoadService } from 'src/app/services/load/load.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { GetIdTypes } from 'src/app/enums/get-id-types';
 
 
 @Component({
@@ -55,12 +56,13 @@ export class ProductListComponent implements AfterViewInit {
   }
 
   async editPage(product: any) {
-    const id = await this.db.getProductId(product)
+    const id: any = await this.db.getId(GetIdTypes.products, product)
+
     this.route.navigate([`admin/products/editProduct/${id}`])
   }
 
   async removeProduct(product: any) {
-    const id = await this.db.getProductId(product)
+    const id: any = await this.db.getId(GetIdTypes.products, product)
 
     this.db.deleteProduct(id)
       .then(() => {

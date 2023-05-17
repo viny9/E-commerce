@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -29,21 +29,6 @@ export class ProductService {
     return this.firebase.collection('products').doc(id).get()
   }
 
-  getProductId(product: any) {
-    return new Promise((resolve, rejects) => {
-      this.getProducts().subscribe((res: any) => {
-        const ids = res.docs
-
-        const products = res.docs.map((res: any) => {
-          return res.data().name
-        })
-
-        const index = products.indexOf(product.name)
-        resolve(ids[index].id)
-      })
-    })
-  }
-
   createProduct(product: Object) {
     return this.firebase.collection('products').add(product)
   }
@@ -61,19 +46,6 @@ export class ProductService {
     return this.firebase.collection('users').doc(this.userId).collection('list').get()
   }
 
-  getListProductId(product: any) {
-    this.getFavoriteList().subscribe((res: any) => {
-      const ids = res.docs
-
-      const products = res.docs.map((res: any) => {
-        return res.data().name
-      })
-
-      const index = products.indexOf(product.name)
-      this.id = ids[index].id
-    })
-  }
-
   addProductInList(product: any) {
     return this.firebase.collection('users').doc(this.userId).collection('list').add(product)
   }
@@ -85,19 +57,6 @@ export class ProductService {
   // Metodos do carrinho
   getCart() {
     return this.firebase.collection('users').doc(this.userId).collection('cart').get()
-  }
-
-  getCartProductId(product: any) {
-    this.getCart().subscribe((res: any) => {
-      const ids = res.docs
-
-      const products = res.docs.map((res: any) => {
-        return res.data().name
-      })
-
-      const index = products.indexOf(product.name)
-      this.id = ids[index].id
-    })
   }
 
   addInCart(product: any) {
@@ -120,19 +79,6 @@ export class ProductService {
   // Categorias 
   getCategorys() {
     return this.firebase.collection('productsCategorys').get()
-  }
-
-  getCategoryId(category: any) {
-    this.getCategorys().subscribe((res: any) => {
-      const ids = res.docs
-
-      const categorys = res.docs.map((res: any) => {
-        return res.data().name
-      })
-
-      const index = categorys.indexOf(category)
-      this.id = ids[index].id
-    })
   }
 
   addCategory(category: any) {
@@ -173,23 +119,6 @@ export class ProductService {
 
   getPromotionById(id: any) {
     return this.firebase.collection('promotions').doc(id).get()
-  }
-
-  // COPY this to every method that is getting a firestore document id
-  getPromotionId(selectedPromotion: any) {
-    return new Promise((resolve, reject) => {
-
-      this.getPromotions().subscribe((res: any) => {
-        const ids = res.docs
-
-        const promotions = res.docs.map((res: any) => {
-          return res.data().name
-        })
-
-        const index = promotions.indexOf(selectedPromotion.name)
-        resolve(ids[index].id)
-      })
-    })
   }
 
   newPromotion(promotion: any) {
@@ -292,6 +221,45 @@ export class ProductService {
 
   sendAdminOrder(order: any) {
     return this.firebase.collection('allOrders').add(order)
+  }
+
+  getId(type: any, product: any) {
+    let get: Observable<any> | undefined | any = undefined
+
+    switch (type) {
+      case 'products':
+        get = this.getProducts()
+        break;
+
+      case 'listProduct':
+        get = this.getFavoriteList()
+        break;
+
+      case 'cartProduct':
+        get = this.getCart()
+        break;
+
+      case 'category':
+        get = this.getCategorys()
+        break;
+
+      case 'promotion':
+        get = this.getPromotions()
+        break;
+    }
+
+    return new Promise((resolve, rejects) => {
+      get.subscribe((res: any) => {
+        const ids = res.docs
+
+        const docs = res.docs.map((res: any) => {
+          return res.data().name
+        })
+
+        const index = docs.indexOf(product.name || product)
+        resolve(ids[index].id)
+      })
+    })
   }
 
   //Atualizar o componente selecionado na área do admin

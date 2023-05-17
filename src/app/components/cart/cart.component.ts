@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GetIdTypes } from 'src/app/enums/get-id-types';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { StripeService } from 'src/app/services/stripe/stripe.service';
@@ -48,15 +49,13 @@ export class CartComponent implements OnInit {
     }
   }
 
-  removeCartItem(product: any) {
-    this.db.getCartProductId(product)
+  async removeCartItem(product: any) {
+    const id = await this.db.getId(GetIdTypes.cart, product)
 
-    setTimeout(() => {
-      this.db.deleteCartProduct(this.db.id)
-        .then(() => this.cartItens())
-        .then(() => console.log('removido')
-        )
-    }, 500);
+    this.db.deleteCartProduct(id)
+      .then(() => this.cartItens())
+      .then(() => console.log('removido')
+      )
   }
 
   subAmount(product: any) {

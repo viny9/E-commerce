@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { DialogAddProductPromotionComponent } from '../dialog-add-product-promotion/dialog-add-product-promotion.component';
+import { GetIdTypes } from 'src/app/enums/get-id-types';
 
 @Component({
   selector: 'app-promotions',
@@ -59,7 +60,8 @@ export class PromotionsComponent implements OnInit {
 
   // Adicionar o disabled no button
   async selectPromotion(promotion: any) {
-    const id = await this.db.getPromotionId(promotion)
+    const id = await this.db.getId(GetIdTypes.promotion, promotion)
+
     this.id = id
     this.selected = true
 
@@ -117,7 +119,8 @@ export class PromotionsComponent implements OnInit {
       product.promotionInfos.name = this.form.value.name
       product.promotionInfos.promotionPrice = promotionPrice
 
-      const id = await this.db.getProductId(product)
+      const id: any = await this.db.getId(GetIdTypes.products, product)
+
       this.db.editProduct(id, product)
         .then(() => this.selectedPromotion = [])
         .catch((e: any) => console.log(e))
@@ -129,7 +132,7 @@ export class PromotionsComponent implements OnInit {
       product.promotionInfos = null
       delete product.edit
 
-      const id = await this.db.getProductId(product)
+      const id: any = await this.db.getId(GetIdTypes.products, product)
       this.db.editProduct(id, product)
     });
   }
@@ -137,7 +140,7 @@ export class PromotionsComponent implements OnInit {
   async deletePromotion(promotion: any) {
     this.loadService.showLoading()
 
-    const id = await this.db.getPromotionId(promotion)
+    const id = await this.db.getId(GetIdTypes.promotion, promotion)
 
     this.db.deletePromotion(id)
       .then(() => this.removeProductPromotion(promotion.products))

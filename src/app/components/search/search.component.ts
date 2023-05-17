@@ -2,6 +2,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { ActivatedRoute } from '@angular/router';
+import { GetIdTypes } from 'src/app/enums/get-id-types';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/services/product/product.service';
 
@@ -133,7 +134,7 @@ export class SearchComponent implements OnInit {
   }
 
   async selectProduct(product: any) {
-    const id = await this.db.getProductId(product)
+    const id: any = await this.db.getId(GetIdTypes.products, product)
 
     this.db.navegate(`product/${id}`)
 

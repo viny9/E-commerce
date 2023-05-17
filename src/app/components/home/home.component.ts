@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { GetIdTypes } from 'src/app/enums/get-id-types';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/services/product/product.service';
 
@@ -55,9 +56,8 @@ export class HomeComponent implements OnInit {
   }
 
   async selectProduct(product: any) {
-    const id = await this.db.getProductId(product)
+    const id = await this.db.getId(GetIdTypes.products, product)
     this.route.navigate([`product/${id}`])
-
   }
 
   // Carrousel improvisado criar outro depois
