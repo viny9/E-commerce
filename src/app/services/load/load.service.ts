@@ -7,8 +7,7 @@ import { Injectable } from '@angular/core';
 export class LoadService {
 
   // Futuramente pensar em fazer um load para quem entrar no site
-  loadingCount: any = 0;
-  private isLoadingSubject: any = new BehaviorSubject<any>(false)
+  private isLoadingSubject = new BehaviorSubject<boolean>(false)
   isLoading = this.isLoadingSubject.asObservable()
 
   constructor() { }
@@ -18,13 +17,6 @@ export class LoadService {
   }
 
   hideLoading() {
-    while (this.loadingCount > 0) {
-      this.loadingCount--;
-    }
-
-    if (this.loadingCount <= 0) {
-      this.loadingCount = 0;
-      this.isLoadingSubject.next(false)
-    }
+    this.isLoadingSubject.next(false)
   }
 }

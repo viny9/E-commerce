@@ -19,6 +19,16 @@
   align-items: center;
 }
 
+.productInfos h1{
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  width: 60%;
+}
+
 .productInfos h1:hover {
   text-decoration: underline;
 }
@@ -26,7 +36,6 @@
 .imgContainer {
   display: flex;
   justify-content: center;
-  width: 200px;
   margin-right: 2rem;
 }
 

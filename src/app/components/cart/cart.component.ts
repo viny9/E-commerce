@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { GetIdTypes } from 'src/app/enums/get-id-types';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { StripeService } from 'src/app/services/stripe/stripe.service';
@@ -11,13 +10,13 @@ import { StripeService } from 'src/app/services/stripe/stripe.service';
 })
 export class CartComponent implements OnInit {
 
-  empty: any = true
+  empty = true
   products: any = []
   all: number = 0
-  loading: any = false
+  loading = false
 
   constructor(private db: ProductService, private loadService: LoadService, private stripe: StripeService) {
-    loadService.isLoading.subscribe((res: any) => {
+    loadService.isLoading.subscribe((res) => {
       this.loading = res
     })
   }
@@ -28,9 +27,10 @@ export class CartComponent implements OnInit {
 
   cartItens() {
     this.loadService.showLoading()
-    this.db.getCart().subscribe((res: any) => {
-      const productsArray = res.docs.map((element: any) => {
-        return element.data()
+
+    this.db.getCart().subscribe((res) => {
+      const productsArray = res.docs.map((doc: any) => {
+        return doc.data()
       })
 
       this.products = productsArray
@@ -49,13 +49,11 @@ export class CartComponent implements OnInit {
     }
   }
 
-  async removeCartItem(product: any) {
-    const id = await this.db.getId(GetIdTypes.cart, product)
+  async removeCartItem(product: Object) {
+    const id = await this.db.getId(this.db.path.cart, product)
 
-    this.db.deleteCartProduct(id)
-      .then(() => this.cartItens())
-      .then(() => console.log('removido')
-      )
+    await this.db.deleteCartProduct(id)
+    this.cartItens()
   }
 
   subAmount(product: any) {

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/services/product/product.service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -10,9 +9,8 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class HeadComponent implements OnInit {
 
-  theme: any
-  admin: any = false
-  logged: any = false
+  theme = localStorage.getItem('theme')
+  logged: boolean = false
   searchInput: any
 
   constructor(private db: ProductService, private userService: UserService) { }
@@ -21,8 +19,7 @@ export class HeadComponent implements OnInit {
     this.themeStatus()
     this.getSearch()
 
-    this.logged = this.userService.userStatus().logged
-    this.admin = this.userService.userStatus().admin
+    this.logged = this.userService.isLogged()
   }
 
   getSearch() {
@@ -30,8 +27,6 @@ export class HeadComponent implements OnInit {
   }
 
   themeStatus() {
-    this.theme = localStorage.getItem('theme')
-
     const sun = document.querySelector('.sun')
     const moon = document.querySelector('.moon')
 
@@ -69,13 +64,11 @@ export class HeadComponent implements OnInit {
       document.body.classList.toggle('lightMode')
       localStorage.setItem('theme', 'dark')
     }
-
   }
 
   search() {
     localStorage.setItem('search', this.searchInput)
     
     this.db.navegate(`search/${this.searchInput}`)
-      .then(() => window.location.reload())
   }
 }

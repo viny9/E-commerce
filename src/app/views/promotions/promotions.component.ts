@@ -4,7 +4,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { DialogAddProductPromotionComponent } from '../dialog-add-product-promotion/dialog-add-product-promotion.component';
-import { GetIdTypes } from 'src/app/enums/get-id-types';
+import { AdminRoutes } from 'src/app/enums/admin-routes';
+import { Promotion } from 'src/app/models/promotion';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-promotions',
@@ -13,16 +15,16 @@ import { GetIdTypes } from 'src/app/enums/get-id-types';
 })
 export class PromotionsComponent implements OnInit {
 
-  columns = ['name', 'start', 'finish', 'actions']
+  columns: string[] = ['name', 'start', 'finish', 'actions']
   dataSource: any
-  form: any
-  id: any
+  form!: FormGroup
+  id: string = ''
   selected: boolean = false
   promotionProducts: any
-  selectedPromotion: any
+  selectedPromotion: Promotion[] = []
 
   constructor(private db: ProductService, private loadService: LoadService, private dialog: MatDialog) {
-    db.selectComponent = 'promotions'
+    db.selectComponent = AdminRoutes.promotions
   }
 
   ngOnInit(): void {
@@ -30,37 +32,36 @@ export class PromotionsComponent implements OnInit {
     this.getPromotions()
   }
 
-  createForm(teste?: any) {
+  createForm(promotionInfos?: Promotion) {
     this.form = new FormGroup({
-      name: new FormControl(teste?.name),
-      description: new FormControl(teste?.description),
-      start: new FormControl(teste?.start),
-      end: new FormControl(teste?.end),
+      name: new FormControl(promotionInfos?.name),
+      description: new FormControl(promotionInfos?.description),
+      start: new FormControl(promotionInfos?.start),
+      end: new FormControl(promotionInfos?.end),
     })
   }
 
   getPromotions() {
     this.loadService.showLoading()
-    this.db.getPromotions().subscribe((res: any) => {
+
+    this.db.getPromotions().subscribe((res) => {
       this.dataSource = res.docs.map((doc: any) => {
 
-        const promotion = {
-          ...doc.data()
-        }
+        const promotion = doc.data()
 
         promotion.start = doc.data().start.replace(/-/g, '/')
         promotion.end = doc.data().end.replace(/-/g, '/')
 
         return promotion
       })
-      this.loadService.hideLoading()
 
+      this.loadService.hideLoading()
     })
   }
 
   // Adicionar o disabled no button
-  async selectPromotion(promotion: any) {
-    const id = await this.db.getId(GetIdTypes.promotion, promotion)
+  async selectPromotion(promotion: Promotion) {
+    const id = await this.db.getId(this.db.path.promotions, promotion)
 
     this.id = id
     this.selected = true
@@ -84,12 +85,13 @@ export class PromotionsComponent implements OnInit {
     }
 
     this.loadService.showLoading()
-    this.db.updatePromotion(this.id, promotion)
-      .then(() => this.selectedPromotion = [])
-      .then(() => this.getPromotions())
-      .then(() => this.addProductPromotion())
-      .then(() => this.cancel())
-      .then(() => this.loadService.hideLoading())
+
+    await this.db.updatePromotion(this.id, promotion)
+    this.selectedPromotion = []
+    this.getPromotions()
+    this.addProductPromotion()
+    this.cancel()
+    this.loadService.hideLoading()
   }
 
   newPromotion() {
@@ -111,7 +113,7 @@ export class PromotionsComponent implements OnInit {
   addProductPromotion() {
     this.promotionProducts?.selectedProducts.forEach(async (product: any) => {
 
-      const percentage = product.promotionInfos?.percentage / 100
+      const percentage = product.promotionInfos.percentage / 100
       let promotionPrice = product.price - (product.price * percentage)
       promotionPrice = Math.round(promotionPrice * 100) / 100
 
@@ -119,7 +121,7 @@ export class PromotionsComponent implements OnInit {
       product.promotionInfos.name = this.form.value.name
       product.promotionInfos.promotionPrice = promotionPrice
 
-      const id: any = await this.db.getId(GetIdTypes.products, product)
+      const id = await this.db.getId(this.db.path.products, product)
 
       this.db.editProduct(id, product)
         .then(() => this.selectedPromotion = [])
@@ -127,25 +129,26 @@ export class PromotionsComponent implements OnInit {
     });
   }
 
-  removeProductPromotion(products: any) {
+  removeProductPromotion(products: Product[]) {
     products.forEach(async (product: any) => {
       product.promotionInfos = null
       delete product.edit
 
-      const id: any = await this.db.getId(GetIdTypes.products, product)
+      const id = await this.db.getId(this.db.path.products, product)
       this.db.editProduct(id, product)
     });
   }
 
-  async deletePromotion(promotion: any) {
+  async deletePromotion(promotion: Promotion) {
     this.loadService.showLoading()
 
-    const id = await this.db.getId(GetIdTypes.promotion, promotion)
+    const id = await this.db.getId(this.db.path.promotions, promotion)
 
     this.db.deletePromotion(id)
       .then(() => this.removeProductPromotion(promotion.products))
       .then(() => this.getPromotions())
       .then(() => this.cancel())
+      
       .then(() => this.loadService.hideLoading())
   }
 
@@ -162,7 +165,7 @@ export class PromotionsComponent implements OnInit {
       data: this.selectedPromotion
     })
 
-    dialog.afterClosed().subscribe((res: any) => {
+    dialog.afterClosed().subscribe((res: Product[]) => {
       this.promotionProducts = res
     })
   }

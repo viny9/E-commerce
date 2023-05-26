@@ -2,25 +2,25 @@
     <mat-sidenav opened class="sidenav" mode="side">
         <mat-nav-list class="nav">
             <a mat-list-item routerLink="products"
-                [ngClass]="selected === 'products' ? 'selected' : '' ">
+                [ngClass]="selected === 'Products' ? 'selected' : '' ">
                 <mat-icon>storefront</mat-icon>
                 Produtos
             </a>
 
             <a mat-list-item routerLink="promotions"
-                [ngClass]="selected === 'promotions' ? 'selected' : '' ">
+                [ngClass]="selected === 'Promotions' ? 'selected' : '' ">
                 <mat-icon>local_offer</mat-icon>
                 Promoções
             </a>
 
             <a mat-list-item routerLink="orders"
-                [ngClass]="selected === 'orders' ? 'selected' : '' ">
+                [ngClass]="selected === 'Orders' ? 'selected' : '' ">
                 <mat-icon>list_alt</mat-icon>
                 Pedidos
             </a>
 
             <a mat-list-item (click)="selected = 'notifications' " routerLink="notifications"
-                [ngClass]="selected === 'notifications' ? 'selected' : '' ">
+                [ngClass]="selected === 'Notifications' ? 'selected' : '' ">
                 <mat-icon>notifications_active</mat-icon>
                 Notificações
             </a>

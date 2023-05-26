@@ -1,6 +1,7 @@
 <div class="productComponent" *ngIf="!loading">
+
     <div class="product">
-        <div>
+        <div class="imgContainer">
             <img *ngIf="selectedImg != undefined" [src]="selectedImg" alt="" class="selectedImg">
             <img *ngIf="selectedImg === undefined" src="../../../assets/without img.jpg" alt="" class="selectedImg">
             <div class="allImgs">
@@ -9,18 +10,18 @@
         </div>
 
         <div class="productInfos">
-            <h1 class="productName">{{product?.name}}</h1>
+            <h1 class="productName">{{product.name}}</h1>
 
             <div class="priceContainer" *ngIf="product.promotionInfos === null || product.promotionInfos === undefined">
-                <p class="productPrice">R${{product?.price.toFixed(2).replace('.', ',')}}</p>
+                <p class="productPrice">R${{product.price.toFixed(2).replace('.', ',')}}</p>
             </div>
 
             <div class="priceContainer" *ngIf="product.promotionInfos != null && product.promotionInfos != undefined">
-                <p class="oldPrice"><s>R${{product?.price.toFixed(2).replace('.', ',')}}</s></p>
+                <p class="oldPrice"><s>R${{product.price.toFixed(2).replace('.', ',')}}</s></p>
                 <span>
-                    <h2 class="productPrice">R$ {{product.promotionInfos?.promotionPrice.toFixed(2).replace('.', ',')}}
+                    <h2 class="productPrice">R$ {{product.promotionInfos.promotionPrice.toFixed(2).replace('.', ',')}}
                     </h2>
-                    <p class="percentage"> {{product.promotionInfos?.percentage}}%</p>
+                    <p class="percentage"> {{product.promotionInfos.percentage}}%</p>
                 </span>
             </div>
             <!-- | currency:'BRL'}} -->

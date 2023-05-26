@@ -1,9 +1,11 @@
 import { MatPaginator } from '@angular/material/paginator';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ProductService } from 'src/app/services/product/product.service';
 import { LoadService } from 'src/app/services/load/load.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { AdminRoutes } from 'src/app/enums/admin-routes';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-orders-list',
@@ -13,16 +15,16 @@ import { MatSort } from '@angular/material/sort';
 export class OrdersListComponent implements AfterViewInit {
 
   dataSource: any
-  products: any
-  columns: any = ['id', 'email', 'value', 'status', 'data', 'actions']
-  priceTotal: any
+  products!: Product[]
+  columns: string[] = ['id', 'email', 'value', 'status', 'data', 'actions']
+  priceTotal: number = 0
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  loading: any = false
+  loading: boolean = false
 
   constructor(private db: ProductService, private loadService: LoadService) {
-    db.selectComponent = 'orders'
+    db.selectComponent = AdminRoutes.orders
   }
 
   ngAfterViewInit() {
@@ -31,7 +33,8 @@ export class OrdersListComponent implements AfterViewInit {
 
   allOrders() {
     this.loadService.showLoading()
-    this.db.getOrders().subscribe((res: any) => {
+
+    this.db.getOrders().subscribe((res) => {
 
       this.products = res.docs.map((doc: any) => {
         return doc.data()
@@ -62,8 +65,8 @@ export class OrdersListComponent implements AfterViewInit {
 
       switch (date.getDate() == orderDate.getDate()) {
         case true:
-          let hour: any = orderDate.getHours()
-          let minutes: any = orderDate.getMinutes()
+          let hour: string | number = orderDate.getHours()
+          let minutes: string | number = orderDate.getMinutes()
 
           hour = hour < 10 ? `0${hour}` : hour
           minutes = minutes < 10 ? `0${minutes}` : minutes
@@ -72,8 +75,8 @@ export class OrdersListComponent implements AfterViewInit {
           break;
 
         case false:
-          let day: any = orderDate.getDate()
-          let mounth: any = orderDate.getMonth() + 1
+          let day: string | number = orderDate.getDate()
+          let mounth: string | number = orderDate.getMonth() + 1
 
           day = day < 10 ? `0${day}` : day
           mounth = mounth < 10 ? `0${mounth}` : mounth
@@ -103,6 +106,7 @@ export class OrdersListComponent implements AfterViewInit {
   total() {
     this.products.forEach((element: any) => {
       let total: any = 0
+
       for (let i = 0; i < element.products.length; i++) {
         const product = element.products[i];
         total += (product.price * product.amount) / 100

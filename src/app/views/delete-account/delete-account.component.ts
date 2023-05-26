@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SignInComponent } from 'src/app/components/sign-in/sign-in.component';
-import { StripeService } from 'src/app/services/stripe/stripe.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -11,9 +10,9 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class DeleteAccountComponent implements OnInit {
 
-  password: any
+  password: string = ''
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialog: MatDialogRef<SignInComponent>, private userService: UserService, private stripeService: StripeService,) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialog: MatDialogRef<SignInComponent>, private userService: UserService) { }
 
   ngOnInit(): void {
   }
@@ -21,17 +20,12 @@ export class DeleteAccountComponent implements OnInit {
   deleteAccount() {
     const user = {
       email: this.data.email,
-      password: this.password
+      password: this.password,
+      stripe_id: this.data.stripe_id
     }
 
     this.userService.deleteUser(user)
-      .then(() => {
-        this.stripeService.deleteCustomer(this.data.stripe_id).subscribe((res: any) => {
-          this.userService.userMessages('Conta deletada')
-        })
-      })
-      .then(() => this.userService.navegate('/signIn'))
-      .then(() => this.dialog.close())
+      .then(() => Promise.all([this.userService.navegate('/signIn'), this.dialog.close()]))
       .catch((e: any) => this.userService.userMessages(e))
   }
 }

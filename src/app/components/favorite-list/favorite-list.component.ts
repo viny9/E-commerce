@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { GetIdTypes } from 'src/app/enums/get-id-types';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/services/product/product.service';
 
@@ -10,12 +9,12 @@ import { ProductService } from 'src/app/services/product/product.service';
 })
 export class FavoriteListComponent implements OnInit {
 
-  empty: any
-  list: any = []
-  loading: any = false
+  empty = true
+  list: any[] = []
+  loading = false
 
   constructor(private db: ProductService, private loadService: LoadService) {
-    loadService.isLoading.subscribe((res: any) => {
+    loadService.isLoading.subscribe((res) => {
       this.loading = res
     })
   }
@@ -26,12 +25,14 @@ export class FavoriteListComponent implements OnInit {
 
   favoriteList() {
     this.loadService.showLoading()
-    this.db.getFavoriteList().subscribe((res: any) => {
-      res.docs.forEach((element: any) => {
-        this.list.push(element.data())
+
+    this.db.getFavoriteList().subscribe((res) => {
+      this.list = res.docs.map((doc) => {
+        return doc.data()
       });
 
       this.isEmpty()
+      this.loadService.hideLoading()
     })
   }
 
@@ -41,16 +42,13 @@ export class FavoriteListComponent implements OnInit {
     } else {
       this.empty = false
     }
-
-    this.loadService.hideLoading()
   }
 
-  async remove(product: any) {
-    const id:any = await this.db.getId(GetIdTypes.list, product)
+  async remove(product: Object) {
+    const id: any = await this.db.getId(this.db.path.list, product)
 
-    this.db.deleteFromList(id)
-      .then(() => console.log('removido'))
-      .then(() => window.location.reload())
+    await this.db.deleteFromList(id)
+    this.favoriteList()
   }
 
 }

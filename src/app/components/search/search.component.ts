@@ -2,7 +2,6 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { ActivatedRoute } from '@angular/router';
-import { GetIdTypes } from 'src/app/enums/get-id-types';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/services/product/product.service';
 
@@ -20,13 +19,12 @@ export class SearchComponent implements OnInit {
   selectedFilters: any = []
   selected: any = -1
   filterProducts: any = []
-  teste: any
 
   dataSource = new MatTreeNestedDataSource()
   treeControl = new NestedTreeControl((node: any) => node.children)
 
   constructor(private db: ProductService, private loadService: LoadService, private router: ActivatedRoute) {
-    loadService.isLoading.subscribe((res: any) => {
+    loadService.isLoading.subscribe((res) => {
       this.loading = res
     })
 
@@ -134,14 +132,13 @@ export class SearchComponent implements OnInit {
   }
 
   async selectProduct(product: any) {
-    const id: any = await this.db.getId(GetIdTypes.products, product)
-
+    const id: any = await this.db.getId(this.db.path.products, product)
     this.db.navegate(`product/${id}`)
-
   }
 
   selectedFilter(selectedFilter: any) {
     this.loadService.showLoading()
+
     this.selectedFilters.push(selectedFilter)
 
     const duplicateFilter = this.selectedFilters.filter((filter: any) => {
@@ -153,7 +150,6 @@ export class SearchComponent implements OnInit {
     })
 
     if (duplicateFilter.length <= 1 && twoPriceFilter.length <= 1) {
-
       this.addFilter()
 
       if (this.products.length === 0) {
@@ -174,7 +170,7 @@ export class SearchComponent implements OnInit {
     this.router.params.subscribe((word: any) => {
       const searchWord = word.searchWord
 
-      this.db.getProducts().subscribe((res: any) => {
+      this.db.getProducts().subscribe((res) => {
 
         const products = res.docs.map((doc: any) => {
           return doc.data()
@@ -189,7 +185,6 @@ export class SearchComponent implements OnInit {
         for (let filter of this.selectedFilters) {
 
           if (filter.type === 'category') {
-
             // Remove os items duplicados do array
             this.filterProducts = this.filterProducts.filter((value: any, index: any, self: any) =>
               index === self.findIndex((t: any) => (
@@ -209,21 +204,21 @@ export class SearchComponent implements OnInit {
 
           } else if (filter.type === 'price') {
 
-            search = search.filter((value: any, index: any, self: any) =>
-              index === self.findIndex((t: any) => (
+            search = search.filter((value, index, self) =>
+              index === self.findIndex((t) => (
                 t.place === value.place && t.name === value.name
               ))
             )
 
-            search = search.filter((product: any) => {
+            search = search.filter((product) => {
               return product.price >= filter.min && product.price <= filter.max
             })
           }
         }
 
         this.products = search
-        this.loadService.hideLoading()
 
+        this.loadService.hideLoading()
       })
     })
   }

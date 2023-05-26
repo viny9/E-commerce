@@ -1,9 +1,10 @@
 import { ProductService } from '../../../services/product/product.service';
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { finalize } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-new-product',
@@ -12,10 +13,10 @@ import { moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class NewProductComponent implements OnInit {
 
-  form: any
-  categorys: any
-  imgs: any = []
-  imgsFiles: any = []
+  form!: FormGroup
+  categorys: any[] = []
+  imgs: Product['imgs'] = []
+  imgsFiles: any[] = []
 
   constructor(private db: ProductService, private storage: AngularFireStorage) { }
 
@@ -33,8 +34,7 @@ export class NewProductComponent implements OnInit {
   }
 
   categoryList() {
-    this.db.getCategorys().subscribe((res: any) => {
-
+    this.db.getCategorys().subscribe((res) => {
       const categorys = res.docs.map((doc: any) => {
         return doc.data()
       })
@@ -43,7 +43,7 @@ export class NewProductComponent implements OnInit {
     })
   }
 
-  selectedImgs(event: Event | any) {
+  selectedImgs(event: any) {
     event.preventDefault()
 
     let files;
@@ -69,7 +69,7 @@ export class NewProductComponent implements OnInit {
 
       size = (Math.round(size * 100) / 100) + ' ' + fileSizeExtension[i];
 
-      const imgInfos = {
+      const imgInfos: any = {
         name: file.name,
         size: size,
         order: this.imgs.length + 1
@@ -80,7 +80,7 @@ export class NewProductComponent implements OnInit {
     }
   }
 
-  changeImgOrder(event: Event | any) {
+  changeImgOrder(event: any) {
     moveItemInArray(this.imgs, event.previousIndex, event.currentIndex)
 
     this.imgs.forEach((element: any) => {
@@ -92,7 +92,7 @@ export class NewProductComponent implements OnInit {
   }
 
   removeImg(selectedImg: any) {
-    const imgs = this.imgs.map((i: any) => {
+    const imgs = this.imgs.map((i) => {
       return i.name
     })
 
@@ -110,15 +110,15 @@ export class NewProductComponent implements OnInit {
   }
 
   updateImgsOrder() {
-    this.imgs.forEach((element: any) => {
-      const imgs = this.imgs.map((element: any) => element.name)
+    this.imgs.forEach((element) => {
+      const imgs = this.imgs.map((img) => img.name)
       let index = imgs.indexOf(element.name) + 1
 
       element.order = index
     });
   }
 
-  createProduct() {
+  async createProduct() {
     const product = this.form.value
     let price: any = Number(product.price)
 
@@ -128,58 +128,50 @@ export class NewProductComponent implements OnInit {
       price = Number(price)
     }
 
+    const imgs = await this.uploadImgs()
     product.price = price
-    this.uploadImgs()
-      .then((imgs: any) => product.imgs = imgs)
-      .then(() => this.db.createProduct(product))
-      .then(() => this.db.userMessages('Produto criado'))
-      .then(() => this.db.navegate('admin/products'))
+    product.imgs = imgs
 
+    await this.db.createProduct(product)
+    Promise.all([this.db.userMessages('Produto criado'), this.db.navegate('admin/products')])
   }
 
-  uploadImgs() {
-    return new Promise((resolve, reject) => {
+  async uploadImgs() {
+    const files = this.imgsFiles
+    const imgs: any = []
 
-      const files = this.imgsFiles
-      const imgs: any = []
+    if (files.length === 0) {
+      return []
+    }
 
-      if (files.length === 0) {
-        resolve([])
+    for (let file of files) {
+      const filePath = `${this.form.value.name}/${file.name}`
+      const fileRef = this.storage.ref(filePath)
+
+      await this.db.sendProductImg(filePath, file)
+
+      const url: string = await lastValueFrom(fileRef.getDownloadURL())
+      const imgInfos: any = this.imgs.find((img) => img.name === file.name)
+
+      imgInfos.url = url
+      imgs.push(imgInfos)
+
+      if (imgs.length === files.length) {
+        imgs.sort((a: any, b: any) => a.order - b.order)
+        return imgs
       }
-
-      for (let file of files) {
-        const filePath = `${this.form.value.name}/${file.name}`
-        const fileRef = this.storage.ref(filePath)
-
-        this.db.sendProductImg(filePath, file).snapshotChanges()
-          .pipe(
-            finalize(() => {
-              fileRef.getDownloadURL().subscribe((url: any) => {
-                const imgInfos = this.imgs.find((img: any) => img.name === file.name)
-                imgInfos.url = url
-                imgs.push(imgInfos)
-
-                if (imgs.length === files.length) {
-                  imgs.sort((a: any, b: any) => a.order - b.order)
-                  resolve(imgs)
-                }
-              })
-            })
-          )
-          .subscribe()
-      }
-    })
+    }
   }
 
   // Adds and removes a hover style when user drag a img to upload
-  dragHoverIn(event: any) {
+  dragHoverIn(event: Event) {
     event.preventDefault()
 
     const imgUploadArea = document.querySelector('#fileUploadLabel')
     imgUploadArea?.classList.add('dragHover')
   }
 
-  dragHoverOut(event: any) {
+  dragHoverOut(event: Event) {
     event.preventDefault()
 
     const imgUploadArea = document.querySelector('#fileUploadLabel')

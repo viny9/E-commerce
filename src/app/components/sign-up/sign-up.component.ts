@@ -11,10 +11,10 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class SignUpComponent implements OnInit {
 
-  hidePassword: any = true
-  hideConfirmPassword: any = true
-  signupForm: any
-  addressForm: any
+  hidePassword: boolean = true
+  hideConfirmPassword: boolean = true
+  signupForm!: FormGroup
+  addressForm!: FormGroup
   mask: any
 
   constructor(private userService: UserService, private productService: ProductService, private stripeService: StripeService) { }

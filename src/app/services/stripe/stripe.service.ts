@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Product } from 'src/app/models/product';
+import { User } from 'src/app/models/user';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -9,44 +11,42 @@ import { environment } from 'src/environments/environment';
 export class StripeService {
 
   baseUrl = environment.backendBaseUrl
-  userId: any = localStorage['userId']
+  userId = localStorage['userId']
 
   constructor(private http: HttpClient, private firebase: AngularFirestore) { }
 
   // Pagamentos
-  productPayment(paymentConfig: any) {
+  productPayment(paymentConfig: Product) {
     return this.http.post(`${this.baseUrl}/checkout`, paymentConfig).subscribe((res: any) => {
       window.location.href = res.url
-      // window.open(res.url)
     })
   }
 
-  cartPayment(paymentConfig: any) {
+  cartPayment(paymentConfig: Product) {
     return this.http.post(`${this.baseUrl}/checkout-cart`, paymentConfig).subscribe((res: any) => {
       window.location.href = res.url;
-      // window.open(res.url)
     })
   }
 
-  paymentStatus(id: any) {
+  paymentStatus(id: string) {
     return this.http.get(`${this.baseUrl}/payment-status/${id}`)
   }
 
   // Clientes
-  createCustomer(customer: any) {
+  createCustomer(customer: User) {
     return this.http.post(`${this.baseUrl}/createCustomer`, customer)
   }
 
-  updateCustomer(customer: any) {
+  updateCustomer(customer: User) {
     return this.http.put(`${this.baseUrl}/updateCustomer/${customer.stripe_id}`, customer)
   }
 
-  deleteCustomer(id: any) {
+  deleteCustomer(id: string) {
     return this.http.delete(`${this.baseUrl}/deleteCustomer/${id}`)
   }
 
   //Firebase
-  savePaymentInfosOnFirebase(session: any) {
+  savePaymentInfosOnFirebase(session: Object) {
     return this.firebase.collection('users').doc(this.userId).collection('payments').add(session)
   }
 

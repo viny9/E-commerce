@@ -10,12 +10,17 @@ p {
 
 .product {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.imgContainer {
+  width: 48%;
 }
 
 .selectedImg {
-  /* min-height: 500px; */
-  max-width: 550px;
-  margin-right: 50px;
+  width: 100%;
+  /* max-width: 550px; */
   border-radius: 3px;
 }
 
@@ -34,12 +39,11 @@ p {
 }
 
 .productInfos {
-  width: 100%;
+  width: 48%;
 }
 
 .productName {
   width: 25rem;
-  max-height: 96px;
   font-size: 26px;
 }
 
@@ -49,7 +53,7 @@ p {
 .priceContainer > .oldPrice {
   color: var(--error-color);
   font-size: 20px;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
 }
 
 .priceContainer span {

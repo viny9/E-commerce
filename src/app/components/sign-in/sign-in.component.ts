@@ -9,8 +9,8 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class SignInComponent implements OnInit {
 
-  hide: any = true
-  signinForm: any
+  hide: boolean = true
+  signinForm!: FormGroup
 
   constructor(private userService: UserService) { }
 

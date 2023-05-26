@@ -1,7 +1,6 @@
 import { ProductService } from '../../../services/product/product.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { GetIdTypes } from 'src/app/enums/get-id-types';
 
 @Component({
   selector: 'app-dialog-category',
@@ -10,12 +9,12 @@ import { GetIdTypes } from 'src/app/enums/get-id-types';
 })
 export class DialogCategoryComponent implements OnInit {
 
-  inputStatus: any = 'new'
-  newCategoryInput: any
-  editCategoryInput: any
-  selectedCategory: any
-  categorys: any
-  changed: any = false
+  inputStatus = 'new'
+  newCategoryInput = ''
+  editCategoryInput = ''
+  selectedCategory = ''
+  categorys: any[] = []
+  changed: boolean = false
 
   constructor(private db: ProductService, private dialog: MatDialogRef<DialogCategoryComponent>) { }
 
@@ -46,7 +45,7 @@ export class DialogCategoryComponent implements OnInit {
   }
 
   async updateCategory() {
-    const id = await this.db.getId(GetIdTypes.category, this.selectedCategory)
+    const id = await this.db.getId(this.db.path.categorys, this.selectedCategory)
 
     const upadatedCategory = { name: this.editCategoryInput }
 
@@ -67,31 +66,21 @@ export class DialogCategoryComponent implements OnInit {
 
       filter.forEach((product: any) => {
         product.category = this.editCategoryInput
-        this.UpdateProducts(product)
+        this.updateProducts(product)
       });
     })
   }
 
-  UpdateProducts(product: any) {
-    this.db.getProducts().subscribe((res: any) => {
+  async updateProducts(product: any) {
+    const id = await this.db.getId(this.db.path.products, product)
 
-      const ids = res.docs
-
-      const products = res.docs.map((res: any) => {
-        return res.data().name
-      })
-
-      const index = products.indexOf(product.name)
-      const id = ids[index].id
-
-      this.db.editProduct(id, product)
-        .then(() => this.db.userMessages('Produtos foram atualizados'))
-        .then(() => this.changed = true)
-    })
+    this.db.editProduct(id, product)
+      .then(() => this.db.userMessages('Produtos foram atualizados'))
+      .then(() => this.changed = true)
   }
 
   async deleteCategory(category: any) {
-    const id = await this.db.getId(GetIdTypes.category, category)
+    const id = await this.db.getId(this.db.path.categorys, category)
 
     this.db.removeCategory(id)
       .then(() => this.db.userMessages('Categoria removida'))

@@ -8,7 +8,7 @@ import { ProductService } from 'src/app/services/product/product.service';
 })
 export class FooterComponent implements OnInit {
 
-  categorys: any
+  categorys: any[] = []
 
   constructor(private db: ProductService) { }
 
@@ -17,8 +17,9 @@ export class FooterComponent implements OnInit {
   }
 
   getCategorys() {
-    this.db.getCategorys().subscribe((res: any) => {
-      this.categorys = res.docs.map((doc: any) => {
+    this.db.getCategorys().subscribe((res) => {
+
+      this.categorys = res.docs.map((doc) => {
         return doc.data()
       })
 

@@ -20,11 +20,8 @@ export class UserAuthGuard implements CanActivate, CanActivateChild {
     } else if (token && admin === true) {
       this.db.navegate('/admin/products')
       return false
-    } else if (token === undefined) {
-      return true
     } else {
-      this.db.navegate('')
-      return false
+      return true
     }
   }
 
