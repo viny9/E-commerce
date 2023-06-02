@@ -29,29 +29,27 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.loadService.showLoading()
 
-    this.productInfos()
+    this.getProductInfos()
     this.isFavorite()
     this.isOnCart()
 
   }
 
-  productInfos() {
+  getProductInfos() {
     this.router.params.subscribe((param) => {
       const id = param['productId']
 
       this.db.getProductById(id).subscribe((res: any) => {
-        this.product = res.data()
+        this.product = res
         this.selectedImg = this.product.imgs[0]?.url
       })
     })
   }
 
   isFavorite() {
-    this.db.getFavoriteList().subscribe((res) => {
+    this.db.getFavoriteList().subscribe((res: any) => {
 
-      res.docs.forEach((element: any) => {
-        this.listFavorites.push(element.data())
-      });
+      this.listFavorites = res
 
       const filter = this.listFavorites.filter((product: Product) => {
         return product.name === this.product.name
@@ -65,18 +63,24 @@ export class ProductComponent implements OnInit {
     })
   }
 
-  subAmount() {
-    if (this.amount > 1) {
-      this.amount -= 1
-    }
-  }
+  isOnCart() {
+    this.db.getCart().subscribe((res: any) => {
 
-  addAmount() {
-    const max = 20
+      this.cart = res
 
-    if (this.amount < max) {
-      this.amount += 1
-    }
+      const filter = this.cart.filter((product: any) => {
+        return product.name === this.product.name
+      })
+
+      if (filter.length === 0) {
+        this.inCart = false
+      } else if (filter.length >= 1) {
+        this.inCart = true
+      }
+
+      this.loadService.hideLoading()
+
+    })
   }
 
   async addFavorites() {
@@ -104,7 +108,7 @@ export class ProductComponent implements OnInit {
       this.product.amount = this.amount
       this.product.id = id
 
-      await this.db.addInCart(this.product)
+      await this.db.addProductInCart(this.product)
       this.inCart = true
       this.db.userMessages('Adicionado ao carrinho')
 
@@ -113,26 +117,18 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  isOnCart() {
-    this.db.getCart().subscribe((res: any) => {
+  subProductAmount() {
+    if (this.amount > 1) {
+      this.amount -= 1
+    }
+  }
 
-      res.docs.forEach((element: any) => {
-        this.cart.push(element.data())
-      });
+  addProductAmount() {
+    const max = 20
 
-      const filter = this.cart.filter((product: any) => {
-        return product.name === this.product.name
-      })
-
-      if (filter.length === 0) {
-        this.inCart = false
-      } else if (filter.length >= 1) {
-        this.inCart = true
-      }
-
-      this.loadService.hideLoading()
-
-    })
+    if (this.amount < max) {
+      this.amount += 1
+    }
   }
 
   async buy() {

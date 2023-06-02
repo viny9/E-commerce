@@ -26,16 +26,12 @@ export class AllOrdersComponent implements OnInit {
     this.loadService.showLoading()
     this.stripeService.getPayments().subscribe((res) => {
 
-      const payments = res.docs.map((doc) => {
-        return doc.data()
-      })
-
-      payments.map((element: any) => {
+      res.map((element: any) => {
         const date = new Date(element.created * 1000)
         element.data = date
       });
 
-      this.payments = payments.sort((a: any, b: any) => {
+      this.payments = res.sort((a: any, b: any) => {
         const d: any = new Date(a.created);
         const c: any = new Date(b.created);
         return c - d;

@@ -1,4 +1,4 @@
-import { BehaviorSubject, lastValueFrom, map } from 'rxjs';
+import { BehaviorSubject, catchError, lastValueFrom, map } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,6 +8,8 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Notification } from 'src/app/models/notification';
 import { Product } from 'src/app/models/product';
 import { Promotion } from 'src/app/models/promotion';
+import { ErrorsService } from '../errors/errors.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,95 +23,138 @@ export class ProductService {
     list: `users/${this.userId}/list`,
     cart: `users/${this.userId}/cart`,
     categorys: 'productsCategorys',
-    promotions: 'promotions'
+    promotions: 'promotions',
   }
 
-  constructor(private firebase: AngularFirestore, private storage: AngularFireStorage, private snackBar: MatSnackBar, private router: Router, private loadService: LoadService) { }
+  constructor(private firebase: AngularFirestore, private storage: AngularFireStorage, private snackBar: MatSnackBar, private router: Router, private loadService: LoadService, private errorService: ErrorsService) { }
 
   // Metodos de Produto
   getProducts() {
     return this.firebase.collection('products').get()
+      .pipe(
+        map((res) => {
+          return res.docs.map((doc) => doc.data())
+        }),
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
   }
 
   getProductById(id: string) {
     return this.firebase.collection('products').doc(id).get()
+      .pipe(
+        map(doc => doc.data()),
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
   }
 
   createProduct(product: Product) {
     return this.firebase.collection('products').add(product)
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
   editProduct(productId: string, newProduct: Product) {
     return this.firebase.collection('products').doc(productId).update(newProduct)
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
   deleteProduct(productId: string) {
     return this.firebase.collection('products').doc(productId).delete()
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
   // Metodos da lista
   getFavoriteList() {
     return this.firebase.collection('users').doc(this.userId).collection('list').get()
+      .pipe(
+        map((res) => {
+          return res.docs.map((doc) => doc.data())
+        }),
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
   }
 
   addProductInList(product: Product) {
     return this.firebase.collection('users').doc(this.userId).collection('list').add(product)
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
   deleteFromList(productId: string) {
     return this.firebase.collection('users').doc(this.userId).collection('list').doc(productId).delete()
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
   // Metodos do carrinho
   getCart() {
     return this.firebase.collection('users').doc(this.userId).collection('cart').get()
+      .pipe(
+        map((res) => {
+          return res.docs.map((doc) => doc.data())
+        }),
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
   }
 
-  addInCart(product: Product) {
+  addProductInCart(product: Product) {
     return this.firebase.collection('users').doc(this.userId).collection('cart').add(product)
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
   deleteCartProduct(productId: string) {
     return this.firebase.collection('users').doc(this.userId).collection('cart').doc(productId).delete()
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
   emptyCart() {
     this.getCart().subscribe((res: any) => {
-      res.docs.forEach((element: any) => {
-        this.deleteCartProduct(element.id)
-      });
 
+      res.forEach(async (element: any) => {
+        const id = await this.getId(this.path.cart, element)
+        this.deleteCartProduct(id)
+      });
     })
   }
 
-  // Categorias 
+  // Metodos de Categorias 
   getCategorys() {
     return this.firebase.collection('productsCategorys').get()
+      .pipe(
+        map((res) => {
+          return res.docs.map((doc) => doc.data())
+        }),
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
   }
 
-  addCategory(category: Object) {
+  createCategory(category: Object) {
     return this.firebase.collection('productsCategorys').add(category)
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
   updateCategory(categoryId: string, updatedCategory: Object) {
     return this.firebase.collection('productsCategorys').doc(categoryId).update(updatedCategory)
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
   removeCategory(categoryId: string) {
     return this.firebase.collection('productsCategorys').doc(categoryId).delete()
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
-  // Imgs
-  sendProductImg(path: string, file: File) {
+  // Metodos de Imgs
+  addProductImg(path: string, file: File) {
     const uploadTask = this.storage.upload(path, file)
 
-    uploadTask.percentageChanges().subscribe((percentage: any) => {
-      if (percentage === 100) {
-        this.loadService.hideLoading()
-      } else if (percentage < 100) {
-        this.loadService.showLoading()
-      }
-    })
+    uploadTask.percentageChanges()
+      .pipe(
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
+      .subscribe((percentage: any) => {
+        if (percentage === 100) {
+          this.loadService.hideLoading()
+        } else if (percentage < 100) {
+          this.loadService.showLoading()
+        }
+      })
 
     return uploadTask
   }
@@ -118,87 +163,128 @@ export class ProductService {
     return this.storage.refFromURL(url).delete()
   }
 
-  // Promoções
+  // Metodos de Promoções
   getPromotions() {
     return this.firebase.collection('promotions').get()
+      .pipe(
+        map((res) => {
+          return res.docs.map((doc) => doc.data())
+        }),
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
   }
 
   getPromotionById(id: string) {
     return this.firebase.collection('promotions').doc(id).get()
+      .pipe(
+        map(doc => doc.data()),
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
   }
 
-  newPromotion(promotion: Promotion) {
+  createPromotion(promotion: Promotion) {
     return this.firebase.collection('promotions').add(promotion)
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
   updatePromotion(id: string, updatedPromotion: Promotion) {
     return this.firebase.collection('promotions').doc(id).update(updatedPromotion)
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
   deletePromotion(id: string) {
     return this.firebase.collection('promotions').doc(id).delete()
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
-  //Notificações
+  // Metodos de Notificações
   getNotifications() {
     return this.firebase.collection('notifications').get()
+      .pipe(
+        map((res) => {
+          return res.docs.map((doc) => doc.data())
+        }),
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
   }
 
   async getNotificationId(notification: Notification) {
-    const res = await lastValueFrom(this.getNotifications())
-    const ids = res.docs
+    const query = this.firebase.collection('notifications', ref => ref.where('id', '==', notification.id));
 
-    const notifications = res.docs.map((res: any) => {
-      return res.data().id
-    })
+    const id = await lastValueFrom<any>(query.get().pipe(
+      map(res => {
+        const doc = res.docs[0];
+        return doc ? doc.id : null;
+      })
+    ))
 
-    const index = notifications.indexOf(notification.id)
-    return ids[index].id
+    return id
   }
 
   updateNotificationStatus(notification: Notification, id: string) {
     return this.firebase.collection('notifications').doc(id).update(notification)
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
   deleteNotification(notificationId: string) {
     return this.firebase.collection('notifications').doc(notificationId).delete()
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
-  // Notificações arquivadas
+  // Metodos de Notificações arquivadas
   getArchivedNotification() {
     return this.firebase.collection('archivedNotifications').get()
+      .pipe(
+        map((res) => {
+          return res.docs.map((doc) => doc.data())
+        }),
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
   }
 
   async getArchivedNotificationId(notification: Notification) {
-    const res = await lastValueFrom(this.getArchivedNotification())
-    const ids = res.docs
 
-    const notifications = res.docs.map((res: any) => {
-      return res.data().date
-    })
+    const query = this.firebase.collection('archivedNotifications', ref => ref.where('date', '==', notification.date));
 
-    const index = notifications.indexOf(notification.date)
-    return ids[index].id
+    const id = await lastValueFrom<any>(query.get().pipe(
+      map(res => {
+        console.log(res)
+        const doc = res.docs[0];
+        return doc ? doc.id : null;
+      })
+    ))
+
+    return id
   }
 
   archiveNotification(notification: Notification) {
     return this.firebase.collection('archivedNotifications').add(notification)
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
-  unachiveNotification(notification: Notification, id: string) {
-    return this.firebase.collection('archivedNotifications').doc(id).delete()
-      .then(() => {
-        this.firebase.collection('notifications').add(notification)
-      })
+  async unachiveNotification(notification: Notification, id: string) {
+    try {
+      await this.firebase.collection('archivedNotifications').doc(id).delete()
+      await this.firebase.collection('notifications').add(notification)
+    } catch (error) {
+      this.errorService.handleError(error)
+    }
   }
 
-  // Todos os pedidos
+  // Metodos de Pedidos
   getOrders() {
     return this.firebase.collection('allOrders').get()
+      .pipe(
+        map((res) => {
+          return res.docs.map((doc) => doc.data())
+        }),
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
   }
 
-  sendAdminOrder(order: Object) {
+  sendOrderToAdmin(order: Object) {
     return this.firebase.collection('allOrders').add(order)
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
   //Atualizar o componente selecionado na área do admin
@@ -238,7 +324,7 @@ export class ProductService {
         const doc = res.docs[0];
         return doc ? doc.id : null;
       })
-    ))
+    )).catch((e: Error) => this.errorService.handleError(e))
   }
 
   // Máscaras dos inputs

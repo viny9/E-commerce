@@ -34,11 +34,8 @@ export class NotificationsComponent implements OnInit {
   getNotifications() {
     this.loadService.showLoading()
     this.db.getNotifications().subscribe((res: any) => {
-      this.notifications = res.docs.map((doc: any) => {
-        return doc.data()
-      })
 
-      this.notifications = this.notifications.sort((a: any, b: any) => {
+      this.notifications = res.sort((a: any, b: any) => {
         const d: any = new Date(a.date);
         const c: any = new Date(b.date);
         return c - d;
@@ -86,9 +83,7 @@ export class NotificationsComponent implements OnInit {
 
   archivedNotifications() {
     this.db.getArchivedNotification().subscribe((res: any) => {
-      this.archived = res.docs.map((doc: any) => {
-        return doc.data()
-      })
+      this.archived = res
     })
   }
 
@@ -96,11 +91,7 @@ export class NotificationsComponent implements OnInit {
     if (checkedNotification.new) {
       this.db.getNotifications().subscribe(async (res: any) => {
 
-        const notifications = res.docs.map((doc: any) => {
-          return doc.data()
-        })
-
-        const filter = notifications.filter((notification: any) => {
+        const filter = res.filter((notification: any) => {
           return notification.id === checkedNotification.id
         })
 
@@ -108,8 +99,8 @@ export class NotificationsComponent implements OnInit {
 
         const id = await this.db.getNotificationId(checkedNotification)
 
-        this.db.updateNotificationStatus(filter[0], id)
-          .then(() => this.getNotifications())
+        await this.db.updateNotificationStatus(filter[0], id)
+        this.getNotifications()
       })
     }
   }
@@ -119,9 +110,9 @@ export class NotificationsComponent implements OnInit {
 
     const id = await this.db.getNotificationId(notification)
 
-    this.db.archiveNotification(notification)
-      .then(() => this.db.deleteNotification(id))
-      .then(() => this.getNotifications())
+    await this.db.archiveNotification(notification)
+    await this.db.deleteNotification(id)
+    this.getNotifications()
   }
 
   async unarchiveNotification(notification: any, event: Event) {
@@ -138,8 +129,8 @@ export class NotificationsComponent implements OnInit {
 
     const id = await this.db.getNotificationId(notification)
 
-    this.db.deleteNotification(id)
-      .then(() => this.getNotifications())
+    await this.db.deleteNotification(id)
+    this.getNotifications()
   }
 
   selectedNotification(id: any) {

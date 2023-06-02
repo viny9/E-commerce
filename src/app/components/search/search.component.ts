@@ -50,11 +50,7 @@ export class SearchComponent implements OnInit {
 
       this.db.getProducts().subscribe((res: any) => {
 
-        const products = res.docs.map((res: any) => {
-          return res.data()
-        })
-
-        const search = products.filter((product: any) => {
+        const search = res.filter((product: any) => {
           return product.name.toLowerCase().includes(searchWord.toLowerCase())
         })
 
@@ -170,13 +166,9 @@ export class SearchComponent implements OnInit {
     this.router.params.subscribe((word: any) => {
       const searchWord = word.searchWord
 
-      this.db.getProducts().subscribe((res) => {
+      this.db.getProducts().subscribe((res: any) => {
 
-        const products = res.docs.map((doc: any) => {
-          return doc.data()
-        })
-
-        let search = products.filter((product: any) => {
+        let search = res.filter((product: any) => {
           return product.name.toLowerCase().includes(searchWord.toLowerCase())
         })
 
@@ -204,13 +196,13 @@ export class SearchComponent implements OnInit {
 
           } else if (filter.type === 'price') {
 
-            search = search.filter((value, index, self) =>
-              index === self.findIndex((t) => (
+            search = search.filter((value: any, index: any, self: any) =>
+              index === self.findIndex((t: any) => (
                 t.place === value.place && t.name === value.name
               ))
             )
 
-            search = search.filter((product) => {
+            search = search.filter((product: any) => {
               return product.price >= filter.min && product.price <= filter.max
             })
           }

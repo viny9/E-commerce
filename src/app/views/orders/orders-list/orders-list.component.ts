@@ -36,11 +36,7 @@ export class OrdersListComponent implements AfterViewInit {
 
     this.db.getOrders().subscribe((res) => {
 
-      this.products = res.docs.map((doc: any) => {
-        return doc.data()
-      })
-
-      this.products = this.products.sort((a: any, b: any) => {
+      this.products = res.sort((a: any, b: any) => {
         const d: any = new Date(a.created);
         const c: any = new Date(b.created);
         return c - d;

@@ -39,9 +39,7 @@ export class UserComponentComponent implements OnInit {
 
     this.userService.getUsers().subscribe((res) => {
 
-      const users = res.docs.map((user: any) => {
-        return user.data()
-      })
+      const users = res
 
       this.auth.user.subscribe((res: any) => {
         const filter = users.filter((user: any) => {
@@ -78,7 +76,7 @@ export class UserComponentComponent implements OnInit {
   }
 
   updateUserInfos() {
-    this.userService.getUser().subscribe(async (res: any) => {
+    this.userService.getUserById().subscribe(async (res: any) => {
       const email = res.data().email
 
       const user = {
@@ -99,7 +97,7 @@ export class UserComponentComponent implements OnInit {
   }
 
   openDialog() {
-    this.userService.getUser().subscribe((res) => {
+    this.userService.getUserById().subscribe((res) => {
       const user = res.data()
 
       this.dialog.open(DeleteAccountComponent, {

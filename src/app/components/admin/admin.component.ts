@@ -11,22 +11,22 @@ import { UserService } from 'src/app/services/user/user.service';
 export class AdminComponent implements OnInit {
 
   selected: string = ''
-  theme: string | null = localStorage.getItem('theme')
+  theme: string | null = localStorage['theme']
   checked: boolean = false
   routes = AdminRoutes
 
 
   constructor(private userService: UserService, private db: ProductService) {
-    db.updatedComponent.subscribe((res:any) => {
+    db.updatedComponent.subscribe((res: any) => {
       this.selected = res
     })
   }
 
   ngOnInit(): void {
-    this.themeStatus()
+    this.themeIcon()
   }
 
-  themeStatus() {
+  themeIcon() {
     const sun = document.querySelector('.sun')
     const moon = document.querySelector('.moon')
 
@@ -35,12 +35,11 @@ export class AdminComponent implements OnInit {
       this.checked = true
     } else {
       moon?.classList.toggle('hide')
-      document.body.classList.toggle('lightMode')
       this.checked = false
     }
   }
 
-  themeIconToggle() {
+  themeToggle() {
     const sun = document.querySelector('.sun')
     const moon = document.querySelector('.moon')
 

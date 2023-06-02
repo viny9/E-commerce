@@ -33,7 +33,7 @@ export class SuccessComponent implements OnInit {
 
       this.stripeService.paymentStatus(id).subscribe((res: any) => {
 
-        this.userService.getUser().subscribe((doc: any) => {
+        this.userService.getUserById().subscribe((doc: any) => {
           const user = doc.data()
 
           res.customer_details.address = user.address
@@ -50,11 +50,7 @@ export class SuccessComponent implements OnInit {
   savePayment(paymentStatus: any) {
     this.stripeService.getPayments().subscribe(async (res) => {
 
-      const payments = res.docs.map((doc) => {
-        return doc.data()
-      })
-
-      const filter = payments.filter((payment) => {
+      const filter = res.filter((payment: any) => {
         return payment['id'] === paymentStatus.id
       })
 
@@ -71,7 +67,7 @@ export class SuccessComponent implements OnInit {
         paymentStatus.order_number = orderNumber
 
         await this.stripeService.savePaymentInfosOnFirebase(paymentStatus)
-        await this.db.sendAdminOrder(paymentStatus)
+        await this.db.sendOrderToAdmin(paymentStatus)
         this.db.emptyCart()
       }
     })

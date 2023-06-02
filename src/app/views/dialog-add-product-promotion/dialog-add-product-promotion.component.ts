@@ -29,11 +29,8 @@ export class DialogAddProductPromotionComponent implements OnInit {
     this.db.getProducts().subscribe((res) => {
 
       const noPromotionProducts: any[] = []
-      const allProducts = res.docs.map((doc: any) => {
-        return doc.data()
-      })
 
-      allProducts.forEach((element) => {
+      res.forEach((element: any) => {
         if (element.promotionInfos === undefined || element.promotionInfos === null) {
           noPromotionProducts.push(element)
         }

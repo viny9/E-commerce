@@ -39,11 +39,10 @@ export class EditProductComponent implements OnInit {
     this.loadService.showLoading()
 
     this.route.params.subscribe((res) => {
-
       const id = res['productId']
 
       this.db.getProductById(id).subscribe((res: any) => {
-        this.product = res.data()
+        this.product = res
         this.imgs = this.product.imgs
         this.createForm(this.product)
       })
@@ -52,13 +51,7 @@ export class EditProductComponent implements OnInit {
 
   categoryList() {
     this.db.getCategorys().subscribe((res) => {
-
-      const categorys = res.docs.map((doc) => {
-        return doc.data()
-      })
-
-      this.categorys = categorys
-
+      this.categorys = res
       this.loadService.hideLoading()
     })
   }
@@ -162,14 +155,9 @@ export class EditProductComponent implements OnInit {
       ...this.editForm.value
     }
 
-    // Terminar depois
-    // if (this.editForm.value.name != this.product.name) {
-    //   this.db.updateProductImgRef(this.product.name, this.editForm.value.name)
-    // }
-
     product.price = Number(product.price)
 
-    this.route.params.subscribe((res: any) => {
+    this.route.params.subscribe(async (res: any) => {
 
       if (this.removedImgs.length > 0) {
         this.removedImgs.forEach((img: any) => {
@@ -177,10 +165,12 @@ export class EditProductComponent implements OnInit {
         });
       }
 
-      this.uploadImgs()
-        .then(() => this.db.editProduct(res.productId, product))
-        .then(() => this.db.navegate('admin/products'))
-        .then(() => this.db.userMessages('Produto Editado'))
+      await this.uploadImgs()
+      await this.db.editProduct(res.productId, product)
+      await Promise.all([
+        this.db.navegate('admin/products'),
+        this.db.userMessages('Produto Editado')
+      ])
     })
   }
 
@@ -196,7 +186,7 @@ export class EditProductComponent implements OnInit {
       const filePath = `${this.editForm.value.name}/${file.name}`
       const fileRef = this.storage.ref(filePath)
 
-      await this.db.sendProductImg(filePath, file)
+      await this.db.addProductImg(filePath, file)
 
       const url = await lastValueFrom(fileRef.getDownloadURL())
       const imgInfos = this.imgs.find((img) => img.name === file.name)

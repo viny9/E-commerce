@@ -75,7 +75,7 @@ export class SignUpComponent implements OnInit {
     }
   }
 
-  newUser() {
+  createUser() {
     const user = this.signupForm.value
     user.address = this.addressForm.value
 

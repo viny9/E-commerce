@@ -37,17 +37,14 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.allProducts()
+    this.getAllProducts()
   }
 
-  allProducts() {
+  getAllProducts() {
     this.loadService.showLoading()
 
     this.db.getProducts().subscribe((res) => {
-      this.products = res.docs.map((doc) => {
-        return doc.data()
-      })
-
+      this.products = res
       this.loadService.hideLoading()
     })
   }

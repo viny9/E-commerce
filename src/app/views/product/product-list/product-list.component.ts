@@ -37,11 +37,7 @@ export class ProductListComponent implements AfterViewInit {
 
     this.db.getProducts().subscribe((res) => {
 
-      const products: Product[] = []
-
-      res.docs.map((res: any) => {
-        products.push(res.data())
-      })
+      const products: Product[] = res
 
       this.dataSource = new MatTableDataSource(products)
       this.dataSource.paginator = this.paginator
@@ -65,7 +61,7 @@ export class ProductListComponent implements AfterViewInit {
       this.db.deleteProductImg(img.url).subscribe()
     })
 
-    Promise.all([this.product(), this.db.userMessages('Produto removido')])
+    await Promise.all([this.product(), this.db.userMessages('Produto removido')])
   }
 
   openDialog() {

@@ -34,8 +34,8 @@ const routes: Routes = [
     children: [
       { path: '', component: HomeComponent },
       { path: 'favoriteList', component: FavoriteListComponent },
-      { path: 'cart', component: CartComponent},
-      { path: 'user', component: UserComponentComponent},
+      { path: 'cart', component: CartComponent },
+      { path: 'user', component: UserComponentComponent },
       { path: 'allOrders', component: AllOrdersComponent },
       { path: 'order/:orderId', component: UserOrderDetailComponent },
       { path: 'product/:productId', component: ProductComponent },

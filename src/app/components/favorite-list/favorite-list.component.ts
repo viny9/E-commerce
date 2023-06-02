@@ -20,16 +20,14 @@ export class FavoriteListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.favoriteList()
+    this.getList()
   }
 
-  favoriteList() {
+  getList() {
     this.loadService.showLoading()
 
     this.db.getFavoriteList().subscribe((res) => {
-      this.list = res.docs.map((doc) => {
-        return doc.data()
-      });
+      this.list = res;
 
       this.isEmpty()
       this.loadService.hideLoading()
@@ -44,11 +42,11 @@ export class FavoriteListComponent implements OnInit {
     }
   }
 
-  async remove(product: Object) {
+  async removeListProduct(product: Object) {
     const id: any = await this.db.getId(this.db.path.list, product)
 
     await this.db.deleteFromList(id)
-    this.favoriteList()
+    this.getList()
   }
 
 }

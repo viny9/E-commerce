@@ -9,15 +9,15 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class HeadComponent implements OnInit {
 
-  theme = localStorage.getItem('theme')
+  theme = localStorage['theme']
   logged: boolean = false
   searchInput: any
 
   constructor(private db: ProductService, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.themeStatus()
     this.getSearch()
+    this.themeIcon()
 
     this.logged = this.userService.isLogged()
   }
@@ -26,7 +26,7 @@ export class HeadComponent implements OnInit {
     this.searchInput = localStorage.getItem('search')
   }
 
-  themeStatus() {
+  themeIcon() {
     const sun = document.querySelector('.sun')
     const moon = document.querySelector('.moon')
 
@@ -34,11 +34,10 @@ export class HeadComponent implements OnInit {
       sun?.classList.toggle('hide')
     } else {
       moon?.classList.toggle('hide')
-      document.body.classList.toggle('lightMode')
     }
   }
 
-  themeIconToggle() {
+  themeToggle() {
     const sun = document.querySelector('.sun')
     const moon = document.querySelector('.moon')
 
@@ -68,7 +67,7 @@ export class HeadComponent implements OnInit {
 
   search() {
     localStorage.setItem('search', this.searchInput)
-    
+
     this.db.navegate(`search/${this.searchInput}`)
   }
 }

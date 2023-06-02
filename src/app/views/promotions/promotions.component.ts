@@ -45,14 +45,15 @@ export class PromotionsComponent implements OnInit {
     this.loadService.showLoading()
 
     this.db.getPromotions().subscribe((res) => {
-      this.dataSource = res.docs.map((doc: any) => {
+      this.dataSource = res.map((doc: any) => {
 
-        const promotion = doc.data()
+        const start = new Date(doc.start)
+        const end = new Date(doc.end)
 
-        promotion.start = doc.data().start.replace(/-/g, '/')
-        promotion.end = doc.data().end.replace(/-/g, '/')
+        doc.start = `${start.getDate() + 1}/${start.getMonth() + 1}/${start.getFullYear()}`
+        doc.end = `${end.getDate() + 1}/${end.getMonth() + 1}/${end.getFullYear()}`
 
-        return promotion
+        return doc
       })
 
       this.loadService.hideLoading()
@@ -67,10 +68,9 @@ export class PromotionsComponent implements OnInit {
     this.selected = true
 
     this.db.getPromotionById(id).subscribe((res: any) => {
-      const promotion = res.data()
-      this.selectedPromotion = promotion
+      this.selectedPromotion = res
 
-      this.createForm(promotion)
+      this.createForm(res)
     })
   }
 
@@ -87,14 +87,16 @@ export class PromotionsComponent implements OnInit {
     this.loadService.showLoading()
 
     await this.db.updatePromotion(this.id, promotion)
-    this.selectedPromotion = []
-    this.getPromotions()
-    this.addProductPromotion()
-    this.cancel()
-    this.loadService.hideLoading()
+    await Promise.all([
+      this.selectedPromotion = [],
+      this.addProductPromotion(),
+      this.getPromotions(),
+      this.cancel(),
+      this.loadService.hideLoading()
+    ])
   }
 
-  newPromotion() {
+  async newPromotion() {
     this.loadService.showLoading()
 
     const promotion = {
@@ -102,30 +104,32 @@ export class PromotionsComponent implements OnInit {
       products: this.promotionProducts.selectedProducts
     }
 
-    this.db.newPromotion(promotion)
-      .then(() => this.getPromotions())
-      .then(() => this.addProductPromotion())
-      .then(() => this.cancel())
-      .then(() => this.loadService.hideLoading())
-      .catch((e: any) => console.log(e))
+    await this.db.createPromotion(promotion)
+
+    await Promise.all([
+      this.addProductPromotion(),
+      this.getPromotions(),
+      this.cancel(),
+      this.loadService.hideLoading()
+    ])
+
   }
 
   addProductPromotion() {
-    this.promotionProducts?.selectedProducts.forEach(async (product: any) => {
+    this.promotionProducts?.selectedProducts.forEach(async (product: Product) => {
 
-      const percentage = product.promotionInfos.percentage / 100
+      const percentage = product.promotionInfos!.percentage / 100
       let promotionPrice = product.price - (product.price * percentage)
       promotionPrice = Math.round(promotionPrice * 100) / 100
 
       delete product.edit
-      product.promotionInfos.name = this.form.value.name
-      product.promotionInfos.promotionPrice = promotionPrice
+      product.promotionInfos!.name = this.form.value.name
+      product.promotionInfos!.promotionPrice = promotionPrice
 
       const id = await this.db.getId(this.db.path.products, product)
 
-      this.db.editProduct(id, product)
-        .then(() => this.selectedPromotion = [])
-        .catch((e: any) => console.log(e))
+      await this.db.editProduct(id, product)
+      this.selectedPromotion = []
     });
   }
 
@@ -135,7 +139,7 @@ export class PromotionsComponent implements OnInit {
       delete product.edit
 
       const id = await this.db.getId(this.db.path.products, product)
-      this.db.editProduct(id, product)
+      await this.db.editProduct(id, product)
     });
   }
 
@@ -144,12 +148,14 @@ export class PromotionsComponent implements OnInit {
 
     const id = await this.db.getId(this.db.path.promotions, promotion)
 
-    this.db.deletePromotion(id)
+    await this.db.deletePromotion(id)
       .then(() => this.removeProductPromotion(promotion.products))
-      .then(() => this.getPromotions())
-      .then(() => this.cancel())
-      
-      .then(() => this.loadService.hideLoading())
+
+    await Promise.all([
+      this.getPromotions(),
+      this.cancel(),
+      this.loadService.hideLoading()
+    ])
   }
 
   cancel() {

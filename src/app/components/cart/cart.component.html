@@ -15,9 +15,9 @@
                 </div>
                 <div>
                     <div class="amountContainer">
-                        <button (click)="subAmount(product)" mat-icon-button>-</button>
+                        <button (click)="subProductAmount(product)" mat-icon-button>-</button>
                         <p>{{product.amount}}</p>
-                        <button (click)="addAmount(product)" mat-icon-button>+</button>
+                        <button (click)="addProductAmount(product)" mat-icon-button>+</button>
                     </div>
                 </div>
                 <h1 *ngIf="product.promotionInfos === null || product.promotionInfos === undefined">R$

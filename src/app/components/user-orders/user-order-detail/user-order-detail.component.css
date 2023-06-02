@@ -11,7 +11,7 @@
   justify-content: space-between;
 }
 
-.orderHead > button {
+.orderHead>button {
   background-color: var(--main-color);
   color: var(--opposite-text-color);
 }
@@ -53,22 +53,22 @@
   margin-bottom: 1rem;
 }
 
-.orderProduct > img {
+.orderProduct>img {
   width: 150px;
   border-radius: 5px;
 }
 
-.orderProduct > span {
+.orderProduct>span {
   margin-left: 1rem;
 }
 
-.orderProduct > span > p {
+.orderProduct>span>p {
   margin-bottom: 1px;
   font-size: 17px;
   font-weight: 500;
 }
 
-.orderProduct span > button {
+.orderProduct span>button {
   margin-top: 10px;
   background-color: var(--main-color);
   color: var(--opposite-text-color);
@@ -76,8 +76,9 @@
 }
 
 .paid {
-   color: var(--success-color); 
+  color: var(--success-color);
 }
+
 .unpaid {
-    color: var(--error-color); 
+  color: var(--error-color);
 }

@@ -24,19 +24,15 @@ export class DialogCategoryComponent implements OnInit {
 
   categorysList() {
     this.db.getCategorys().subscribe((res: any) => {
-      const categorys = res.docs.map((doc: any) => {
-        return doc.data()
-      })
-
-      this.categorys = categorys
+      this.categorys = res
     })
   }
 
-  newCategory() {
+  async newCategory() {
     const category = { name: this.newCategoryInput }
 
-    this.db.addCategory(category)
-      .then(() => this.categorysList())
+    await this.db.createCategory(category)
+    this.categorysList()
   }
 
   selectCategory(category: any) {
@@ -46,21 +42,16 @@ export class DialogCategoryComponent implements OnInit {
 
   async updateCategory() {
     const id = await this.db.getId(this.db.path.categorys, this.selectedCategory)
-
     const upadatedCategory = { name: this.editCategoryInput }
 
-    this.db.updateCategory(id, upadatedCategory)
-      .then(() => this.categorysList())
-      .then(() => this.filterProducts())
+    await this.db.updateCategory(id, upadatedCategory)
+    this.categorysList()
+    this.filterProducts()
   }
 
   filterProducts() {
     this.db.getProducts().subscribe((res: any) => {
-      const products = res.docs.map((doc: any) => {
-        return doc.data()
-      })
-
-      const filter = products.filter((product: any) => {
+      const filter = res.filter((product: any) => {
         return product.category === this.selectedCategory
       })
 
@@ -74,17 +65,17 @@ export class DialogCategoryComponent implements OnInit {
   async updateProducts(product: any) {
     const id = await this.db.getId(this.db.path.products, product)
 
-    this.db.editProduct(id, product)
-      .then(() => this.db.userMessages('Produtos foram atualizados'))
-      .then(() => this.changed = true)
+    await this.db.editProduct(id, product)
+    this.db.userMessages('Produtos foram atualizados')
+    this.changed = true
   }
 
   async deleteCategory(category: any) {
     const id = await this.db.getId(this.db.path.categorys, category)
 
-    this.db.removeCategory(id)
-      .then(() => this.db.userMessages('Categoria removida'))
-      .then(() => this.categorysList())
+    await this.db.removeCategory(id)
+    this.db.userMessages('Categoria removida')
+    this.categorysList()
   }
 
   close() {

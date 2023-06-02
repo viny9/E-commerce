@@ -17,15 +17,14 @@ export class DeleteAccountComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  deleteAccount() {
+  async deleteAccount() {
     const user = {
       email: this.data.email,
       password: this.password,
       stripe_id: this.data.stripe_id
     }
 
-    this.userService.deleteUser(user)
-      .then(() => Promise.all([this.userService.navegate('/signIn'), this.dialog.close()]))
-      .catch((e: any) => this.userService.userMessages(e))
+    await this.userService.deleteUser(user)
+    await Promise.all([this.userService.navegate('/signIn'), this.dialog.close()])
   }
 }

@@ -3,6 +3,7 @@ export interface Product {
     amount?: number
     name: string
     price: number
+    edit?: boolean
     imgs: {
         name: string
         order: number

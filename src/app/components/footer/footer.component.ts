@@ -18,12 +18,7 @@ export class FooterComponent implements OnInit {
 
   getCategorys() {
     this.db.getCategorys().subscribe((res) => {
-
-      this.categorys = res.docs.map((doc) => {
-        return doc.data()
-      })
-
-      this.categorys = this.categorys.sort((a: any, b: any) => {
+      this.categorys = res.sort((a: any, b: any) => {
         if (a.name > b.name) {
           return 1;
         }

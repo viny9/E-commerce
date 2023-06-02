@@ -45,11 +45,7 @@ export class PasswordRecoveryComponent implements OnInit {
 
   sendCodeEmail() {
     this.userSevice.getUsers().subscribe((res) => {
-      const users = res.docs.map((doc) => {
-        return doc.data()
-      })
-
-      const user = users.filter((user: any) => {
+      const user = res.filter((user: any) => {
         return user.email === this.email
       })
 

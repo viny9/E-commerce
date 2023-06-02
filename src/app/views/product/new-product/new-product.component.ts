@@ -35,11 +35,7 @@ export class NewProductComponent implements OnInit {
 
   categoryList() {
     this.db.getCategorys().subscribe((res) => {
-      const categorys = res.docs.map((doc: any) => {
-        return doc.data()
-      })
-
-      this.categorys = categorys
+      this.categorys = res
     })
   }
 
@@ -77,6 +73,7 @@ export class NewProductComponent implements OnInit {
 
       this.imgs.push(imgInfos)
       this.imgsFiles.push(file)
+
     }
   }
 
@@ -133,7 +130,7 @@ export class NewProductComponent implements OnInit {
     product.imgs = imgs
 
     await this.db.createProduct(product)
-    Promise.all([this.db.userMessages('Produto criado'), this.db.navegate('admin/products')])
+    await Promise.all([this.db.userMessages('Produto criado'), this.db.navegate('admin/products')])
   }
 
   async uploadImgs() {
@@ -148,7 +145,7 @@ export class NewProductComponent implements OnInit {
       const filePath = `${this.form.value.name}/${file.name}`
       const fileRef = this.storage.ref(filePath)
 
-      await this.db.sendProductImg(filePath, file)
+      await this.db.addProductImg(filePath, file)
 
       const url: string = await lastValueFrom(fileRef.getDownloadURL())
       const imgInfos: any = this.imgs.find((img) => img.name === file.name)

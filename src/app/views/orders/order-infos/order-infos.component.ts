@@ -34,11 +34,7 @@ export class OrderInfosComponent implements OnInit {
 
       this.db.getOrders().subscribe((res) => {
 
-        const orders = res.docs.map((doc) => {
-          return doc.data()
-        })
-
-        const filter = orders.filter((order: any) => {
+        const filter = res.filter((order: any) => {
           return order.id === id
         })
 

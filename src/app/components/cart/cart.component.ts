@@ -29,11 +29,7 @@ export class CartComponent implements OnInit {
     this.loadService.showLoading()
 
     this.db.getCart().subscribe((res) => {
-      const productsArray = res.docs.map((doc: any) => {
-        return doc.data()
-      })
-
-      this.products = productsArray
+      this.products = res
 
       this.isEmpty()
       this.totalPrice()
@@ -56,14 +52,14 @@ export class CartComponent implements OnInit {
     this.cartItens()
   }
 
-  subAmount(product: any) {
+  subProductAmount(product: any) {
     if (product.amount > 1) {
       product.amount -= 1
       this.totalPrice()
     }
   }
 
-  addAmount(product: any) {
+  addProductAmount(product: any) {
     const max = 20
 
     if (product.amount < max) {
