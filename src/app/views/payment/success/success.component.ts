@@ -33,7 +33,7 @@ export class SuccessComponent implements OnInit {
 
       this.stripeService.paymentStatus(id).subscribe((res: any) => {
 
-        this.userService.getUserById().subscribe((doc: any) => {
+        this.userService.getUserById(this.userService.userId).subscribe((doc: any) => {
           const user = doc.data()
 
           res.customer_details.address = user.address

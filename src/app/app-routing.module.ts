@@ -24,6 +24,9 @@ import { PasswordRecoveryComponent } from './components/password-recovery/passwo
 import { PromotionsComponent } from './views/promotions/promotions.component';
 import { AdminAuthGuard } from './auth/admin-auth.guard';
 import { UserAuthGuard } from './auth/user-auth.guard';
+import { AdminUsersListComponent } from './views/adminUser/admin-users-list/admin-users-list.component';
+import { CreateAdminUserComponent } from './views/adminUser/create-admin-user/create-admin-user.component';
+import { EditAdminUserComponent } from './views/adminUser/edit-admin-user/edit-admin-user.component';
 
 const routes: Routes = [
   {
@@ -56,6 +59,9 @@ const routes: Routes = [
       { path: 'orders', component: OrdersListComponent },
       { path: 'orders/:orderId', component: OrderInfosComponent },
       { path: 'notifications', component: NotificationsComponent },
+      { path: 'adminUsersList', component: AdminUsersListComponent },
+      { path: 'adminUsersList/createAdminUser', component: CreateAdminUserComponent },
+      { path: 'adminUsersList/editAdminUser/:userId', component: EditAdminUserComponent },
     ]
   },
 

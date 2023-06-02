@@ -35,6 +35,10 @@ import { LoadingComponent } from './views/loading/loading.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { DeleteAccountComponent } from './views/delete-account/delete-account.component';
 import { DialogUpdateUserComponent } from './views/dialog-update-user/dialog-update-user.component';
+import { PromotionsComponent } from './views/promotions/promotions.component';
+import { DialogAddProductPromotionComponent } from './views/dialog-add-product-promotion/dialog-add-product-promotion.component';
+import { AdminUsersListComponent } from './views/adminUser/admin-users-list/admin-users-list.component';
+import { CreateAdminUserComponent } from './views/adminUser/create-admin-user/create-admin-user.component';
 import { environment } from './../environments/environment';
 
 //Angular Material
@@ -68,8 +72,8 @@ import { AngularFireModule } from '@angular/fire/compat'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
 import { AngularFireStorageModule } from '@angular/fire/compat/storage'
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { PromotionsComponent } from './views/promotions/promotions.component';
-import { DialogAddProductPromotionComponent } from './views/dialog-add-product-promotion/dialog-add-product-promotion.component';
+import { EditAdminUserComponent } from './views/adminUser/edit-admin-user/edit-admin-user.component';
+
 
 
 @NgModule({
@@ -104,6 +108,9 @@ import { DialogAddProductPromotionComponent } from './views/dialog-add-product-p
     DialogUpdateUserComponent,
     PromotionsComponent,
     DialogAddProductPromotionComponent,
+    AdminUsersListComponent,
+    CreateAdminUserComponent,
+    EditAdminUserComponent,
   ],
   imports: [
     BrowserModule,

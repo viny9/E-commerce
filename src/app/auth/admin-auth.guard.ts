@@ -11,8 +11,8 @@ export class AdminAuthGuard implements CanActivate {
   constructor(private db: ProductService, private auth: AngularFireAuth) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const token = localStorage['token']
-    const admin = eval(localStorage['admin'])
+    const token = localStorage['token'] || sessionStorage['token']
+    const admin = eval(localStorage['admin']) || eval(sessionStorage['admin'])
 
     if (token && admin === true) {
       return true

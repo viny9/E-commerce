@@ -76,7 +76,7 @@ export class UserComponentComponent implements OnInit {
   }
 
   updateUserInfos() {
-    this.userService.getUserById().subscribe(async (res: any) => {
+    this.userService.getUserById(this.userService.userId).subscribe(async (res: any) => {
       const email = res.data().email
 
       const user = {
@@ -97,7 +97,7 @@ export class UserComponentComponent implements OnInit {
   }
 
   openDialog() {
-    this.userService.getUserById().subscribe((res) => {
+    this.userService.getUserById(this.userService.userId).subscribe((res) => {
       const user = res.data()
 
       this.dialog.open(DeleteAccountComponent, {

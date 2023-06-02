@@ -47,16 +47,37 @@ export class UserService {
     }
   }
 
+  async newAdminUser(user: any) {
+    try {
+      await this.auth.createUserWithEmailAndPassword(user.email, user.password)
+      delete user.password
+      user.admin = true
+
+      await this.createUser(user)
+      await Promise.all([this.userMessages('Usuário criado'), this.navegate('admin/adminUsersList')])
+
+    } catch (error) {
+      this.errorService.handleError(error)
+    }
+  }
+
   async signIn(user: any) {
     try {
       await this.auth.signInWithEmailAndPassword(user.email, user.password)
 
-      const token: any = await getAuth().currentUser?.getIdToken()
-      localStorage.setItem('token', token)
-
       const infos: any = await this.userInfos(user)
-      localStorage.setItem('userId', infos.userId)
-      localStorage.setItem('admin', infos.admin)
+      const token: any = await getAuth().currentUser?.getIdToken()
+
+      if (!infos.admin) {
+        localStorage.setItem('token', token)
+        localStorage.setItem('userId', infos.userId)
+        localStorage.setItem('admin', infos.admin)
+
+      } else {
+        sessionStorage.setItem('token', token)
+        sessionStorage.setItem('userId', infos.userId)
+        sessionStorage.setItem('admin', infos.admin)
+      }
 
       this.navegate('')
     } catch (error) {
@@ -87,6 +108,7 @@ export class UserService {
     this.auth.signOut()
 
     localStorage.clear()
+    sessionStorage.clear()
     window.location.reload()
   }
 
@@ -101,8 +123,16 @@ export class UserService {
       )
   }
 
-  getUserById() {
-    return this.firestore.collection('users').doc(this.userId).get()
+  getAdminUsers() {
+    const query = this.firestore.collection('users', ref => ref.where('admin', '==', true))
+    return query.get().pipe(
+      catchError((e: Error) => this.errorService.handleError(e))
+    )
+
+  }
+
+  getUserById(id: any) {
+    return this.firestore.collection('users').doc(id).get()
       .pipe(
         catchError((e: Error) => this.errorService.handleError(e))
       )
@@ -179,6 +209,40 @@ export class UserService {
     } catch (error) {
       this.errorService.handleError(error)
     }
+  }
+
+  async updateUserAsAdmin(user: any) {
+    const query = this.firestore.collection('users', ref => ref.where('email', '==', user.oldEmail));
+    const id = await lastValueFrom<any>(query.get().pipe(
+      map(res => {
+        const doc = res.docs[0];
+        return doc ? doc.id : null;
+      })
+    ))
+
+    const newUser = {
+      ...user
+    }
+
+    delete newUser.password && user.password
+    delete newUser.confirmPassword && user.confirmPassword
+    delete newUser.oldEmail
+
+    await this.firestore.collection('users').doc(id).update(newUser)
+    return this.http.put(`${this.baseUrl}/updateUser`, user)
+      .pipe(
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
+  }
+
+  async deleteUserAsAdmin(user: any) {
+    const id = await this.productService.getId('users', user)
+
+    await this.firestore.collection('users').doc(id).delete()
+    return this.http.post(`${this.baseUrl}/deleteUser`, user)
+      .pipe(
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
   }
 
   // User status

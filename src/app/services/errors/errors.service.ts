@@ -36,6 +36,10 @@ export class ErrorsService {
         return ''
         break
 
+      case 'auth/email-already-in-use':
+        return 'Email já está em uso'
+        break
+
       case 0:
       case 500:
         return 'Erro no servidor'

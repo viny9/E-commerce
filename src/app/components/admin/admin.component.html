@@ -16,10 +16,14 @@
                 Pedidos
             </a>
 
-            <a mat-list-item (click)="selected = 'notifications' " routerLink="notifications"
-                [ngClass]="selected === 'Notifications' ? 'selected' : '' ">
+            <a mat-list-item routerLink="notifications" [ngClass]="selected === 'Notifications' ? 'selected' : '' ">
                 <mat-icon>notifications_active</mat-icon>
                 Notificações
+            </a>
+
+            <a mat-list-item routerLink="adminUsersList" [ngClass]="selected === 'AdminUsers' ? 'selected' : '' ">
+                <mat-icon>person</mat-icon>
+                Configurações de Usuário
             </a>
 
             <a mat-list-item>

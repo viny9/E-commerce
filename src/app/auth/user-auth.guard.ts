@@ -12,8 +12,8 @@ export class UserAuthGuard implements CanActivate, CanActivateChild {
 
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const token = localStorage['token']
-    const admin = eval(localStorage['admin'])
+    const token = localStorage['token'] || sessionStorage['token']
+    const admin = eval(localStorage['admin']) || eval(sessionStorage['admin'])
 
     if (token && admin === false) {
       return true
