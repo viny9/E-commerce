@@ -32,15 +32,13 @@ export class UserOrderDetailComponent implements OnInit {
 
   getOrder() {
     this.loadService.showLoading()
-    this.stripe.getPayments().subscribe((res: any) => {
-      const orders = res.docs.map((doc: any) => {
-        return doc.data()
-      })
 
-      this.router.params.subscribe((params: any) => {
-        const orderNumber = Number(params.orderId)
+    this.router.params.subscribe((params) => {
+      const orderNumber = Number(params['orderId'])
 
-        const filter = orders.filter((order: any) => {
+      this.stripe.getPayments().subscribe((res: any) => {
+
+        const filter = res.filter((order: any) => {
           return order.order_number === orderNumber
         })
 
@@ -64,7 +62,6 @@ export class UserOrderDetailComponent implements OnInit {
     let productsValue: any = 0
 
     const products = this.order?.products
-    console.log(this.order)
     products.forEach((product: any) => {
       if (product.promotionInfos != null) {
         promotion += (product.promotionInfos.oldPrice * product.promotionInfos.percentage) / 100

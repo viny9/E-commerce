@@ -19,13 +19,12 @@ export class SearchComponent implements OnInit {
   selectedFilters: any = []
   selected: any = -1
   filterProducts: any = []
-  teste: any
 
   dataSource = new MatTreeNestedDataSource()
   treeControl = new NestedTreeControl((node: any) => node.children)
 
   constructor(private db: ProductService, private loadService: LoadService, private router: ActivatedRoute) {
-    loadService.isLoading.subscribe((res: any) => {
+    loadService.isLoading.subscribe((res) => {
       this.loading = res
     })
 
@@ -51,11 +50,7 @@ export class SearchComponent implements OnInit {
 
       this.db.getProducts().subscribe((res: any) => {
 
-        const products = res.docs.map((res: any) => {
-          return res.data()
-        })
-
-        const search = products.filter((product: any) => {
+        const search = res.filter((product: any) => {
           return product.name.toLowerCase().includes(searchWord.toLowerCase())
         })
 
@@ -133,14 +128,13 @@ export class SearchComponent implements OnInit {
   }
 
   async selectProduct(product: any) {
-    const id = await this.db.getProductId(product)
-
+    const id: any = await this.db.getId(this.db.path.products, product)
     this.db.navegate(`product/${id}`)
-
   }
 
   selectedFilter(selectedFilter: any) {
     this.loadService.showLoading()
+
     this.selectedFilters.push(selectedFilter)
 
     const duplicateFilter = this.selectedFilters.filter((filter: any) => {
@@ -152,7 +146,6 @@ export class SearchComponent implements OnInit {
     })
 
     if (duplicateFilter.length <= 1 && twoPriceFilter.length <= 1) {
-
       this.addFilter()
 
       if (this.products.length === 0) {
@@ -175,11 +168,7 @@ export class SearchComponent implements OnInit {
 
       this.db.getProducts().subscribe((res: any) => {
 
-        const products = res.docs.map((doc: any) => {
-          return doc.data()
-        })
-
-        let search = products.filter((product: any) => {
+        let search = res.filter((product: any) => {
           return product.name.toLowerCase().includes(searchWord.toLowerCase())
         })
 
@@ -188,7 +177,6 @@ export class SearchComponent implements OnInit {
         for (let filter of this.selectedFilters) {
 
           if (filter.type === 'category') {
-
             // Remove os items duplicados do array
             this.filterProducts = this.filterProducts.filter((value: any, index: any, self: any) =>
               index === self.findIndex((t: any) => (
@@ -221,8 +209,8 @@ export class SearchComponent implements OnInit {
         }
 
         this.products = search
-        this.loadService.hideLoading()
 
+        this.loadService.hideLoading()
       })
     })
   }

@@ -9,11 +9,11 @@ import { StripeService } from 'src/app/services/stripe/stripe.service';
 })
 export class AllOrdersComponent implements OnInit {
 
-  payments: any
-  loading:any = false
+  payments: any[] = []
+  loading: boolean = false
 
   constructor(private stripeService: StripeService, private loadService: LoadService) {
-    loadService.isLoading.subscribe((res: any) => {
+    loadService.isLoading.subscribe((res) => {
       this.loading = res
     })
   }
@@ -24,18 +24,14 @@ export class AllOrdersComponent implements OnInit {
 
   getUserPayments() {
     this.loadService.showLoading()
-    this.stripeService.getPayments().subscribe((res: any) => {
+    this.stripeService.getPayments().subscribe((res) => {
 
-      const payments = res.docs.map((doc: any) => {
-        return doc.data()
-      })
-
-      payments.map((element: any) => {
+      res.map((element: any) => {
         const date = new Date(element.created * 1000)
         element.data = date
       });
 
-      this.payments = payments.sort((a: any, b: any) => {
+      this.payments = res.sort((a: any, b: any) => {
         const d: any = new Date(a.created);
         const c: any = new Date(b.created);
         return c - d;

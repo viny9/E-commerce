@@ -10,13 +10,13 @@ import { StripeService } from 'src/app/services/stripe/stripe.service';
 })
 export class CartComponent implements OnInit {
 
-  empty: any = true
+  empty = true
   products: any = []
   all: number = 0
-  loading: any = false
+  loading = false
 
   constructor(private db: ProductService, private loadService: LoadService, private stripe: StripeService) {
-    loadService.isLoading.subscribe((res: any) => {
+    loadService.isLoading.subscribe((res) => {
       this.loading = res
     })
   }
@@ -27,12 +27,9 @@ export class CartComponent implements OnInit {
 
   cartItens() {
     this.loadService.showLoading()
-    this.db.getCart().subscribe((res: any) => {
-      const productsArray = res.docs.map((element: any) => {
-        return element.data()
-      })
 
-      this.products = productsArray
+    this.db.getCart().subscribe((res) => {
+      this.products = res
 
       this.isEmpty()
       this.totalPrice()
@@ -48,25 +45,21 @@ export class CartComponent implements OnInit {
     }
   }
 
-  removeCartItem(product: any) {
-    this.db.getCartProductId(product)
+  async removeCartItem(product: Object) {
+    const id = await this.db.getId(this.db.path.cart, product)
 
-    setTimeout(() => {
-      this.db.deleteCartProduct(this.db.id)
-        .then(() => this.cartItens())
-        .then(() => console.log('removido')
-        )
-    }, 500);
+    await this.db.deleteCartProduct(id)
+    this.cartItens()
   }
 
-  subAmount(product: any) {
+  subProductAmount(product: any) {
     if (product.amount > 1) {
       product.amount -= 1
       this.totalPrice()
     }
   }
 
-  addAmount(product: any) {
+  addProductAmount(product: any) {
     const max = 20
 
     if (product.amount < max) {

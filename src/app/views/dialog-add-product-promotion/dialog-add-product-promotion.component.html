@@ -2,10 +2,10 @@
     <div class="head">
         <mat-form-field>
             <mat-label>Produtos</mat-label>
-            <input type="text" matInput [(ngModel)]="input" (keyup)="searchProduct()" name="input"
+            <input type="text" matInput [(ngModel)]="searchInput" (keyup)="searchProduct()" name="input"
                 [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of teste?.slice(0, 3)"
+                <mat-option *ngFor="let option of products?.slice(0, 3)"
                     (click)="selectProduct(option)">{{option.name}}</mat-option>
             </mat-autocomplete>
         </mat-form-field>

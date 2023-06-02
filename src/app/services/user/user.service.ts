@@ -1,8 +1,4 @@
-// Talvez criar um dialog para fazer o login, basicamente passar a senha 
-// Fazer um if para atualizar o email do authentic
-// revizar o código 
-// E enviar para o github
-
+import { User } from './../../models/user';
 import { NoopScrollStrategy } from '@angular/cdk/overlay';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -15,154 +11,177 @@ import { Router } from '@angular/router';
 import { DialogUpdateUserComponent } from 'src/app/views/dialog-update-user/dialog-update-user.component';
 import { environment } from 'src/environments/environment';
 import { StripeService } from '../stripe/stripe.service';
+import { catchError, lastValueFrom, map } from 'rxjs';
+import { ErrorsService } from '../errors/errors.service';
+import { ProductService } from '../product/product.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  admin: any
-  userId: any = localStorage['userId']
-  baseUrl = environment.backendBaseUrl
+  userId = localStorage['userId']
+  baseUrl: string = environment.backendBaseUrl
 
-  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth, private snackBar: MatSnackBar, private router: Router, private http: HttpClient, private dialog: MatDialog, private stripeService: StripeService) { }
-
+  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth, private snackBar: MatSnackBar, private router: Router, private http: HttpClient, private dialog: MatDialog, private productService: ProductService, private stripeService: StripeService, private errorService: ErrorsService) { }
 
   // Login e cadastro
-  signUp(user: any) {
-    return this.auth.createUserWithEmailAndPassword(user.email, user.password)
-      .then(() => {
-        delete user.password
-        this.createUser(user)
-      })
+  async signUp(user: any) {
+    try {
+      await this.auth.createUserWithEmailAndPassword(user.email, user.password)
 
-      .then(() => {
-        getAuth().currentUser?.getIdToken()
-          .then((token: any) => localStorage.setItem('token', token))
-      })
-      .then(() => this.setAdmin(user))
-      .then(() => this.setUserId(user))
+      delete user.password
+      await this.createUser(user)
 
-      .then(() => this.userMessages('Usuário criado'))
-      .then(() => this.navegate(''))
+      const token: any = await getAuth().currentUser?.getIdToken()
+      localStorage.setItem('token', token)
+
+      const infos: any = await this.userInfos(user)
+      localStorage.setItem('userId', infos.userId)
+      localStorage.setItem('admin', infos.admin)
+
+      await Promise.all([this.userMessages('Usuário criado'), this.navegate('')])
+
+    } catch (error) {
+      this.errorService.handleError(error)
+    }
   }
 
-  signIn(user: any) {
-    this.auth.signInWithEmailAndPassword(user.email, user.password)
-      .then(() => {
-        getAuth().currentUser?.getIdToken()
-          .then((token: any) => localStorage.setItem('token', token))
-          .then(() => this.setAdmin(user))
-          .then(() => this.setUserId(user))
-      })
-      .then(() => {
-        setTimeout(() => {
-          const admin = this.userStatus().admin
+  async signIn(user: any) {
+    try {
+      await this.auth.signInWithEmailAndPassword(user.email, user.password)
 
-          if (admin === true) {
-            this.navegate('admin/products')
-          } else if (admin === false) {
-            this.navegate('')
-          }
-        }, 700);
+      const token: any = await getAuth().currentUser?.getIdToken()
+      localStorage.setItem('token', token)
+
+      const infos: any = await this.userInfos(user)
+      localStorage.setItem('userId', infos.userId)
+      localStorage.setItem('admin', infos.admin)
+
+      this.navegate('')
+    } catch (error) {
+      this.errorService.handleError(error)
+    }
+  }
+
+  async userInfos(item: User) {
+    const query = this.firestore.collection('users', ref => ref.where('email', '==', item.email));
+    const doc = await lastValueFrom<any>(query.get().pipe(
+      map(res => {
+        const doc = res.docs[0];
+        return doc ? doc : null;
       })
-      .catch((e: any) => {
-        this.userMessages(e)
-      })
+    ))
+
+    const user = doc.data()
+
+    const userInfos = {
+      userId: doc.id,
+      admin: user.admin
+    }
+
+    return userInfos
   }
 
   logOut() {
     this.auth.signOut()
-      .then(() => localStorage.clear())
-      .then(() => this.navegate('signIn'))
-      .then(() => window.location.reload())
+
+    localStorage.clear()
+    window.location.reload()
   }
 
   // Informações do usuário
   getUsers() {
     return this.firestore.collection('users').get()
+      .pipe(
+        map((res) => {
+          return res.docs.map((doc) => doc.data())
+        }),
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
   }
 
-  getUser() {
+  getUserById() {
     return this.firestore.collection('users').doc(this.userId).get()
+      .pipe(
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
   }
 
-  createUser(userInfos: any) {
-    this.firestore.collection('users').add(userInfos)
+  createUser(userInfos: User) {
+    return this.firestore.collection('users').add(userInfos)
+      .catch((e: Error) => this.errorService.handleError(e))
   }
 
-  updateUser(updatedInfos: any) {
+  async updateUser(updatedInfos: User) {
     const auth: any = getAuth().currentUser
 
     if (updatedInfos.email != updatedInfos.oldEmail) {
-      return updateEmail(auth, updatedInfos.email)
-        .then(() => delete updatedInfos.oldEmail)
-        .then(() => this.firestore.collection('users').doc(this.userId).update(updatedInfos))
-        .then(() => {
-          this.stripeService.updateCustomer(updatedInfos).subscribe((res: any) => {
-            console.log(res)
+      try {
+
+        await updateEmail(auth, updatedInfos.email) // Atualiza o authenticator
+          .catch(() => {  // Abri um dialog para fazer login caso necessário
+            this.dialog.open(DialogUpdateUserComponent, {
+              data: updatedInfos,
+              width: '500px',
+              scrollStrategy: new NoopScrollStrategy()
+            })
           })
-        })
-        .then(() => this.userMessages('Informações atualizadas'))
-        .catch((e) => {
-          this.dialog.open(DialogUpdateUserComponent, {
-            data: updatedInfos,
-            width: '500px',
-            scrollStrategy: new NoopScrollStrategy()
-          })
-        })
+        delete updatedInfos.oldEmail
+
+        await this.firestore.collection('users').doc(this.userId).update(updatedInfos) // Atualiza o firestore
+        this.stripeService.updateCustomer(updatedInfos).subscribe() //Atualiza o stripe
+
+        this.userMessages('Usuário atualizado')
+
+      } catch (error) {
+        this.errorService.handleError(error)
+      }
+
     } else {
-      delete updatedInfos.oldEmail
-      return this.firestore.collection('users').doc(this.userId).update(updatedInfos)
+      try {
+        delete updatedInfos.oldEmail
+
+        await this.firestore.collection('users').doc(this.userId).update(updatedInfos) // Atualiza o firestore
+        this.stripeService.updateCustomer(updatedInfos).subscribe() //Atualiza o stripe
+        this.userMessages('Usuário atualizado')
+
+      } catch (error) {
+        this.errorService.handleError(error)
+      }
     }
   }
 
-  updateUserWithLogin(user: any) {
+  async updateUserWithLogin(user: any) {
     const auth: any = getAuth()
 
-    return this.auth.signInWithEmailAndPassword(user.oldEmail, user.password)
-      .then(() => updateEmail(auth, user.email))
-      .then(() => delete user.oldEmail && delete user.password)
-      .then(() => this.firestore.collection('users').doc(this.userId).update(user))
-      .then(() => this.stripeService.updateCustomer(user).subscribe())
-      .then(() => this.userMessages('Dados atualizados'))
-      .catch((e) => this.userMessages(e))
+    try {
+      this.auth.signInWithEmailAndPassword(user.oldEmail, user.password)
+
+      await updateEmail(auth, user.email) // Atualiza o authenticator
+      delete user.oldEmail && delete user.password
+
+      await this.firestore.collection('users').doc(this.userId).update(user)  // Atualiza o firestore
+      this.stripeService.updateCustomer(user).subscribe()  //Atualiza o stripe
+      this.userMessages('Dados atualizados')
+
+    } catch (error) {
+      this.errorService.handleError(error)
+    }
   }
 
-  deleteUser(user: any) {
-    return this.auth.signInWithEmailAndPassword(user.email, user.password)
-      .then(() => {
-        getAuth().currentUser?.delete() // Exclui o usuário no authentic 
-      })
-      .then(() => {
-        this.firestore.collection('users').doc(this.userId).delete() // Exclui o usuário da firestore
-      })
-  }
-
-  setUserId(user: any) {
-    this.getUsers().subscribe((res: any) => {
-      const ids = res.docs
-
-      const users = res.docs.map((res: any) => {
-        return res.data().email
-      })
-
-      const index = users.indexOf(user.email)
-      localStorage.setItem('userId', ids[index].id)
-    })
+  async deleteUser(user: any) {
+    try {
+      await this.auth.signInWithEmailAndPassword(user.email, user.password)
+      await getAuth().currentUser?.delete() // Exclui o usuário no authentic 
+      await this.firestore.collection('users').doc(this.userId).delete() // Exclui o usuário da firestore
+      this.stripeService.deleteCustomer(user.stripe_id).subscribe() //Exclui o  usuário no stripe
+    } catch (error) {
+      this.errorService.handleError(error)
+    }
   }
 
   // User status
-  isAdmin() {
-    const admin = eval(localStorage['admin'])
-
-    if (admin === true) {
-      return true
-    } else {
-      return false
-    }
-  }
-
   isLogged() {
     const token = localStorage['token']
 
@@ -173,43 +192,25 @@ export class UserService {
     }
   }
 
-  setAdmin(userInfos?: any) {
-    this.getUsers().subscribe((res: any) => {
-      const users = res.docs.map((users: any) => {
-        return users.data()
-      })
-
-      const filter = users.filter((user: any) => {
-        return user.email === userInfos.email
-      })
-
-      localStorage.setItem('admin', filter[0]?.admin)
-    })
-  }
-
-  userStatus() {
-    const status = {
-      logged: this.isLogged(),
-      admin: this.isAdmin(),
-    }
-
-    return status
-  }
-
   // Emails 
-
-  sendVerificationCodeEmail(email: any) {
+  sendVerificationCodeEmail(email: string) {
     const body = {
       email: email
     }
 
     return this.http.post(`${this.baseUrl}/recoverPassword`, body)
+      .pipe(
+        catchError((e: Error) => this.errorService.handleError(e))
+      )
   }
 
-  sendPasswordResetEmail(email: any) {
-    this.auth.sendPasswordResetEmail(email)
-      .then(() => this.userMessages('Foi enviado um email para atualizar senha'))
-      .then(() => this.navegate('/signIn'))
+  async sendPasswordResetEmail(email: string) {
+    try {
+      await this.auth.sendPasswordResetEmail(email)
+      await Promise.all([this.userMessages('Foi enviado um email para atualizar senha'), this.navegate('/signIn')])
+    } catch (error) {
+      this.errorService.handleError(error)
+    }
   }
 
   // Extras

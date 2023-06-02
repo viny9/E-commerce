@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
+import { Product } from 'src/app/models/product';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/services/product/product.service';
 
@@ -14,17 +15,17 @@ import { ProductService } from 'src/app/services/product/product.service';
 })
 export class EditProductComponent implements OnInit {
 
-  product: any
-  categorys: any
-  editForm: any
-  imgs: any = []
-  newImgs: any = []
-  imgsFiles: any = []
-  removedImgs: any = []
-  loading: any = false
+  product!: Product
+  categorys: any[] = []
+  editForm!: FormGroup
+  imgs: any[] = []
+  newImgs: any[] = []
+  imgsFiles: any[] = []
+  removedImgs: any[] = []
+  loading: boolean = false
 
   constructor(private db: ProductService, private loadService: LoadService, private route: ActivatedRoute, private storage: AngularFireStorage) {
-    loadService.isLoading.subscribe((res: any) => {
+    loadService.isLoading.subscribe((res) => {
       this.loading = res
     })
   }
@@ -37,12 +38,11 @@ export class EditProductComponent implements OnInit {
   getProduct() {
     this.loadService.showLoading()
 
-    this.route.params.subscribe((res: any) => {
-
-      const id = res.productId
+    this.route.params.subscribe((res) => {
+      const id = res['productId']
 
       this.db.getProductById(id).subscribe((res: any) => {
-        this.product = res.data()
+        this.product = res
         this.imgs = this.product.imgs
         this.createForm(this.product)
       })
@@ -50,14 +50,8 @@ export class EditProductComponent implements OnInit {
   }
 
   categoryList() {
-    this.db.getCategorys().subscribe((res: any) => {
-
-      const categorys = res.docs.map((doc: any) => {
-        return doc.data()
-      })
-
-      this.categorys = categorys
-
+    this.db.getCategorys().subscribe((res) => {
+      this.categorys = res
       this.loadService.hideLoading()
     })
   }
@@ -70,7 +64,7 @@ export class EditProductComponent implements OnInit {
     })
   }
 
-  addImgs(event: Event | any) {
+  addImgs(event: any) {
     event.preventDefault()
 
     let files;
@@ -108,7 +102,7 @@ export class EditProductComponent implements OnInit {
     }
   }
 
-  changeImgOrder(event: Event | any) {
+  changeImgOrder(event: any) {
     moveItemInArray(this.imgs, event.previousIndex, event.currentIndex)
     this.updateImgsOrder()
   }
@@ -148,8 +142,8 @@ export class EditProductComponent implements OnInit {
 
   updateImgsOrder() {
     this.imgs.forEach((element: any) => {
-      const imgs = this.imgs.map((element: any) => element.name)
-      let index = imgs.indexOf(element.name) + 1
+      const imgs = this.imgs.map((img) => img.name)
+      const index = imgs.indexOf(element.name) + 1
 
       element.order = index
     });
@@ -161,14 +155,9 @@ export class EditProductComponent implements OnInit {
       ...this.editForm.value
     }
 
-    // Terminar depois
-    // if (this.editForm.value.name != this.product.name) {
-    //   this.db.updateProductImgRef(this.product.name, this.editForm.value.name)
-    // }
-
     product.price = Number(product.price)
 
-    this.route.params.subscribe((res: any) => {
+    this.route.params.subscribe(async (res: any) => {
 
       if (this.removedImgs.length > 0) {
         this.removedImgs.forEach((img: any) => {
@@ -176,56 +165,51 @@ export class EditProductComponent implements OnInit {
         });
       }
 
-      this.uploadImgs()
-        .then(() => this.db.editProduct(res.productId, product))
-        .then(() => this.db.navegate('admin/products'))
-        .then(() => this.db.userMessages('Produto Editado'))
+      await this.uploadImgs()
+      await this.db.editProduct(res.productId, product)
+      await Promise.all([
+        this.db.navegate('admin/products'),
+        this.db.userMessages('Produto Editado')
+      ])
     })
   }
 
-  uploadImgs() {
-    return new Promise((resolve, reject) => {
+  async uploadImgs() {
+    const files = this.imgsFiles
+    const imgs: any = []
 
-      const files = this.imgsFiles
-      const imgs: any = []
+    if (files.length === 0 || this.imgs.length === 0) {
+      return null
+    }
 
-      if (files.length === 0 || this.imgs.length === 0) {
-        resolve(null)
+    for (let file of files) {
+      const filePath = `${this.editForm.value.name}/${file.name}`
+      const fileRef = this.storage.ref(filePath)
+
+      await this.db.addProductImg(filePath, file)
+
+      const url = await lastValueFrom(fileRef.getDownloadURL())
+      const imgInfos = this.imgs.find((img) => img.name === file.name)
+
+      imgInfos.url = url
+      imgs.push(imgInfos)
+
+      if (imgs.length === files.length) {
+        imgs.sort((a: any, b: any) => a.order - b.order)
+        return imgs
       }
-
-      for (let file of files) {
-        const filePath = `${this.editForm.value.name}/${file.name}`
-        const fileRef = this.storage.ref(filePath)
-
-        this.db.sendProductImg(filePath, file).snapshotChanges()
-          .pipe(
-            finalize(() => {
-              fileRef.getDownloadURL().subscribe((url: any) => {
-                const imgInfos = this.imgs.find((img: any) => img.name === file.name)
-                imgInfos.url = url
-                imgs.push(imgInfos)
-
-                if (imgs.length === files.length) {
-                  imgs.sort((a: any, b: any) => a.order - b.order)
-                  resolve(imgs)
-                }
-              })
-            })
-          )
-          .subscribe()
-      }
-    })
+    }
   }
 
   // Adds and removes a hover style when user drag a img to upload
-  dragHoverIn(event: any) {
+  dragHoverIn(event: Event) {
     event.preventDefault()
 
     const imgUploadArea = document.querySelector('#fileUploadLabel')
     imgUploadArea?.classList.add('dragHover')
   }
 
-  dragHoverOut(event: any) {
+  dragHoverOut(event: Event) {
     event.preventDefault()
 
     const imgUploadArea = document.querySelector('#fileUploadLabel')

@@ -4,6 +4,7 @@ import { StripeService } from 'src/app/services/stripe/stripe.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { LoadService } from 'src/app/services/load/load.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-success',
@@ -12,10 +13,10 @@ import { LoadService } from 'src/app/services/load/load.service';
 })
 export class SuccessComponent implements OnInit {
 
-  loading: any = false
+  loading: boolean = false
 
   constructor(private userService: UserService, private db: ProductService, private stripeService: StripeService, private loadService: LoadService, private router: ActivatedRoute) {
-    loadService.isLoading.subscribe((res: any) => {
+    loadService.isLoading.subscribe((res) => {
       this.loading = res
     })
   }
@@ -26,12 +27,13 @@ export class SuccessComponent implements OnInit {
 
   status() {
     this.loadService.showLoading()
-    this.router.params.subscribe((params: any) => {
-      const id = params.paymentId
+
+    this.router.params.subscribe((params) => {
+      const id = params['paymentId']
 
       this.stripeService.paymentStatus(id).subscribe((res: any) => {
 
-        this.userService.getUser().subscribe((doc: any) => {
+        this.userService.getUserById().subscribe((doc: any) => {
           const user = doc.data()
 
           res.customer_details.address = user.address
@@ -46,19 +48,14 @@ export class SuccessComponent implements OnInit {
   }
 
   savePayment(paymentStatus: any) {
-    this.stripeService.getPayments().subscribe((res: any) => {
+    this.stripeService.getPayments().subscribe(async (res) => {
 
-      const payments = res.docs.map((doc: any) => {
-        return doc.data()
+      const filter = res.filter((payment: any) => {
+        return payment['id'] === paymentStatus.id
       })
 
-      const filter = payments.filter((payment: any) => {
-        return payment.id === paymentStatus.id
-      })
+      this.loadService.hideLoading()
 
-      this.loadService.hideLoading(
-
-      )
       if (filter.length === 0) {
         const products = JSON.parse(paymentStatus.metadata.products)
         const orderNumber = Math.floor(Math.random() * 999999999) + 100000000
@@ -69,11 +66,9 @@ export class SuccessComponent implements OnInit {
         paymentStatus.products = products
         paymentStatus.order_number = orderNumber
 
-        this.stripeService.savePaymentInfosOnFirebase(paymentStatus)
-          .then(() => this.db.emptyCart())
-
-        this.db.sendAdminOrder(paymentStatus)
-          .then(() => console.log('foi'))
+        await this.stripeService.savePaymentInfosOnFirebase(paymentStatus)
+        await this.db.sendOrderToAdmin(paymentStatus)
+        this.db.emptyCart()
       }
     })
   }

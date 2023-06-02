@@ -21,13 +21,10 @@
         <button mat-icon-button *ngIf="logged === true" routerLink="user">
             <mat-icon class="icons">person</mat-icon>
         </button>
-        <!-- <button mat-icon-button *ngIf="admin === true" routerLink="admin/products">
-            <mat-icon class="icons">settings</mat-icon>
-        </button> -->
         <button mat-icon-button *ngIf="logged === true" routerLink="allOrders">
             <mat-icon class="icons">shopping_basket</mat-icon>
         </button>
-        <div class="themeIcons" (click)="themeIconToggle()">
+        <div class="themeIcons" (click)="themeToggle()">
             <button mat-icon-button class="sun">
                 <mat-icon>wb_sunny</mat-icon>
             </button>

@@ -8,8 +8,8 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class PasswordRecoveryComponent implements OnInit {
 
-  email: any
-  code: any
+  email: string = ''
+  code: string = ''
   sendedCode: any
 
   constructor(private userSevice: UserService) { }
@@ -44,12 +44,8 @@ export class PasswordRecoveryComponent implements OnInit {
   }
 
   sendCodeEmail() {
-    this.userSevice.getUsers().subscribe((res: any) => {
-      const users = res.docs.map((doc: any) => {
-        return doc.data()
-      })
-
-      const user = users.filter((user: any) => {
+    this.userSevice.getUsers().subscribe((res) => {
+      const user = res.filter((user: any) => {
         return user.email === this.email
       })
 

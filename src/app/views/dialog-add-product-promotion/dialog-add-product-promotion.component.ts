@@ -10,45 +10,39 @@ import { PromotionsComponent } from '../promotions/promotions.component';
 })
 export class DialogAddProductPromotionComponent implements OnInit {
 
-  promotionInput: any = ''
-  input: string = ''
-  products: any
-  teste: any
-  teste1: any = []
-  selectedProducts: any = []
-  deletedProducts: any = []
+  promotionInput: string | number = ''
+  searchInput: string = ''
+  products: any[] = []
+  promotionProducts: any[] = []
+  selectedProducts: any[] = []
+  deletedProducts: any[] = []
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private db: ProductService, private dialog: MatDialogRef<PromotionsComponent>) { }
 
   ngOnInit(): void {
     this.getProducts()
     this.selectedProducts = this.data?.products || []
-    this.teste1 = this.data?.products || []
+    this.promotionProducts = this.data?.products || []
   }
 
   getProducts() {
-    this.db.getProducts().subscribe((res: any) => {
-      this.products = res.docs.map((doc: any) => {
-        return doc.data()
+    this.db.getProducts().subscribe((res) => {
+
+      const noPromotionProducts: any[] = []
+
+      res.forEach((element: any) => {
+        if (element.promotionInfos === undefined || element.promotionInfos === null) {
+          noPromotionProducts.push(element)
+        }
       })
 
-      const teste1 = []
-
-      for (let i = 0; i < this.products.length; i++) {
-        const element = this.products[i];
-
-        if (element.promotionInfos === undefined || element.promotionInfos === null) {
-          teste1.push(element)
-        }
-      }
-
-      this.teste = teste1
+      this.products = noPromotionProducts
     })
   }
 
   searchProduct() {
-    this.teste = this.products.filter((product: any) => {
-      return product.name.includes(this.input)
+    this.products = this.products.filter((product: any) => {
+      return product.name.includes(this.searchInput)
     })
   }
 
@@ -104,10 +98,10 @@ export class DialogAddProductPromotionComponent implements OnInit {
     })
 
     const index = products.indexOf(product.name)
-    const teste = this.selectedProducts[index]
+    const selectedProduct = this.selectedProducts[index]
 
-    if (this.teste1.includes(teste)) {
-      this.deletedProducts.push(teste)
+    if (this.promotionProducts.includes(selectedProduct)) {
+      this.deletedProducts.push(selectedProduct)
     }
 
     this.selectedProducts.splice(index, 1)

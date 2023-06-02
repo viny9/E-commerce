@@ -30,6 +30,7 @@ const routes: Routes = [
     path: '',
     component: MainComponent,
     canActivate: [UserAuthGuard],
+    canActivateChild: [UserAuthGuard],
     children: [
       { path: '', component: HomeComponent },
       { path: 'favoriteList', component: FavoriteListComponent },

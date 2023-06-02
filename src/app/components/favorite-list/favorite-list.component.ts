@@ -9,28 +9,28 @@ import { ProductService } from 'src/app/services/product/product.service';
 })
 export class FavoriteListComponent implements OnInit {
 
-  empty: any
-  list: any = []
-  loading: any = false
+  empty = true
+  list: any[] = []
+  loading = false
 
   constructor(private db: ProductService, private loadService: LoadService) {
-    loadService.isLoading.subscribe((res: any) => {
+    loadService.isLoading.subscribe((res) => {
       this.loading = res
     })
   }
 
   ngOnInit(): void {
-    this.favoriteList()
+    this.getList()
   }
 
-  favoriteList() {
+  getList() {
     this.loadService.showLoading()
-    this.db.getFavoriteList().subscribe((res: any) => {
-      res.docs.forEach((element: any) => {
-        this.list.push(element.data())
-      });
+
+    this.db.getFavoriteList().subscribe((res) => {
+      this.list = res;
 
       this.isEmpty()
+      this.loadService.hideLoading()
     })
   }
 
@@ -40,18 +40,13 @@ export class FavoriteListComponent implements OnInit {
     } else {
       this.empty = false
     }
-
-    this.loadService.hideLoading()
   }
 
-  remove(product: any) {
-    this.db.getListProductId(product)
+  async removeListProduct(product: Object) {
+    const id: any = await this.db.getId(this.db.path.list, product)
 
-    setTimeout(() => {
-      this.db.deleteFromList(this.db.id)
-        .then(() => console.log('removido'))
-        .then(() => window.location.reload())
-    }, 500);
+    await this.db.deleteFromList(id)
+    this.getList()
   }
 
 }

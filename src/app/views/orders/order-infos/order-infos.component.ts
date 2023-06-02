@@ -2,6 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product/product.service';
 import { LoadService } from 'src/app/services/load/load.service';
+import { AdminRoutes } from 'src/app/enums/admin-routes';
 
 @Component({
   selector: 'app-order-infos',
@@ -11,15 +12,15 @@ import { LoadService } from 'src/app/services/load/load.service';
 export class OrderInfosComponent implements OnInit {
 
   orderInfos: any
-  loading:any = false
+  loading: boolean = false
 
-  constructor(private db: ProductService, private loadService:LoadService, private router: ActivatedRoute) {
-    loadService.isLoading.subscribe((res: any) => {
+  constructor(private db: ProductService, private loadService: LoadService, private router: ActivatedRoute) {
+    loadService.isLoading.subscribe((res) => {
       this.loading = res
     })
 
-    db.selectComponent = 'orders'
-   }
+    db.selectComponent = AdminRoutes.orders
+  }
 
   ngOnInit(): void {
     this.getOrder()
@@ -27,15 +28,13 @@ export class OrderInfosComponent implements OnInit {
 
   getOrder() {
     this.loadService.showLoading()
-    this.router.params.subscribe((param: any) => {
-      const id = param.orderId
 
-      this.db.getOrders().subscribe((res: any) => {
-        const orders = res.docs.map((doc: any) => {
-          return doc.data()
-        })
+    this.router.params.subscribe((param) => {
+      const id = param['orderId']
 
-        const filter = orders.filter((order: any) => {
+      this.db.getOrders().subscribe((res) => {
+
+        const filter = res.filter((order: any) => {
           return order.id === id
         })
 
@@ -48,7 +47,7 @@ export class OrderInfosComponent implements OnInit {
   }
 
   total() {
-    let total: any = 0
+    let total: number = 0
 
     this.orderInfos.products.forEach((product: any) => {
       total += (product.price * product.amount) / 100
@@ -57,8 +56,8 @@ export class OrderInfosComponent implements OnInit {
     });
   }
 
-  date(miliseconds:any) {
-    const date = new Date(miliseconds * 1000)
+  date(milliseconds: any) {
+    const date = new Date(milliseconds * 1000)
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
   }
 

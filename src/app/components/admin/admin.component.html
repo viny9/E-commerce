@@ -1,26 +1,23 @@
 <mat-sidenav-container class="adminComponent">
     <mat-sidenav opened class="sidenav" mode="side">
         <mat-nav-list class="nav">
-            <a mat-list-item routerLink="products"
-                [ngClass]="selected === 'products' ? 'selected' : '' ">
+            <a mat-list-item routerLink="products" [ngClass]="selected === 'Products' ? 'selected' : '' ">
                 <mat-icon>storefront</mat-icon>
                 Produtos
             </a>
 
-            <a mat-list-item routerLink="promotions"
-                [ngClass]="selected === 'promotions' ? 'selected' : '' ">
+            <a mat-list-item routerLink="promotions" [ngClass]="selected === 'Promotions' ? 'selected' : '' ">
                 <mat-icon>local_offer</mat-icon>
                 Promoções
             </a>
 
-            <a mat-list-item routerLink="orders"
-                [ngClass]="selected === 'orders' ? 'selected' : '' ">
+            <a mat-list-item routerLink="orders" [ngClass]="selected === 'Orders' ? 'selected' : '' ">
                 <mat-icon>list_alt</mat-icon>
                 Pedidos
             </a>
 
             <a mat-list-item (click)="selected = 'notifications' " routerLink="notifications"
-                [ngClass]="selected === 'notifications' ? 'selected' : '' ">
+                [ngClass]="selected === 'Notifications' ? 'selected' : '' ">
                 <mat-icon>notifications_active</mat-icon>
                 Notificações
             </a>
@@ -30,8 +27,7 @@
                     <mat-icon class="sun">wb_sunny</mat-icon>
                     <mat-icon class="moon">brightness_4</mat-icon>
                 </div>
-                <mat-slide-toggle class="slideToggle" (change)="themeIconToggle()"
-                    [checked]="checked"></mat-slide-toggle>
+                <mat-slide-toggle class="slideToggle" (change)="themeToggle()" [checked]="checked"></mat-slide-toggle>
             </a>
 
             <a mat-list-item (click)="signOut()">

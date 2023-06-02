@@ -9,12 +9,12 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class DialogCategoryComponent implements OnInit {
 
-  inputStatus: any = 'new'
-  newCategoryInput: any
-  editCategoryInput: any
-  selectedCategory: any
-  categorys: any
-  changed: any = false
+  inputStatus = 'new'
+  newCategoryInput = ''
+  editCategoryInput = ''
+  selectedCategory = ''
+  categorys: any[] = []
+  changed: boolean = false
 
   constructor(private db: ProductService, private dialog: MatDialogRef<DialogCategoryComponent>) { }
 
@@ -24,19 +24,15 @@ export class DialogCategoryComponent implements OnInit {
 
   categorysList() {
     this.db.getCategorys().subscribe((res: any) => {
-      const categorys = res.docs.map((doc: any) => {
-        return doc.data()
-      })
-
-      this.categorys = categorys
+      this.categorys = res
     })
   }
 
-  newCategory() {
+  async newCategory() {
     const category = { name: this.newCategoryInput }
 
-    this.db.addCategory(category)
-      .then(() => this.categorysList())
+    await this.db.createCategory(category)
+    this.categorysList()
   }
 
   selectCategory(category: any) {
@@ -44,62 +40,42 @@ export class DialogCategoryComponent implements OnInit {
     this.selectedCategory = category.name
   }
 
-  updateCategory() {
-    this.db.getCategoryId(this.selectedCategory)
+  async updateCategory() {
+    const id = await this.db.getId(this.db.path.categorys, this.selectedCategory)
+    const upadatedCategory = { name: this.editCategoryInput }
 
-    setTimeout(() => {
-      const id = this.db.id
-      const upadatedCategory = { name: this.editCategoryInput }
-
-      this.db.updateCategory(id, upadatedCategory)
-        .then(() => this.categorysList())
-        .then(() => this.filterProducts())
-    }, 1000);
+    await this.db.updateCategory(id, upadatedCategory)
+    this.categorysList()
+    this.filterProducts()
   }
 
   filterProducts() {
     this.db.getProducts().subscribe((res: any) => {
-      const products = res.docs.map((doc: any) => {
-        return doc.data()
-      })
-
-      const filter = products.filter((product: any) => {
+      const filter = res.filter((product: any) => {
         return product.category === this.selectedCategory
       })
 
       filter.forEach((product: any) => {
         product.category = this.editCategoryInput
-        this.UpdateProducts(product)
+        this.updateProducts(product)
       });
     })
   }
 
-  UpdateProducts(product: any) {
-    this.db.getProducts().subscribe((res: any) => {
+  async updateProducts(product: any) {
+    const id = await this.db.getId(this.db.path.products, product)
 
-      const ids = res.docs
-
-      const products = res.docs.map((res: any) => {
-        return res.data().name
-      })
-
-      const index = products.indexOf(product.name)
-      const id = ids[index].id
-
-      this.db.editProduct(id, product)
-        .then(() => this.db.userMessages('Produtos foram atualizados'))
-        .then(() => this.changed = true)
-    })
+    await this.db.editProduct(id, product)
+    this.db.userMessages('Produtos foram atualizados')
+    this.changed = true
   }
 
-  deleteCategory(category: any) {
-    this.db.getCategoryId(category.name)
+  async deleteCategory(category: any) {
+    const id = await this.db.getId(this.db.path.categorys, category)
 
-    setTimeout(() => {
-      this.db.removeCategory(this.db.id)
-        .then(() => this.db.userMessages('Categoria removida'))
-        .then(() => this.categorysList())
-    }, 500);
+    await this.db.removeCategory(id)
+    this.db.userMessages('Categoria removida')
+    this.categorysList()
   }
 
   close() {

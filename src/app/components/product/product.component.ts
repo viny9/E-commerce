@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product/product.service';
 import { LoadService } from 'src/app/services/load/load.service';
+import { Product } from 'src/app/models/product';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -10,17 +11,17 @@ import { LoadService } from 'src/app/services/load/load.service';
 })
 export class ProductComponent implements OnInit {
 
-  amount: any = 1
-  favorite: any = false
-  product: any
-  listFavorites: Array<any> = []
-  cart: any = []
-  inCart: any
-  loading: any = false
-  selectedImg: any
+  amount: number = 1
+  favorite: boolean = false
+  product!: Product
+  listFavorites: any[] = []
+  cart: any[] = []
+  inCart: boolean = false
+  loading: boolean = false
+  selectedImg: string = ''
 
   constructor(private db: ProductService, private loadService: LoadService, private router: ActivatedRoute, private stripeService: StripeService) {
-    loadService.isLoading.subscribe((res: any) => {
+    loadService.isLoading.subscribe((res) => {
       this.loading = res
     })
   }
@@ -28,19 +29,19 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.loadService.showLoading()
 
-    this.productInfos()
+    this.getProductInfos()
     this.isFavorite()
     this.isOnCart()
 
   }
 
-  productInfos() {
-    this.router.params.subscribe((data: any) => {
-      const id = data.productId
+  getProductInfos() {
+    this.router.params.subscribe((param) => {
+      const id = param['productId']
 
       this.db.getProductById(id).subscribe((res: any) => {
-        this.product = res.data()
-        this.selectedImg = this.product?.imgs[0]?.url
+        this.product = res
+        this.selectedImg = this.product.imgs[0]?.url
       })
     })
   }
@@ -48,11 +49,9 @@ export class ProductComponent implements OnInit {
   isFavorite() {
     this.db.getFavoriteList().subscribe((res: any) => {
 
-      res.docs.forEach((element: any) => {
-        this.listFavorites.push(element.data())
-      });
+      this.listFavorites = res
 
-      const filter = this.listFavorites.filter((product: any) => {
+      const filter = this.listFavorites.filter((product: Product) => {
         return product.name === this.product.name
       })
 
@@ -64,64 +63,10 @@ export class ProductComponent implements OnInit {
     })
   }
 
-  subAmount() {
-    if (this.amount > 1) {
-      this.amount -= 1
-    }
-  }
-
-  addAmount() {
-    const max = 20
-
-    if (this.amount < max) {
-      this.amount += 1
-    }
-  }
-
-  async addFavorites() {
-    if (this.favorite === false) {
-      const id: any = await this.db.getProductId(this.product)
-      this.product.id = id
-
-      this.db.addProductInList(this.product)
-        .then(() => this.favorite = true)
-        .then(() => this.db.userMessages('Adicionado a sua lista'))
-
-    } else if (this.favorite === true) {
-      const id: any = await this.db.getProductId(this.product)
-
-      this.db.getListProductId(this.product)
-
-      setTimeout(() => {
-        this.db.deleteFromList(this.db.id)
-          .then(() => this.favorite = false)
-          .then(() => this.db.userMessages('Foi removido da sua lista'))
-      }, 500);
-    }
-  }
-
-  async addCart() {
-    if (this.inCart === false) {
-      const id = await this.db.getProductId(this.product)
-
-      this.product.amount = this.amount
-      this.product.id = id
-
-      this.db.addInCart(this.product)
-        .then(() => this.inCart = true)
-        .then(() => this.db.userMessages('Adicionado ao carrinho'))
-
-    } else {
-      this.db.userMessages('Produto já está no carrinho')
-    }
-  }
-
   isOnCart() {
     this.db.getCart().subscribe((res: any) => {
 
-      res.docs.forEach((element: any) => {
-        this.cart.push(element.data())
-      });
+      this.cart = res
 
       const filter = this.cart.filter((product: any) => {
         return product.name === this.product.name
@@ -138,8 +83,56 @@ export class ProductComponent implements OnInit {
     })
   }
 
+  async addFavorites() {
+    if (!this.favorite) {
+      const id = await this.db.getId(this.db.path.products, this.product)
+      this.product.id = id
+
+      await this.db.addProductInList(this.product)
+      this.favorite = true
+      this.db.userMessages('Adicionado a sua lista')
+
+    } else if (this.favorite) {
+      const id: any = await this.db.getId(this.db.path.list, this.product)
+
+      await this.db.deleteFromList(id)
+      this.favorite = false
+      this.db.userMessages('Foi removido da sua lista')
+    }
+  }
+
+  async addCart() {
+    if (!this.inCart) {
+      const id: any = await this.db.getId(this.db.path.products, this.product)
+
+      this.product.amount = this.amount
+      this.product.id = id
+
+      await this.db.addProductInCart(this.product)
+      this.inCart = true
+      this.db.userMessages('Adicionado ao carrinho')
+
+    } else {
+      this.db.userMessages('Produto já está no carrinho')
+    }
+  }
+
+  subProductAmount() {
+    if (this.amount > 1) {
+      this.amount -= 1
+    }
+  }
+
+  addProductAmount() {
+    const max = 20
+
+    if (this.amount < max) {
+      this.amount += 1
+    }
+  }
+
   async buy() {
-    const id = await this.db.getProductId(this.product)
+    const id: any = await this.db.getId(this.db.path.products, this.product)
 
     this.product.id = id
     this.product.amount = this.amount
