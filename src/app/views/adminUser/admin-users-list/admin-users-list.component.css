@@ -1,0 +1,50 @@
+h1 {
+    margin: 0;
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.newProductBtn {
+    background-color: var(--main-color);
+    color: var(--opposite-text-color);
+}
+
+.mat-table {
+    width: 100%;
+    margin-top: 1rem;
+    border-top: 1px solid var(--disabled-color);
+}
+
+tr {
+    background-color: var(--background-color);
+}
+
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type {
+    text-align: start;
+    max-width: 25rem;
+    min-width: 10rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+th.mat-header-cell,
+td.mat-cell {
+    width: 15%;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type {
+    width: 15%;
+    text-align: center;
+}
+
+.editBtn {
+    color: var(--main-color);
+}

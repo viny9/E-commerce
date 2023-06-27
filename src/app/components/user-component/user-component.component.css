@@ -6,6 +6,11 @@ h2 {
 .userDatasComponent {
   display: flex;
   justify-content: center;
+  overflow: hidden;
+}
+
+.cdk-overlay-container {
+  height: 10%;
 }
 
 .userInfos {
@@ -19,7 +24,8 @@ h2 {
 
 button {
   width: 100%;
-  background-color: var(--orange);
+  background-color: var(--main-color);
+  color: var(--opposite-text-color);
   margin: 1.5rem 0 2.5rem 0;
 }
 
@@ -46,5 +52,5 @@ p {
 }
 
 ::ng-deep.mat-form-field-ripple {
-  background-color: #ffba00 !important;
+  background-color: var(--main-color) !important;
 }

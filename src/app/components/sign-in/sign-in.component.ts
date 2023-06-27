@@ -1,6 +1,6 @@
-import { ProductService } from './../../services/product.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -9,10 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignInComponent implements OnInit {
 
-  hide:any = true
-  signinForm:any
+  hide: boolean = true
+  signinForm!: FormGroup
 
-  constructor(private db:ProductService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.createForm()
@@ -26,7 +26,7 @@ export class SignInComponent implements OnInit {
   }
 
   login() {
-    this.db.signIn(this.signinForm.value)
+    this.userService.signIn(this.signinForm.value)
   }
 
 }

@@ -9,6 +9,8 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  max-height: 100%;
+  overflow-x: hidden;
 }
 
 /* Varíaveis */
@@ -16,29 +18,62 @@ body {
 /* Dark mode */
 :root {
   --background-color: #171717;
-  --orange: #ffba00;
+  --main-color: #ffba00;
+  --main-color-hover: #ffbb0031;
   --card-color: #282828;
   --secondary-card-color: #424242;
   --text-color: #fff;
+  --opposite-text-color: #000;
   --secondary-text-color: #ffffffb3;
   --disabled-color: #ffffff80;
   --hover-color: #505050;
-  --success-color: #007e33;
-  --error-color: #FF1744;
+  --scrollbar-hover: #555;
+  --success-color: #00c851;
+  --error-color: #ff1744;
 }
 
 /* Light mode */
 .lightMode {
   --background-color: #fff;
-  --orange: #ffba00;
+  --main-color: #3f51b5;
+  --main-color-hover: #3f51b51f;
   --card-color: #fff;
   --secondary-card-color: #f5f5f5ab;
   --text-color: #000;
+  --opposite-text-color: #fff;
   --secondary-text-color: #0000008a;
   --disabled-color: #00000034;
   --hover-color: #f0f0f0;
+  --scrollbar-hover: #00000061;
   --success-color: #00c851;
-  --error-color:#DC143C ;
+  --error-color: #dc143c;
+}
+
+/* Scrollbar style */
+
+/* width */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: var(--background-color);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: var(--disabled-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-hover);
+}
+
+/* Arrows */
+::-webkit-scrollbar-button {
+  display: none;
 }
 
 /* Table base style */

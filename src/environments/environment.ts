@@ -5,7 +5,7 @@ import { firebase } from './../../env';
 
 export const environment = {
   production: false,
-  stripeBaseUrl: 'http://localhost:3000',
+  backendBaseUrl: 'http://localhost:3000',
   firebase: firebase,
 };
 

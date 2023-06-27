@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductService } from 'src/app/services/product/product.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +8,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  categorys: any[] = []
+
+  constructor(private db: ProductService) { }
 
   ngOnInit(): void {
+    this.getCategorys()
   }
+
+  getCategorys() {
+    this.db.getCategorys().subscribe((res) => {
+      this.categorys = res.sort((a: any, b: any) => {
+        if (a.name > b.name) {
+          return 1;
+        }
+        if (a.name < b.name) {
+          return -1;
+        }
+
+        return 0
+      })
+    })
+  }
+
+  // window.open("https://wa.me/" + 61984977155, "_blank");
 
 }

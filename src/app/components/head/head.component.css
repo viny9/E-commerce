@@ -5,7 +5,8 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #b3b3b3;
-  position: absolute;
+  position: sticky;
+  background-color: var(--background-color);
 }
 
 .search {
@@ -36,9 +37,9 @@
 }
 
 .search button {
-  background-color: var(--orange);
+  background-color: var(--main-color);
   border-radius: 0 50px 50px 0;
-  color: #000;
+  color: var(--opposite-text-color);
   display: flex;
   align-items: center;
   padding-right: 10px;
@@ -54,16 +55,16 @@
 }
 
 .icons {
-  color: #ffba00;
+  color: var(--main-color);
 }
 
 .logged {
   margin-right: 1rem;
-  color: #ffba00;
+  color: var(--main-color);
 }
 
 .logged a {
-  color: #ffba00;
+  color: var(--main-color);
   text-decoration: none;
 }
 
@@ -75,7 +76,7 @@
 .moon {
   position: absolute;
   top: 17%;
-  color: #ffba00;
+  color: var(--main-color);
 }
 
 .hideAnimation {

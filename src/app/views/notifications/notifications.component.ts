@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
+import { AdminRoutes } from 'src/app/enums/admin-routes';
+import { Notification } from 'src/app/models/notification';
+import { LoadService } from 'src/app/services/load/load.service';
+import { ProductService } from 'src/app/services/product/product.service';
 
 @Component({
   selector: 'app-notifications',
@@ -10,11 +13,18 @@ export class NotificationsComponent implements OnInit {
 
   archived: any
   componentSelect: any = false
-  notifications: any = []
+  notifications: Notification[] = []
   selectedNotifications: any = []
-  date: any
+  date: string = ''
+  loading: boolean = false
 
-  constructor(private db: ProductService) { }
+  constructor(private db: ProductService, private loadService: LoadService) {
+    loadService.isLoading.subscribe((res: any) => {
+      this.loading = res
+    })
+
+    db.selectComponent = AdminRoutes.notifications
+  }
 
   ngOnInit(): void {
     this.getNotifications()
@@ -22,18 +32,17 @@ export class NotificationsComponent implements OnInit {
   }
 
   getNotifications() {
+    this.loadService.showLoading()
     this.db.getNotifications().subscribe((res: any) => {
-      this.notifications = res.docs.map((doc: any) => {
-        return doc.data()
-      })
 
-      this.notifications = this.notifications.sort((a: any, b: any) => {
+      this.notifications = res.sort((a: any, b: any) => {
         const d: any = new Date(a.date);
         const c: any = new Date(b.date);
         return c - d;
       })
 
       this.notificationDate()
+      this.loadService.hideLoading()
     })
   }
 
@@ -74,74 +83,59 @@ export class NotificationsComponent implements OnInit {
 
   archivedNotifications() {
     this.db.getArchivedNotification().subscribe((res: any) => {
-      this.archived = res.docs.map((doc: any) => {
-        return doc.data()
-      })
+      this.archived = res
     })
   }
 
   checkNotification(checkedNotification: any) {
-    if (checkedNotification.new === true) {
-      this.db.getNotifications().subscribe((res: any) => {
+    if (checkedNotification.new) {
+      this.db.getNotifications().subscribe(async (res: any) => {
 
-        const notifications = res.docs.map((doc: any) => {
-          return doc.data()
-        })
-
-        const filter = notifications.filter((notification: any) => {
+        const filter = res.filter((notification: any) => {
           return notification.id === checkedNotification.id
         })
 
         filter[0].new = false
 
-        this.db.getNotificationId(checkedNotification)
+        const id = await this.db.getNotificationId(checkedNotification)
 
-        setTimeout(() => {
-          this.db.updateNotificationStatus(filter[0], this.db.productId)
-            .then(() => this.getNotifications())
-        }, 500);
+        await this.db.updateNotificationStatus(filter[0], id)
+        this.getNotifications()
       })
     }
   }
 
-  archiveNotification(notification: any, event: Event) {
+  async archiveNotification(notification: any, event: Event) {
     event.stopPropagation()
 
-    this.db.getNotificationId(notification)
+    const id = await this.db.getNotificationId(notification)
 
-    setTimeout(() => {
-      this.db.archiveNotification(notification)
-        .then(() => this.deleteNotification(this.db.productId))
-        .then(() => this.getNotifications())
-    }, 500);
+    await this.db.archiveNotification(notification)
+    await this.db.deleteNotification(id)
+    this.getNotifications()
   }
 
-  unarchiveNotification(notification: any, event: any) {
+  async unarchiveNotification(notification: any, event: Event) {
     event.stopPropagation()
 
-    this.db.getArchivedNotificationId(notification)
+    const id = await this.db.getArchivedNotificationId(notification)
 
-    setTimeout(() => {
-      this.db.unachiveNotification(notification, this.db.productId)
-        .then(() => this.archivedNotifications())
-    }, 500);
+    await this.db.unachiveNotification(notification, id)
+    this.archivedNotifications()
   }
 
-  deleteNotification(notification: any, event?: any) {
-    event.stopPropagation()
+  async deleteNotification(notification: any, event?: any) {
+    event?.stopPropagation()
 
-    this.db.getNotificationId(notification)
+    const id = await this.db.getNotificationId(notification)
 
-    setTimeout(() => {
-      this.db.deleteNotification(this.db.productId)
-        .then(() => this.getNotifications())
-    }, 500);
+    await this.db.deleteNotification(id)
+    this.getNotifications()
   }
 
   selectedNotification(id: any) {
     this.selectedNotifications.push(id)
-
     console.log(this.selectedNotifications)
   }
-  
+
 }

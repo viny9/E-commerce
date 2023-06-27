@@ -1,69 +1,149 @@
 .signUp {
-    height: 100%;
-    background-color: #ffba00;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: 100%;
+  background-color: #ffba00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  background-color: #151515d8;
+  /* height: 35rem; */
+  width: 30%;
+  color: #fff;
+  padding: 3rem 3rem 2rem;
+  border-radius: 1rem;
+}
+
+.backIcon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  margin: 0.5rem;
+}
+
+.form h1 {
+  text-align: center;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mat-form-field {
+  font-size: 17px;
+  width: 90%;
+  margin: 5px 0;
+}
+
+/* input */
+::ng-deep .mat-form-field-label {
+  color: #fff !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  background-color: #fff !important;
+}
+
+::ng-deep .mat-form-field-invalid .mat-form-field-ripple {
+  background-color: #ff3333 !important;
+}
+
+::ng-deep .mat-form-field-ripple {
+  background-color: #ffba00 !important;
+}
+
+::ng-deep .mat-form-field-required-marker {
+  display: none;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  background-color: #ffba00;
+  color: #fff;
+  width: 70%;
+  border-radius: 20px;
+  padding: 5px 0;
+  margin-top: 20px;
+}
+
+.login {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.login a {
+  text-decoration: underline;
+  color: #ffba00;
+}
+
+.showAddressForm {
+  animation: forwards 1s showAddress;
+}
+
+.showUserForm {
+  animation: forwards 1s showUserForm;
+}
+
+.hideUserForm {
+  animation: forwards 1s hideUserForm;
+}
+
+.hideAdressForm {
+  animation: forwards 1s hideAddress;
+}
+
+.none {
+  display: none;
+}
+
+@keyframes showAddress {
+  0% {
+    position: relative;
+    transform: translateX(200%);
   }
-  
-  .form {
-    background-color: #151515d8;
-    height: 35rem;
-    width: 25%;
-    color: #fff;
-    padding: 3rem;
-    border-radius: 90px;
+
+  100% {
+    transform: translateX(0%);
   }
-  
-  .form h1 {
-    text-align: center;
+}
+
+@keyframes hideUserForm {
+  0% {
+    position: relative;
+    transform: translateX(0%);
   }
-  
-  .fields {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+  100% {
+    transform: translateX(-200%);
   }
-  
-  .mat-form-field {
-    font-size: 17px;
-    width: 80%;
-    margin: 5px 0;
+}
+
+@keyframes showUserForm {
+  0% {
+    position: relative;
+    transform: translateX(-200%);
   }
-  
-  ::ng-deep .mat-form-field-label {
-    color: #fff !important;
+
+  100% {
+    transform: translateX(0%);
   }
-  
-  ::ng-deep .mat-form-field-underline {
-    background-color: #fff !important;
+}
+
+@keyframes hideAddress {
+  0% {
+    position: relative;
+    transform: translateX(0%);
   }
-  
-  ::ng-deep.mat-form-field-ripple {
-    background-color: #ffba00 !important;
+
+  100% {
+    transform: translateX(200%);
   }
-  
-  .btnContainer {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .btn {
-    background-color: #ffba00;
-    color: #fff;
-    width: 70%;
-    border-radius: 20px;
-    padding: 5px 0;
-    margin-top: 20px;
-  }
-  
-  .login {
-    text-align: center;
-    margin-top: 4rem;
-  }
-  
-  .login a {
-    text-decoration: underline;
-    color: #ffba00;
-  }
-  
+}

@@ -1,0 +1,11 @@
+<div class="component">
+    <div class="infos">
+        <h1>Excluir sua Conta</h1>
+        <p>Digite sua senha para excluir sua conta</p>
+    </div>
+    <mat-form-field>
+        <mat-label>Senha</mat-label>
+        <input type="text" matInput [(ngModel)]="password">
+    </mat-form-field>
+    <button mat-flat-button color="warn" (click)="deleteAccount()">Excluir</button>
+</div>

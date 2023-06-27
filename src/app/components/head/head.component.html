@@ -1,7 +1,7 @@
-<div class="head">
+<div class="head mat-elevation-z3">
     <a href="">Logo</a>
     <div class="search">
-        <input type="text" placeholder="Pesquisar" [(ngModel)]="searchInput">
+        <input type="text" placeholder="Pesquisar" [(ngModel)]="searchInput" (keyup.enter)="search()">
         <button (click)="search()" [disabled]="searchInput === undefined">
             <mat-icon>search</mat-icon>
         </button>
@@ -12,22 +12,19 @@
             /
             <a routerLink="signIn">Login</a>
         </div>
-        <button mat-icon-button>
-            <mat-icon class="icons" routerLink="cart">shopping_cart</mat-icon>
+        <button mat-icon-button routerLink="cart">
+            <mat-icon class="icons">shopping_cart</mat-icon>
         </button>
         <button mat-icon-button routerLink="favoriteList">
             <mat-icon class="icons">favorite</mat-icon>
         </button>
-        <button mat-icon-button *ngIf="logged === true">
-            <mat-icon class="icons" routerLink="user">person</mat-icon>
+        <button mat-icon-button *ngIf="logged === true" routerLink="user">
+            <mat-icon class="icons">person</mat-icon>
         </button>
-        <button mat-icon-button *ngIf="admin === true">
-            <mat-icon class="icons" routerLink="admin/products">settings</mat-icon>
+        <button mat-icon-button *ngIf="logged === true" routerLink="allOrders">
+            <mat-icon class="icons">shopping_basket</mat-icon>
         </button>
-        <button mat-icon-button *ngIf="logged === true">
-            <mat-icon class="icons" routerLink="allOrders">shopping_basket</mat-icon>
-        </button>
-        <div class="themeIcons" (click)="themeIconToggle()">
+        <div class="themeIcons" (click)="themeToggle()">
             <button mat-icon-button class="sun">
                 <mat-icon>wb_sunny</mat-icon>
             </button>

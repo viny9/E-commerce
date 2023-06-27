@@ -1,41 +1,45 @@
+<!-- Corrigir erro de template -->
 <div class="footer">
     <div class="nav">
         <h2>Categorias</h2>
         <div>
-            <p class="option">Categoria1</p>
-            <p class="option">Categoria2</p>
-            <p class="option">Categoria3</p>
-            <p class="option">Categoria4</p>
+            <p class="option" *ngFor="let category of categorys">{{category.name}}</p>
         </div>
     </div>
     <div class="nav">
         <h2>Suporte</h2>
         <div>
+            <!-- https://wa.me/{{numero para suporte}} -->
             <p class="option">Fale conosco</p>
-            <p class="option">Whatsapp</p>
+            <a href="https://wa.me/61984977155" target="_blank" class="option">Whatsapp</a>
         </div>
     </div>
 
-    <!-- Descobrir o que colocar aqui -->
-    <div class="nav">
-        <h2>Teste</h2>
-        <div>
-            <p class="option">Teste</p>
-            <p class="option">Teste</p>
-        </div>
-    </div>
     <div class="socialMedias">
         <h2>Siga-nos</h2>
         <div class="links">
             <button mat-icon-button>
-                <img src="../../../assets/instagram_icon.png" alt="">
+                <a href="https://www.instagram.com/viniciusoli1/" target="_blank">
+                    <img src="../../../assets/instagram_icon.png" alt="">
+                </a>
             </button>
             <button mat-icon-button>
-                <img src="../../../assets/facebook_icon.png" alt="">
+                <a href="https://www.facebook.com/profile.php?id=100026341417358" target="_blank">
+                    <img src="../../../assets/facebook_icon.png" alt="">
+                </a>
             </button>
             <button mat-icon-button>
-                <img src="../../../assets/twitter_icon.png" alt="">
+                <a href="https://twitter.com/" target="_blank">
+                    <img src="../../../assets/twitter_icon.png" alt="">
+                </a>
+            </button>
+            <button mat-icon-button>
+                <a href="https://www.linkedin.com/in/vin%C3%ADcius-oliveira-de-carvalho-6001a0223/" target="_blank">
+                    <img src="../../../assets/linkedin_icon.png" alt="">
+                </a>
             </button>
         </div>
     </div>
+
+    <p class="copyrights">© 2023 developed and design by Viny9</p>
 </div>

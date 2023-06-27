@@ -3,7 +3,7 @@
 <!-- Se não colocar qualquer informção que ajude o usuário -->
 <!-- Adicionar um filtro depois de lançar a primeira versão do site -->
 
-<div class="orderComponent">
+<div class="orderComponent" *ngIf="!loading">
     <div class="ordersContainer" *ngIf="payments">
         <mat-card class="orderContainer" *ngFor="let payment of payments">
             <div class="products">

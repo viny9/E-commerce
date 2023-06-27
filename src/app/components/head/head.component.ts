@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ProductService } from 'src/app/services/product/product.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-head',
@@ -9,23 +9,24 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class HeadComponent implements OnInit {
 
-  theme: any
-  admin: any = false
-  logged: any = false
+  theme = localStorage['theme']
+  logged: boolean = false
   searchInput: any
 
-  constructor(private db: ProductService, private route: ActivatedRoute) { }
+  constructor(private db: ProductService, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.themeStatus()
+    this.getSearch()
+    this.themeIcon()
 
-    this.logged = this.db.userStatus().logged
-    this.admin = this.db.userStatus().admin
+    this.logged = this.userService.isLogged()
   }
 
-  themeStatus() {
-    this.theme = localStorage.getItem('theme')
+  getSearch() {
+    this.searchInput = localStorage.getItem('search')
+  }
 
+  themeIcon() {
     const sun = document.querySelector('.sun')
     const moon = document.querySelector('.moon')
 
@@ -33,11 +34,10 @@ export class HeadComponent implements OnInit {
       sun?.classList.toggle('hide')
     } else {
       moon?.classList.toggle('hide')
-      document.body.classList.toggle('lightMode')
     }
   }
 
-  themeIconToggle() {
+  themeToggle() {
     const sun = document.querySelector('.sun')
     const moon = document.querySelector('.moon')
 
@@ -63,10 +63,11 @@ export class HeadComponent implements OnInit {
       document.body.classList.toggle('lightMode')
       localStorage.setItem('theme', 'dark')
     }
-
   }
 
   search() {
+    localStorage.setItem('search', this.searchInput)
+
     this.db.navegate(`search/${this.searchInput}`)
   }
 }

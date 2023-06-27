@@ -1,14 +1,5 @@
-<div class="editProduct">
-    <h1>Editar produto</h1>
-    <div class="productInfos">
-        <label for="selectImg">
-            <div class="fileUploadLabel" (drop)="teste2($event)" (dragover)="teste3($event)">
-                <mat-icon class="a">add_photo_alternate</mat-icon>
-                <h2>Arraste ou selecione uma imagem</h2>
-            </div>
-        </label>
-        <input type="file" id="selectImg">
-
+<div class="newProduct" *ngIf="!loading">
+    <div class="productInfos mat-elevation-z5">
         <form class="productForm" [formGroup]="editForm">
             <mat-form-field>
                 <mat-label>Nome</mat-label>
@@ -20,18 +11,46 @@
                 <input type="text" matInput formControlName="price" placeholder="00.00">
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="category">
+            <mat-form-field appearance="outline" class="categorys">
                 <mat-label>Categoria</mat-label>
                 <mat-select formControlName="category">
-                    <mat-option ></mat-option>
-                    <mat-option *ngFor="let category of categorys" [value]="category.name">{{category.name}}</mat-option>
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let category of categorys"
+                        [value]="category.name">{{category.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
-
-            <div class="actionBtns">
-                <button type="button" mat-flat-button (click)="updateProduct()">Atualizar produto</button>
-                <button type="button" mat-flat-button color="warn" routerLink="../..">Cancelar</button>
-            </div>
         </form>
+        <div class="imgsContainer">
+            <div>
+                <label for="addImg" (change)="addImgs($event)">
+                    <div class="fileUploadLabel" id="fileUploadLabel" (dragover)="dragHoverIn($event)"
+                        (dragleave)="dragHoverOut($event)" (drop)="addImgs($event); dragHoverOut($event)">
+                        <mat-icon class="a">add_photo_alternate</mat-icon>
+                        <h2>Arraste ou clique para selecionar um arquivo</h2>
+                    </div>
+                    <input type="file" id="addImg" multiple>
+                </label>
+                <input type="file" id="addImg">
+            </div>
+
+            <div class="imgs" cdkDropList (cdkDropListDropped)="changeImgOrder($event)">
+                <div class="img" *ngFor="let img of imgs" cdkDrag>
+                    <span>
+                        <mat-icon>image</mat-icon>
+                        <p>{{img.name}}</p>
+                    </span>
+                    <p>{{img.size}}</p>
+                    <button mat-icon-button color="warn" (click)="removeImg(img)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="actionBtns">
+            <!-- Deixar o button disponivel só quando ouver mudança -->
+            <button mat-flat-button [disabled]="editForm.status === 'INVALID'" (click)="updateProduct()">Atualizar
+                produto</button>
+            <button mat-flat-button color="warn" routerLink="../..">Cancelar</button>
+        </div>
     </div>
 </div>

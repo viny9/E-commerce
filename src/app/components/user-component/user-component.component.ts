@@ -1,7 +1,13 @@
+import { NoopScrollStrategy } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ProductService } from 'src/app/services/product.service';
+import { MatDialog } from '@angular/material/dialog';
+import { User } from 'src/app/models/user';
+import { LoadService } from 'src/app/services/load/load.service';
+import { ProductService } from 'src/app/services/product/product.service';
+import { UserService } from 'src/app/services/user/user.service';
+import { DeleteAccountComponent } from 'src/app/views/delete-account/delete-account.component';
 
 @Component({
   selector: 'app-user-component',
@@ -10,13 +16,17 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class UserComponentComponent implements OnInit {
 
-  constructor(private db: ProductService, private auth: AngularFireAuth) { }
-
-  user: any
-  userForm: any
-  addressForm: any
+  user!: User
+  userForm!: FormGroup
+  addressForm!: FormGroup
   mask: any
+  loading: boolean = false
 
+  constructor(private userService: UserService, private db: ProductService, private auth: AngularFireAuth, private loadService: LoadService, private dialog: MatDialog) {
+    loadService.isLoading.subscribe((res) => {
+      this.loading = res
+    })
+  }
 
   ngOnInit(): void {
     this.userInfos()
@@ -24,11 +34,31 @@ export class UserComponentComponent implements OnInit {
     this.mask = this.db.inputMasks()
   }
 
+  userInfos() {
+    this.loadService.showLoading()
+
+    this.userService.getUsers().subscribe((res) => {
+
+      const users = res
+
+      this.auth.user.subscribe((res: any) => {
+        const filter = users.filter((user: any) => {
+          return user.email === res.email
+        })
+
+        this.user = filter[0]
+        this.createForms(this.user)
+      })
+
+      this.loadService.hideLoading()
+    })
+  }
+
   createForms(userInfos?: any) {
     this.userForm = new FormGroup({
       name: new FormControl(userInfos?.name),
       email: new FormControl(userInfos?.email),
-      telephone: new FormControl(userInfos?.telephone),
+      phone: new FormControl(userInfos?.phone),
     })
 
     this.addressForm = new FormGroup({
@@ -41,41 +71,41 @@ export class UserComponentComponent implements OnInit {
     })
   }
 
-  userInfos() {
-    this.db.getUsers().subscribe((res: any) => {
+  signOut() {
+    this.userService.logOut()
+  }
 
-      const users = res.docs.map((user: any) => {
-        return user.data()
-      })
+  updateUserInfos() {
+    this.userService.getUserById(this.userService.userId).subscribe(async (res: any) => {
+      const email = res.data().email
 
-      this.auth.user.subscribe((res: any) => {
-        const filter = users.filter((user: any) => {
-          return user.email === res.email
-        })
+      const user = {
+        ...this.user,
+        ...this.userForm.value,
+        oldEmail: email
+      }
 
-        this.user = filter[0]
-        this.createForms(this.user)
-      })
+      const address = this.addressForm.value
+      user.address = address
+
+      user.address.cep = user.address.cep.replace(/\D/g, ''); //Removendo a mask do valor
+      user.phone = user.phone.replace(/\D/g, ''); //Removendo a mask do valor
+
+      await this.userService.updateUser(user)
+      this.userInfos()
     })
   }
 
-  signOut() {
-    this.db.logOut()
-  }
+  openDialog() {
+    this.userService.getUserById(this.userService.userId).subscribe((res) => {
+      const user = res.data()
 
-  updateInfos() {
-    const user = this.userForm.value
-    const userId = localStorage['userId']
-    const address = this.addressForm.value
-
-    user.address = address
-
-    this.db.updateUser(userId, user)
-      .then(() => this.db.userMessages('Informações atualizadas'))
-  }
-
-  teste() {
-    console.log(this.userForm)
+      this.dialog.open(DeleteAccountComponent, {
+        data: user,
+        width: '500px',
+        scrollStrategy: new NoopScrollStrategy()
+      })
+    })
   }
 
 }

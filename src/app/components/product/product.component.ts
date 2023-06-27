@@ -1,7 +1,9 @@
-import { StipeService } from 'src/app/services/stipe.service';
+import { StripeService } from 'src/app/services/stripe/stripe.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/services/product/product.service';
+import { LoadService } from 'src/app/services/load/load.service';
+import { Product } from 'src/app/models/product';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -9,38 +11,47 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductComponent implements OnInit {
 
-  amount: any = 1
-  favorite: any = false
-  product: any
-  listFavorites: Array<any> = []
-  cart: any = []
-  inCart: any
+  amount: number = 1
+  favorite: boolean = false
+  product!: Product
+  listFavorites: any[] = []
+  cart: any[] = []
+  inCart: boolean = false
+  loading: boolean = false
+  selectedImg: string = ''
 
-  constructor(private db: ProductService, private router: ActivatedRoute, private pay: StipeService) { }
-
-  ngOnInit(): void {
-    this.productInfos()
-    this.isFavorite()
-    this.isOnCart()
+  constructor(private db: ProductService, private loadService: LoadService, private router: ActivatedRoute, private stripeService: StripeService) {
+    loadService.isLoading.subscribe((res) => {
+      this.loading = res
+    })
   }
 
-  productInfos() {
-    this.router.params.subscribe((data: any) => {
-      const id = data.productId
+  ngOnInit(): void {
+    this.loadService.showLoading()
+
+    this.getProductInfos()
+    this.isFavorite()
+    this.isOnCart()
+
+  }
+
+  getProductInfos() {
+    this.router.params.subscribe((param) => {
+      const id = param['productId']
 
       this.db.getProductById(id).subscribe((res: any) => {
-        this.product = res.data()
+        this.product = res
+        this.selectedImg = this.product.imgs[0]?.url
       })
     })
   }
 
   isFavorite() {
     this.db.getFavoriteList().subscribe((res: any) => {
-      res.docs.forEach((element: any) => {
-        this.listFavorites.push(element.data())
-      });
 
-      const filter = this.listFavorites.filter((product: any) => {
+      this.listFavorites = res
+
+      const filter = this.listFavorites.filter((product: Product) => {
         return product.name === this.product.name
       })
 
@@ -52,66 +63,10 @@ export class ProductComponent implements OnInit {
     })
   }
 
-  subAmount() {
-    if (this.amount > 1) {
-      this.amount -= 1
-    }
-  }
-
-  addAmount() {
-    const max = 20
-
-    if (this.amount < max) {
-      this.amount += 1
-    }
-  }
-
-  addFavorites() {
-    if (this.favorite === false) {
-      this.db.getProductId(this.product)
-
-      setTimeout(() => {
-        this.product.id = this.db.productId
-
-        this.db.addProductInList(this.product)
-          .then(() => this.favorite = true)
-          .then(() => this.db.userMessages('Adicionado a sua lista'))
-      }, 500);
-
-    } else if (this.favorite === true) {
-      this.db.getListProductId(this.product)
-
-      setTimeout(() => {
-        this.db.deleteFromList(this.db.productId)
-          .then(() => this.favorite = false)
-          .then(() => this.db.userMessages('Foi removido da sua lista'))
-      }, 500);
-    }
-  }
-
-  addCart() {
-    if (this.inCart === false) {
-      this.db.getProductId(this.product)
-
-      setTimeout(() => {
-        this.product.amount = this.amount
-        this.product.id = this.db.productId
-
-        this.db.addInCart(this.product)
-          .then(() => this.inCart = true)
-          .then(() => this.db.userMessages('Adicionado ao carrinho'))
-      }, 500);
-
-    } else {
-      this.db.userMessages('Produto já está no carrinho')
-    }
-  }
-
   isOnCart() {
     this.db.getCart().subscribe((res: any) => {
-      res.docs.forEach((element: any) => {
-        this.cart.push(element.data())
-      });
+
+      this.cart = res
 
       const filter = this.cart.filter((product: any) => {
         return product.name === this.product.name
@@ -122,17 +77,66 @@ export class ProductComponent implements OnInit {
       } else if (filter.length >= 1) {
         this.inCart = true
       }
+
+      this.loadService.hideLoading()
+
     })
   }
 
-  buy() {
-    this.db.getProductId(this.product)
+  async addFavorites() {
+    if (!this.favorite) {
+      const id = await this.db.getId(this.db.path.products, this.product)
+      this.product.id = id
 
-    setTimeout(() => {
-      this.product.id = this.db.productId
+      await this.db.addProductInList(this.product)
+      this.favorite = true
+      this.db.userMessages('Adicionado a sua lista')
+
+    } else if (this.favorite) {
+      const id: any = await this.db.getId(this.db.path.list, this.product)
+
+      await this.db.deleteFromList(id)
+      this.favorite = false
+      this.db.userMessages('Foi removido da sua lista')
+    }
+  }
+
+  async addCart() {
+    if (!this.inCart) {
+      const id: any = await this.db.getId(this.db.path.products, this.product)
+
       this.product.amount = this.amount
-      this.pay.productPayment(this.product)
-    }, 500);
+      this.product.id = id
+
+      await this.db.addProductInCart(this.product)
+      this.inCart = true
+      this.db.userMessages('Adicionado ao carrinho')
+
+    } else {
+      this.db.userMessages('Produto já está no carrinho')
+    }
+  }
+
+  subProductAmount() {
+    if (this.amount > 1) {
+      this.amount -= 1
+    }
+  }
+
+  addProductAmount() {
+    const max = 20
+
+    if (this.amount < max) {
+      this.amount += 1
+    }
+  }
+
+  async buy() {
+    const id: any = await this.db.getId(this.db.path.products, this.product)
+
+    this.product.id = id
+    this.product.amount = this.amount
+    this.stripeService.productPayment(this.product)
   }
 
   // navigator.clipboard.writeText(window.location.href)
