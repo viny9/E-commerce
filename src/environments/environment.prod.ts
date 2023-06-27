@@ -1,3 +1,7 @@
+(window as any).process = {}
+console.log(process.env);
+
+
 export const environment = {
   production: true,
   backendBaseUrl: 'https://ecommerce-back-0gyg.onrender.com',
