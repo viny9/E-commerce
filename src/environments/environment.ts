@@ -6,7 +6,7 @@ import { firebase } from './../../env';
 export const environment = {
   production: false,
   backendBaseUrl: 'http://localhost:3000',
-  firebase: firebase,
+  firebase: firebase
 };
 
 /*
