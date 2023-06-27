@@ -2,6 +2,10 @@ h1 {
   margin: 0;
 }
 
+.cartComponent {
+  padding: 0 3rem;
+}
+
 .fullCart {
   display: flex;
   justify-content: space-between;
@@ -28,11 +32,23 @@ h1 {
   display: flex;
   align-items: center;
   min-width: 29rem;
+  max-width: 50%;
 }
 
 img {
   margin: 0 20px;
   max-width: 150px;
+  max-height: 108px;
+}
+
+.productName {
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  width: 100%;
 }
 
 .productName:hover {
@@ -82,7 +98,8 @@ img {
 }
 
 .total button {
-  background-color: var(--orange);
+  background-color: var(--main-color);
+  color: var(--opposite-text-color);
   width: 90%;
   margin: 1.5rem 1rem 0;
 }
@@ -99,5 +116,6 @@ img {
 }
 
 .emptyCart button {
-  background-color: var(--orange);
+  background-color: var(--main-color);
+  color: var(--opposite-text-color);
 }

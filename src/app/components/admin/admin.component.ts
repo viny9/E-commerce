@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
+import { AdminRoutes } from 'src/app/enums/admin-routes';
+import { ProductService } from 'src/app/services/product/product.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-admin',
@@ -8,20 +10,23 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class AdminComponent implements OnInit {
 
-  selected: string = 'products'
-  theme: any
-  checked:any = false
+  selected: string = ''
+  theme: string | null = localStorage['theme']
+  checked: boolean = false
+  routes = AdminRoutes
 
 
-  constructor(private db: ProductService) { }
-
-  ngOnInit(): void {
-    this.themeStatus()
+  constructor(private userService: UserService, private db: ProductService) {
+    db.updatedComponent.subscribe((res: any) => {
+      this.selected = res
+    })
   }
 
-  themeStatus() {
-    this.theme = localStorage.getItem('theme')
+  ngOnInit(): void {
+    this.themeIcon()
+  }
 
+  themeIcon() {
     const sun = document.querySelector('.sun')
     const moon = document.querySelector('.moon')
 
@@ -30,12 +35,11 @@ export class AdminComponent implements OnInit {
       this.checked = true
     } else {
       moon?.classList.toggle('hide')
-      document.body.classList.toggle('lightMode')
       this.checked = false
     }
   }
 
-  themeIconToggle() {
+  themeToggle() {
     const sun = document.querySelector('.sun')
     const moon = document.querySelector('.moon')
 
@@ -64,6 +68,6 @@ export class AdminComponent implements OnInit {
   }
 
   signOut() {
-    this.db.logOut()
+    this.userService.logOut()
   }
 }

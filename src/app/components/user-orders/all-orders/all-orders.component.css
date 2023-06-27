@@ -1,7 +1,8 @@
 .orderComponent {
   display: grid;
   grid-column: auto;
-  padding: 0 1rem;
+  padding: 0 3rem;
+  /* padding: 0 50px; */
 }
 
 .orderContainer {
@@ -37,8 +38,8 @@
 }
 
 button {
-  background-color: var(--orange);
-  color: black;
+  background-color: var(--main-color);
+  color: var(--opposite-text-color);
 }
 
 .teste {

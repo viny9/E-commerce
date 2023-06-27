@@ -4,10 +4,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%; */
 }
 
 .form {
@@ -16,7 +12,7 @@
   width: 25%;
   color: #fff;
   padding: 3rem;
-  border-radius: 90px;
+  border-radius: 1rem;
 }
 
 .form h1 {
@@ -47,10 +43,13 @@
 }
 
 .forgotPassword {
-  text-align: end;
-  text-decoration: underline;
+  display: flex;
+  justify-content: end;
+  width: 90%;
   font-size: 17px;
-  margin: 10px 30px 40px 0;
+  margin: 10px 0 20px 0;
+  color: #ffba00;
+  text-decoration: underline;
 }
 
 .btnContainer {

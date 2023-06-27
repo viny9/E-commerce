@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
-import { StipeService } from 'src/app/services/stipe.service';
+import { LoadService } from 'src/app/services/load/load.service';
+import { ProductService } from 'src/app/services/product/product.service';
+import { StripeService } from 'src/app/services/stripe/stripe.service';
 
 @Component({
   selector: 'app-cart',
@@ -9,25 +10,30 @@ import { StipeService } from 'src/app/services/stipe.service';
 })
 export class CartComponent implements OnInit {
 
-  empty: any = true
+  empty = true
   products: any = []
   all: number = 0
+  loading = false
 
-  constructor(private db: ProductService, private stripe:StipeService) { }
+  constructor(private db: ProductService, private loadService: LoadService, private stripe: StripeService) {
+    loadService.isLoading.subscribe((res) => {
+      this.loading = res
+    })
+  }
 
   ngOnInit(): void {
     this.cartItens()
   }
 
   cartItens() {
-    this.db.getCart().subscribe((res: any) => {
-      const productsArray = res.docs.map((element: any) => {
-        return element.data()
-      })
-      this.products = productsArray
+    this.loadService.showLoading()
+
+    this.db.getCart().subscribe((res) => {
+      this.products = res
 
       this.isEmpty()
       this.totalPrice()
+      this.loadService.hideLoading()
     })
   }
 
@@ -39,25 +45,21 @@ export class CartComponent implements OnInit {
     }
   }
 
-  removeCartItem(product: any) {
-    this.db.getCartProductId(product)
+  async removeCartItem(product: Object) {
+    const id = await this.db.getId(this.db.path.cart, product)
 
-    setTimeout(() => {
-      this.db.deleteCartProduct(this.db.productId)
-        .then(() => this.cartItens())
-        .then(() => console.log('removido')
-        )
-    }, 500);
+    await this.db.deleteCartProduct(id)
+    this.cartItens()
   }
 
-  subAmount(product: any) {
+  subProductAmount(product: any) {
     if (product.amount > 1) {
       product.amount -= 1
       this.totalPrice()
     }
   }
 
-  addAmount(product: any) {
+  addProductAmount(product: any) {
     const max = 20
 
     if (product.amount < max) {
@@ -69,9 +71,14 @@ export class CartComponent implements OnInit {
   totalPrice() {
     let all: any = 0
     this.products.forEach((element: any) => {
-      all += element.price * element.amount
+      if (element.promotionInfos != null) {
+        all += element.promotionInfos.promotionPrice * element.amount
+      } else {
+        all += element.price * element.amount
+      }
     });
-    this.all = all
+
+    this.all = all.toFixed(2).replace('.', ',')
   }
 
   pay() {

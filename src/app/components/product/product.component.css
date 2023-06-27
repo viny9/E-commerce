@@ -5,35 +5,79 @@ p {
 .productComponent {
   background-color: var(--background-color);
   color: var(--text-color);
-  padding-top: 2rem;
+  padding: 2rem 3rem;
 }
 
 .product {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
-img {
-  min-height: 500px;
-  max-height: 550px;
-  margin-right: 50px;
+.imgContainer {
+  width: 48%;
+}
+
+.selectedImg {
+  width: 100%;
+  /* max-width: 550px; */
+  border-radius: 3px;
+}
+
+.allImgs {
+  display: flex;
+  align-items: flex-end;
+  overflow-x: auto;
+  max-width: 550px;
+  height: 120px;
+  padding-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.allImgs > img {
+  width: 100px;
+  margin-right: 1rem;
+  transition: 0.5s;
+}
+
+.allImgs > img:hover {
+  width: 150px;
+  transition: 0.5s;
 }
 
 .productInfos {
-  width: 100%;
-  /* width: 534.670px; */
+  width: 48%;
 }
 
 .productName {
   width: 25rem;
-  height: 96px;
-  max-height: 96px;
   font-size: 26px;
+}
+
+.priceContainer {
+  margin: 2rem 0;
+}
+.priceContainer > .oldPrice {
+  color: var(--error-color);
+  font-size: 20px;
+  /* margin-bottom: 1rem; */
+}
+
+.priceContainer span {
+  display: flex;
+  align-items: center;
 }
 
 .productPrice {
   font-size: 30px;
   font-weight: 50;
-  margin: 50px 0 30px;
+  margin-right: 1rem;
+  margin-bottom: 0;
+}
+
+.percentage {
+  color: var(--success-color);
+  font-size: 17px;
 }
 
 .amountContainer {
@@ -60,7 +104,7 @@ img {
 .icons {
   margin: 20px 0 20px;
   display: flex;
-  color: #ffba00;
+  color: var(--main-color);
 }
 .actionButtons {
   display: flex;
@@ -69,6 +113,7 @@ img {
 
 .actionButtons button {
   padding: 5px 15px;
-  background-color: #ffba00;
+  background-color: var(--main-color);
+  color: var(--opposite-text-color);
   margin: 10px 0;
 }

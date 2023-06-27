@@ -1,3 +1,7 @@
+import { firebase } from './../../env';
+
 export const environment = {
-  production: true
+  production: true,
+  backendBaseUrl: 'https://ecommerce-back-0gyg.onrender.com',
+  firebase: firebase,
 };

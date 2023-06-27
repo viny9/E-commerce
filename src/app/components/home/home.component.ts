@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProductService } from 'src/app/services/product.service';
+import { LoadService } from 'src/app/services/load/load.service';
+import { ProductService } from 'src/app/services/product/product.service';
 
 @Component({
   selector: 'app-home',
@@ -24,33 +25,33 @@ export class HomeComponent implements OnInit {
     },
 
   ]
-  products: any = []
-  imgNumber: any = 1
+  products: any[] = []
+  imgNumber: number = 1
+  loading: boolean = true
+  promotionPrice: any[] = []
 
-  constructor(private db: ProductService, private route: Router) { }
-
-  // Quando fazer o componente de promoções e na hora do cliente bota a img para a promo no carrousel você adiciona um input para categoria 
-  // Assim você adicina como param na url e redireciona para as promoções daquela categoria.
-
-  ngOnInit(): void {
-    this.allProducts()
-  }
-
-  allProducts() {
-    this.db.getProducts().subscribe((data: any) => {
-      data.docs.map((data: any) => {
-        this.products.push(data.data())
-      })
+  constructor(private db: ProductService, private loadService: LoadService, private route: Router) {
+    loadService.isLoading.subscribe((res) => {
+      this.loading = res
     })
   }
 
-  selectProduct(product: any) {
-    this.db.getProductId(product)
+  ngOnInit(): void {
+    this.getAllProducts()
+  }
 
-    setTimeout(() => {
-      this.route.navigate([`product/${this.db.productId}`])
-    }, 500);
+  getAllProducts() {
+    this.loadService.showLoading()
 
+    this.db.getProducts().subscribe((res) => {
+      this.products = res
+      this.loadService.hideLoading()
+    })
+  }
+
+  async selectProduct(product: any) {
+    const id = await this.db.getId(this.db.path.products, product)
+    this.route.navigate([`product/${id}`])
   }
 
   // Carrousel improvisado criar outro depois

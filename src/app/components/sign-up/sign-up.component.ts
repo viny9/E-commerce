@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/services/product/product.service';
+import { StripeService } from 'src/app/services/stripe/stripe.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -9,16 +11,17 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class SignUpComponent implements OnInit {
 
-  hidePassword: any = true
-  hideConfirmPassword: any = true
-  signupForm: any
-  mask:any
+  hidePassword: boolean = true
+  hideConfirmPassword: boolean = true
+  signupForm!: FormGroup
+  addressForm!: FormGroup
+  mask: any
 
-  constructor(private db: ProductService) { }
+  constructor(private userService: UserService, private productService: ProductService, private stripeService: StripeService) { }
 
   ngOnInit(): void {
     this.createForm()
-    this.mask = this.db.inputMasks()
+    this.mask = this.productService.inputMasks()
   }
 
   createForm() {
@@ -29,19 +32,68 @@ export class SignUpComponent implements OnInit {
       password: new FormControl('', Validators.required),
       confirmPassword: new FormControl('', Validators.required)
     })
+
+    this.addressForm = new FormGroup({
+      cep: new FormControl('', Validators.required),
+      number: new FormControl('', Validators.required),
+      state: new FormControl('', Validators.required),
+      neighborhood: new FormControl('', Validators.required),
+      city: new FormControl('', Validators.required),
+      extra: new FormControl('')
+    })
+
   }
 
-  newUser() {
-    const user = this.signupForm.value
-    user.admin = false
+  formChangeAnimationControl(form: any) {
+    const userForm = document.querySelector('.userForm')
+    const addressForm = document.querySelector('.addressForm')
 
-    if (user.password === user.confirmPassword) {
-      delete user.confirmPassword
-      this.db.signUp(user)
+    switch (form) {
+      case 'address':
+        userForm?.classList.add('hideUserForm')
 
-    } else {
-      this.db.userMessages('As senhas são diferentes')
+        setTimeout(() => {
+          userForm?.classList.add('none')
+
+          addressForm?.classList.remove('none')
+          addressForm?.classList.remove('hideAdressForm')
+          addressForm?.classList.add('showAddressForm')
+        }, 650);
+        break;
+
+      case 'user':
+        addressForm?.classList.add('hideAdressForm')
+
+        setTimeout(() => {
+          addressForm?.classList.add('none')
+
+          userForm?.classList.remove('none')
+          userForm?.classList.remove('hideUserForm')
+          userForm?.classList.add('showUserForm')
+        }, 650);
+        break;
     }
   }
 
+  createUser() {
+    const user = this.signupForm.value
+    user.address = this.addressForm.value
+
+    user.address.cep = user.address.cep.replace(/\D/g, ''); //Removendo a mask do valor
+    user.phone = user.phone.replace(/\D/g, ''); //Removendo a mask do valor
+
+    if (user.password === user.confirmPassword) {
+      delete user.confirmPassword
+
+      this.stripeService.createCustomer(user).subscribe((res: any) => {
+        user.admin = false
+        user.stripe_id = res.id
+
+        this.userService.signUp(user)
+      })
+
+    } else {
+      this.userService.userMessages('As senhas são diferentes')
+    }
+  }
 }

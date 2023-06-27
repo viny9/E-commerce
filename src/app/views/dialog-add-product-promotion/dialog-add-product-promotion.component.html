@@ -1,0 +1,40 @@
+<div class="dialog">
+    <div class="head">
+        <mat-form-field>
+            <mat-label>Produtos</mat-label>
+            <input type="text" matInput [(ngModel)]="searchInput" (keyup)="searchProduct()" name="input"
+                [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of products?.slice(0, 3)"
+                    (click)="selectProduct(option)">{{option.name}}</mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+    <div class="selectedProducts">
+        <div *ngFor="let product of selectedProducts" class="product">
+            <p>{{product.name}}</p>
+            <span class="percentage">
+                <input *ngIf="product.edit" type="text" maxlength="3" [(ngModel)]="promotionInput">
+                <P *ngIf="!product.edit">{{product.promotionInfos.percentage}}</P>
+                <p matSuffix>%</p>
+            </span>
+            <div>
+                <button mat-icon-button class="editBtn" [disabled]="check()" (click)="product.edit = true"
+                    *ngIf="!product.edit" (click)="promotionInput = product.promotionInfos.percentage">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button class="doneBtn" (click)="product.edit = false" *ngIf="product.edit"
+                    (click)="editProduct(product)" [disabled]="promotionInput > 100">
+                    <mat-icon>done</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="removeProduct(product)">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="actionBtns">
+        <button mat-flat-button (click)="addPromotion()">Adicionar</button>
+        <button mat-flat-button color="warn" (click)="cancel()">Cancelar</button>
+    </div>
+</div>

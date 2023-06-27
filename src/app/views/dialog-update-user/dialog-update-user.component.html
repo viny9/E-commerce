@@ -1,0 +1,13 @@
+<div class="component">
+    <div class="component">
+        <div class="infos">
+            <h1>Atualizar dados</h1>
+            <p>Digite sua senha para atualizar seu dados</p>
+        </div>
+        <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input type="text" matInput [(ngModel)]="password">
+        </mat-form-field>
+        <button mat-flat-button color="warn" (click)="updateAccount()">Atualizar</button>
+    </div>
+</div>

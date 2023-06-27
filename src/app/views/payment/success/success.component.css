@@ -36,6 +36,7 @@
 
 .btns button {
   margin-bottom: 1.5rem;
+  color: var(--opposite-text-color);
 }
 
 .btns button:first-child {
@@ -43,5 +44,5 @@
 }
 
 .btns button:nth-child(2) {
-  background-color: var(--orange);
+  background-color: var(--main-color);
 }

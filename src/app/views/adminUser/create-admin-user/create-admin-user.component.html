@@ -1,0 +1,30 @@
+<div class="component">
+    <form [formGroup]="form">
+        <h1>Novo Usuário</h1>
+        <mat-form-field>
+            <mat-label>Nome</mat-label>
+            <input type="text" matInput formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input type="text" matInput formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input type="text" matInput formControlName="password">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Confirmar Senha</mat-label>
+            <input type="text" matInput formControlName="confirmPassword">
+        </mat-form-field>
+
+        <div class="actionBts">
+            <button mat-flat-button color="primary" (click)="createUser()"
+                [disabled]="form.status === 'INVALID'">Salvar</button>
+            <button mat-flat-button color="warn" routerLink="../">Cancelar</button>
+        </div>
+    </form>
+</div>

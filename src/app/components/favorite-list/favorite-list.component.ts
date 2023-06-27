@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
+import { LoadService } from 'src/app/services/load/load.service';
+import { ProductService } from 'src/app/services/product/product.service';
 
 @Component({
   selector: 'app-favorite-list',
@@ -8,13 +9,29 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class FavoriteListComponent implements OnInit {
 
-  empty: any
-  list: any = []
+  empty = true
+  list: any[] = []
+  loading = false
 
-  constructor(private db: ProductService) { }
+  constructor(private db: ProductService, private loadService: LoadService) {
+    loadService.isLoading.subscribe((res) => {
+      this.loading = res
+    })
+  }
 
   ngOnInit(): void {
-    this.favoriteList()
+    this.getList()
+  }
+
+  getList() {
+    this.loadService.showLoading()
+
+    this.db.getFavoriteList().subscribe((res) => {
+      this.list = res;
+
+      this.isEmpty()
+      this.loadService.hideLoading()
+    })
   }
 
   isEmpty() {
@@ -25,24 +42,11 @@ export class FavoriteListComponent implements OnInit {
     }
   }
 
-  favoriteList() {
-    this.db.getFavoriteList().subscribe((res: any) => {
-      res.docs.forEach((element: any) => {
-        this.list.push(element.data())
-      });
+  async removeListProduct(product: Object) {
+    const id: any = await this.db.getId(this.db.path.list, product)
 
-      this.isEmpty()
-    })
-  }
-
-  remove(product: any) {
-    this.db.getListProductId(product)
-
-    setTimeout(() => {
-      this.db.deleteFromList(this.db.productId)
-        .then(() => console.log('removido'))
-        .then(() => window.location.reload())
-    }, 500);
+    await this.db.deleteFromList(id)
+    this.getList()
   }
 
 }

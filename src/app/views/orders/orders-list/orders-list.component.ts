@@ -1,6 +1,11 @@
 import { MatPaginator } from '@angular/material/paginator';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { ProductService } from 'src/app/services/product/product.service';
+import { LoadService } from 'src/app/services/load/load.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { AdminRoutes } from 'src/app/enums/admin-routes';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-orders-list',
@@ -10,47 +15,54 @@ import { ProductService } from 'src/app/services/product.service';
 export class OrdersListComponent implements AfterViewInit {
 
   dataSource: any
-  columns: any = ['id', 'email', 'value', 'status', 'data', 'actions']
-  priceTotal: any
-  @ViewChild(MatPaginator) paginator: any;
+  products!: Product[]
+  columns: string[] = ['id', 'email', 'value', 'status', 'data', 'actions']
+  priceTotal: number = 0
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private db: ProductService) { }
+  loading: boolean = false
+
+  constructor(private db: ProductService, private loadService: LoadService) {
+    db.selectComponent = AdminRoutes.orders
+  }
 
   ngAfterViewInit() {
     this.allOrders()
   }
 
   allOrders() {
-    this.db.getOrders().subscribe((res: any) => {
-      this.dataSource = res.docs.map((doc: any) => {
-        return doc.data()
-      })
+    this.loadService.showLoading()
 
-      this.dataSource = this.dataSource.sort((a: any, b: any) => {
+    this.db.getOrders().subscribe((res) => {
+
+      this.products = res.sort((a: any, b: any) => {
         const d: any = new Date(a.created);
         const c: any = new Date(b.created);
         return c - d;
       })
 
-
+      this.dataSource = new MatTableDataSource(this.products)
       this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort
 
       this.notificationDate()
       this.paymentStatus()
       this.total()
+      this.loadService.hideLoading()
     })
   }
 
   notificationDate() {
     const date = new Date()
 
-    this.dataSource.forEach((element: any) => {
+    this.products.forEach((element: any) => {
       const orderDate = new Date(element.created * 1000)
 
       switch (date.getDate() == orderDate.getDate()) {
         case true:
-          let hour: any = orderDate.getHours()
-          let minutes: any = orderDate.getMinutes()
+          let hour: string | number = orderDate.getHours()
+          let minutes: string | number = orderDate.getMinutes()
 
           hour = hour < 10 ? `0${hour}` : hour
           minutes = minutes < 10 ? `0${minutes}` : minutes
@@ -59,8 +71,8 @@ export class OrdersListComponent implements AfterViewInit {
           break;
 
         case false:
-          let day: any = orderDate.getDate()
-          let mounth: any = orderDate.getMonth() + 1
+          let day: string | number = orderDate.getDate()
+          let mounth: string | number = orderDate.getMonth() + 1
 
           day = day < 10 ? `0${day}` : day
           mounth = mounth < 10 ? `0${mounth}` : mounth
@@ -77,7 +89,7 @@ export class OrdersListComponent implements AfterViewInit {
   }
 
   paymentStatus() {
-    this.dataSource.forEach((element: any) => {
+    this.products.forEach((element: any) => {
 
       if (element.payment_intent.status === 'succeeded') {
         element.payment_intent.status = 'Pago'
@@ -88,8 +100,9 @@ export class OrdersListComponent implements AfterViewInit {
   }
 
   total() {
-    this.dataSource.forEach((element: any) => {
+    this.products.forEach((element: any) => {
       let total: any = 0
+
       for (let i = 0; i < element.products.length; i++) {
         const product = element.products[i];
         total += (product.price * product.amount) / 100
@@ -98,6 +111,4 @@ export class OrdersListComponent implements AfterViewInit {
       element.total = total
     });
   }
-
-    // window.open("https://wa.me/" + 61984977155, "_blank");
 }
