@@ -1,6 +1,7 @@
 {
   "name": "e-commerce",
   "version": "0.0.0",
+  "main": "main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,8 +11,8 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~13.3.0",
     "@angular-builders/custom-webpack": "13.0.0",
+    "@angular/animations": "~13.3.0",
     "@angular/cdk": "^13.3.9",
     "@angular/common": "~13.3.0",
     "@angular/compiler": "~13.3.0",
