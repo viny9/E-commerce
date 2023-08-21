@@ -1,16 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Adicionar um transition */
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
+  /* min-height: 100vh; */
   height: 100%;
+  /* overflow-x: hidden ; */
 }
 
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  max-height: 100%;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 /* Varíaveis */
@@ -34,7 +39,7 @@ body {
 
 /* Light mode */
 .lightMode {
-  --background-color: #fff;
+  --background-color: #ffffff;
   --main-color: #3f51b5;
   --main-color-hover: #3f51b51f;
   --card-color: #fff;

@@ -1,9 +1,10 @@
 .footer {
-  padding: 3rem 5rem 1rem;
   background-color: #000;
   color: #ffffffb3 !important;
   display: grid;
   grid-template-columns: repeat(3, 33%);
+  padding: 3rem;
+  /* padding-top: 2rem; */
 }
 
 .nav {
@@ -18,7 +19,7 @@
 }
 
 .option {
-  font-size: 16px;
+  font-size: 1rem;
   color: #ffffffb3;
   text-decoration: none;
 }
@@ -28,6 +29,7 @@
 }
 
 .socialMedias {
+  overflow: hidden;
   grid-column-start: 3;
   grid-column-end: 4;
   display: flex;
@@ -62,4 +64,39 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
+}
+
+
+@media (max-width: 767px) {
+  .footer {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-around;
+  }
+
+  .nav {
+    min-width: 33%;
+    margin-bottom: 2rem;
+  }
+
+  .socialMedias {
+    min-width: 33%;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+
+  .socialMedias h2 {
+    margin-right: 10px;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 374px) {
+  .footer {
+    padding: 3rem 1rem;
+  }
+
+  .socialMedias {
+    width: 100%;
+  }
 }
