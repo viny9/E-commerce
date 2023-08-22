@@ -7,15 +7,12 @@
 
 html,
 body {
-  /* min-height: 100vh; */
-  height: 100%;
-  /* overflow-x: hidden ; */
+  min-height: 100vh;
 }
 
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  /* overflow-x: hidden; */
 }
 
 /* Varíaveis */
@@ -121,4 +118,12 @@ td {
 .snackBar {
   background-color: var(--card-color);
   color: var(--text-color);
+}
+
+::ng-deep.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: var(--main-color-hover);
+}
+
+::ng-deep.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: var(--main-color);
 }

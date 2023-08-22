@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
   imgNumber: number = 1
   loading: boolean = true
   promotionPrice: any[] = []
+  isSidebarOpen: boolean = false
 
   constructor(private db: ProductService, private loadService: LoadService, private route: Router) {
     loadService.isLoading.subscribe((res) => {
