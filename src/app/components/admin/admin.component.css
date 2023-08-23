@@ -1,10 +1,10 @@
 .adminComponent {
   width: 100%;
-  height: 100%;
+  height: 100vh;
 }
 
 .sidenav {
-  width: 20%;
+  width: 25%;
   background-color: var(--card-color);
   color: var(--text-color);
 }
@@ -32,7 +32,7 @@ mat-icon {
 }
 
 ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  background-color: #ffbb006c;
+  background-color: var(--main-color-hover);
 }
 
 ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
@@ -47,7 +47,7 @@ mat-icon {
 .main {
   background-color: var(--background-color);
   color: var(--text-color);
-  width: 80%;
+  width: 75%;
   padding: 2rem 0rem;
 }
 

@@ -6,7 +6,6 @@
             <mat-icon>search</mat-icon>
         </button>
     </div>
-  
     
     <div class="options">
         <div *ngIf="logged === false" class="logged">
@@ -37,7 +36,7 @@
 
     </div>
 
-    <button mat-icon-button class="menu">
+    <button mat-icon-button class="menu" (click)="toggleSidebar()">
         <mat-icon class="icons">menu</mat-icon>
     </button>
 </div>
