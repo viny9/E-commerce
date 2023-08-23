@@ -12,8 +12,7 @@ export class HeadComponent implements OnInit {
   theme = localStorage['theme']
   logged: boolean = false
   searchInput: any
-  @Output() sidebar: any = new EventEmitter
-  @Input() isSidebarOpen!: boolean
+  @Input() isSidebarOpen!: any
 
   constructor(private db: ProductService, private userService: UserService) { }
 
@@ -71,10 +70,5 @@ export class HeadComponent implements OnInit {
     localStorage.setItem('search', this.searchInput)
 
     this.db.navegate(`search/${this.searchInput}`)
-  }
-
-  toggleSidebar() {
-    console.log(this.isSidebarOpen)
-    this.sidebar.emit(!this.isSidebarOpen)
   }
 }

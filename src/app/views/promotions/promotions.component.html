@@ -60,9 +60,7 @@
                     <input type="date" matInput formControlName="end">
                 </mat-form-field>
             </span>
-            <div class="productButton">
-                <button mat-flat-button (click)="openDialog()">Produtos</button>
-            </div>
+            <button class="productButton" mat-flat-button (click)="openDialog()">Produtos</button>
             <div class="actionsBtns">
                 <button mat-flat-button *ngIf="!selected" (click)="newPromotion()">Adicionar</button>
                 <button mat-flat-button *ngIf="selected" (click)="updatePromotion()">Atualizar</button>

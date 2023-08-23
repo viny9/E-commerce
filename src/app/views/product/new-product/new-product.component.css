@@ -6,12 +6,11 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
 }
 
 .productInfos {
   width: 70%;
-  height: 95%;
+  padding: 1rem 0 2rem;
   border-radius: 7px;
   background-color: var(--card-color);
   display: flex;
@@ -19,7 +18,6 @@ p {
 }
 
 .productForm {
-  margin-top: 2rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -50,7 +48,6 @@ p {
 .fileUploadLabel {
   width: 97%;
   height: 100%;
-  margin: 0 1rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,6 +55,8 @@ p {
   border-top: 1px solid;
   border: 2px dotted;
   padding: 2rem 0;
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 .fileUploadLabel mat-icon {
@@ -80,7 +79,7 @@ p {
 }
 
 .img {
-  padding: 0 1rem;
+  padding: 1rem;
   width: 80%;
   height: 64px;
   border-radius: 5px;
@@ -91,20 +90,20 @@ p {
   margin-bottom: 1rem;
 }
 
-.img > span {
+.img>span {
   display: flex;
   align-items: center;
   width: 60%;
 }
 
-.img > span > p {
+.img>span>p {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   margin-left: 1rem;
 }
 
-.img > p {
+.img>p {
   color: var(--secondary-text-color);
 }
 
@@ -114,7 +113,6 @@ p {
 
 img {
   width: 5%;
-  max-height: 31rem;
   margin-right: 2rem;
 }
 
@@ -170,9 +168,7 @@ img {
 }
 
 /* mat-input focused color */
-::ng-deep
-  .mat-form-field-appearance-outline.mat-focused
-  .mat-form-field-outline-thick {
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
   color: var(--main-color) !important;
 }
 
@@ -205,4 +201,53 @@ input::placeholder {
 /* The animation of the not dragged element */
 .imgs.cdk-drop-list-dragging .img:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@media (max-width: 700px) {
+  .img {
+    width: 90%;
+  }
+}
+
+@media (max-width: 600px) {
+  .productInfos {
+    background-color: transparent;
+    box-shadow: none;
+    width: 90%;
+  }
+
+  .productForm ::ng-deep.mat-form-field {
+    width: 100%;
+  }
+
+  .imgsContainer {
+    padding: 0;
+  }
+
+  .fileUploadLabel {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 1rem;
+    ;
+  }
+
+  .img {
+    width: 100%;
+    /* padding: 0.7rem; */
+    background-color: var(--card-color);
+  }
+
+  .img>p {
+    margin-left: 10px;
+  }
+
+  .actionBtns {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .actionBtns button {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
 }

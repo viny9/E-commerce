@@ -1,7 +1,7 @@
-<app-head (sidebar)="teste($event)" [isSidebarOpen]="isSidebarOpen"></app-head>
+<app-head [isSidebarOpen]="drawer"></app-head>
 <app-loading></app-loading>
 <mat-sidenav-container class="home">
-    <mat-sidenav class="sidebar" mode="over" position="end" [opened]="isSidebarOpen">
+    <mat-sidenav class="sidebar" mode="over" position="end" #drawer>
         <mat-list class="options">
             <mat-list-item class="logged">
                 <a routerLink="signUp">Cadastro</a>

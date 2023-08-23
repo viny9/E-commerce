@@ -17,13 +17,10 @@ export class MainComponent implements OnInit {
     this.themeIcon()
   }
 
-  teste(value: boolean) {
-    this.isSidebarOpen = value
-  }
-
   themeIcon() {
     const sun = document.querySelector('#sun')
     const moon = document.querySelector('#moon')
+
 
     if (this.theme === "dark") {
       sun?.classList.toggle('hide')

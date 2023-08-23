@@ -12,7 +12,7 @@ form {
     color: var(--text-color);
     border-radius: 5px;
     padding: 1rem 2rem;
-    width: 40%;
+    width: 50%;
     box-shadow: 2px 2px 10px 2px #00000034;
 }
 
@@ -48,4 +48,23 @@ form h1 {
 
 ::ng-deep.mat-form-field-ripple {
     background-color: var(--main-color) !important;
+}
+
+@media (max-width:940px) {
+    form {
+        width: 70%;
+    }
+}
+
+@media (max-width:500px) {
+    form {
+        background-color: transparent;
+        width: 90%;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .actionBts button {
+        padding: 0.5rem 0 ;
+    }
 }

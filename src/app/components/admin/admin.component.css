@@ -48,7 +48,14 @@ mat-icon {
   background-color: var(--background-color);
   color: var(--text-color);
   width: 75%;
-  padding: 2rem 0rem;
+  padding: 4rem 0rem 2rem;
+}
+
+.menu {
+  position: absolute;
+  top: 1%;
+  left: 4%;
+  display: none;
 }
 
 .hideAnimation {
@@ -83,5 +90,25 @@ mat-icon {
     opacity: 0;
     /* transform: rotate(360deg); */
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidenav {
+    width: 50%;
+  }
+
+  .main {
+    width: 100%;
+  }
+
+  .menu {
+    display: block;
+  }
+}
+
+@media (max-width: 500px) {
+  .sidenav {
+    width: 70%;
   }
 }

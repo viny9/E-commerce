@@ -9,11 +9,11 @@
   padding: 0 1rem;
 }
 
-.head > h1 {
+.head>h1 {
   margin: 0;
 }
 
-.head > button {
+.head>button {
   background-color: var(--main-color);
   color: var(--opposite-text-color);
 }
@@ -88,15 +88,10 @@ form span {
 }
 
 .productButton {
-  width: 100%;
-  padding: 0 3rem;
-}
-
-.productButton button {
   background-color: var(--main-color);
   color: var(--opposite-text-color);
   width: 30%;
-  margin: 1rem 0 2rem;
+  margin: 2rem auto;
 }
 
 .actionsBtns {
@@ -113,4 +108,33 @@ form span {
 .actionsBtns button {
   width: 30%;
   margin-right: 2rem;
+}
+
+@media (max-width:600px) {
+  form span {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .mat-form-field {
+    width: 85%;
+  }
+
+  .productButton {
+    width: 85%;
+    padding: 0.5rem 0;
+    margin-bottom: 0;
+  }
+
+  .actionsBtns {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .actionsBtns button {
+    width: 85%;
+    padding: 0.5rem 0;
+    margin: 0 0 1rem;
+  }
 }

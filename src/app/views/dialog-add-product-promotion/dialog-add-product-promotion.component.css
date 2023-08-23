@@ -58,10 +58,6 @@
   width: 20%;
 }
 
-input:focus {
-  outline: none;
-}
-
 .editBtn {
   color: var(--main-color);
 }
@@ -85,4 +81,14 @@ input:focus {
   background-color: var(--main-color);
   color: var(--opposite-text-color);
   margin-right: 1rem;
+}
+
+@media (max-width:619px) {
+  .percentage input{
+    width: 50%;
+  }
+
+  .product div {
+    display: flex;
+  }
 }

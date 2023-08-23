@@ -1,5 +1,5 @@
 <mat-sidenav-container class="adminComponent">
-    <mat-sidenav opened class="sidenav" mode="side">
+    <mat-sidenav #drawer class="sidenav" [mode]="sidebarMode">
         <mat-nav-list class="nav">
             <a mat-list-item routerLink="products" [ngClass]="selected === 'Products' ? 'selected' : '' ">
                 <mat-icon>storefront</mat-icon>
@@ -41,6 +41,9 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="main">
+        <button (click)="drawer.toggle()" class="menu" mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
         <app-loading></app-loading>
         <router-outlet></router-outlet>
     </mat-sidenav-content>

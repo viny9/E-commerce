@@ -14,7 +14,8 @@ export class AdminComponent implements OnInit {
   theme: string | null = localStorage['theme']
   checked: boolean = false
   routes = AdminRoutes
-
+  sidebarMode:any = ''
+  isSidebarOpen:boolean = false
 
   constructor(private userService: UserService, private db: ProductService) {
     db.updatedComponent.subscribe((res: any) => {
@@ -24,6 +25,14 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.themeIcon()
+
+    if(window.screen.width <= 768){
+      this.sidebarMode = 'over'
+    } else {
+      this.sidebarMode = 'side'
+      this.isSidebarOpen = true
+    }
+
   }
 
   themeIcon() {
