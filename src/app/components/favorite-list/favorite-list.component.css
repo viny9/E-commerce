@@ -19,7 +19,7 @@
   align-items: center;
 }
 
-.productInfos h1{
+.productInfos h1 {
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -57,4 +57,30 @@ img {
 .empty button {
   background-color: var(--main-color);
   color: var(--opposite-text-color);
+}
+
+@media (max-width: 600px) {
+  .productContainer {
+    padding: 0 1rem;
+  }
+
+  .imgContainer {
+    width: 50%;
+    margin: 0 5%;
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+@media (max-width:500px) {
+  .favoriteListComponent {
+    padding: 0;
+  }
+
+  .productContainer {
+    box-shadow: none;
+    border-bottom: 1px solid;
+  }
 }

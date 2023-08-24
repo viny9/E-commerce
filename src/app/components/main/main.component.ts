@@ -1,3 +1,4 @@
+import { UserService } from 'src/app/services/user/user.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,13 +9,16 @@ import { Component, OnInit } from '@angular/core';
 export class MainComponent implements OnInit {
 
   theme: string | null = localStorage['theme']
+  logged:boolean = false
   isSidebarOpen: boolean = false
   checked: boolean = false
 
-  constructor() { }
+  constructor(private userService:UserService) { }
 
   ngOnInit() {
     this.themeIcon()
+
+    this.logged = this.userService.isLogged()
   }
 
   themeIcon() {

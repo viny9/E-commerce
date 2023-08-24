@@ -3,15 +3,15 @@
 <mat-sidenav-container class="home">
     <mat-sidenav class="sidebar" mode="over" position="end" #drawer>
         <mat-list class="options">
-            <mat-list-item class="logged">
+            <mat-list-item class="logged" *ngIf="!logged">
                 <a routerLink="signUp">Cadastro</a>
                 /
                 <a routerLink="signIn">Login </a>
             </mat-list-item>
 
-            <mat-divider></mat-divider>
+            <mat-divider *ngIf="!logged"></mat-divider>
 
-            <mat-list-item class="nav" routerLink="cart">
+            <mat-list-item class="nav" (click)="drawer.toggle()" routerLink="cart">
                 <button mat-icon-button>
                     <mat-icon class="icons">shopping_cart</mat-icon>
                 </button>
@@ -20,25 +20,25 @@
 
             <mat-divider></mat-divider>
 
-            <mat-list-item class="nav" routerLink="favoriteList">
+            <mat-list-item class="nav" (click)="drawer.toggle()" routerLink="favoriteList">
                 <button mat-icon-button>
                     <mat-icon class="icons">favorite</mat-icon>
                 </button>
                 <p>Lista de desejos</p>
             </mat-list-item>
 
-            <mat-divider></mat-divider>
+            <mat-divider *ngIf="logged"></mat-divider>
 
-            <mat-list-item class="nav" routerLink="user">
+            <mat-list-item class="nav" (click)="drawer.toggle()" routerLink="user" *ngIf="logged">
                 <button mat-icon-button>
                     <mat-icon class="icons">person</mat-icon>
                 </button>
                 <p>Perfil</p>
             </mat-list-item>
 
-            <mat-divider></mat-divider>
+            <mat-divider *ngIf="logged"></mat-divider>
 
-            <mat-list-item class="nav" routerLink="allOrders">
+            <mat-list-item class="nav" (click)="drawer.toggle()" routerLink="allOrders" *ngIf="logged">
                 <button mat-icon-button>
                     <mat-icon class="icons">shopping_basket</mat-icon>
                 </button>

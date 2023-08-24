@@ -82,11 +82,15 @@
   }
 
   .form {
-    width: 100%;
+    width: 80%;
     background-color: transparent;
     color: #000;
+    padding: 0;
   }
 
+  .mat-form-field {
+    width: 100%;
+  }
 
   ::ng-deep .mat-form-field-label {
     color: #000 !important;
@@ -98,6 +102,10 @@
 
   ::ng-deep.mat-form-field-ripple {
     background-color: #000 !important;
+  }
+
+  .forgotPassword {
+    color: black;
   }
 
   .btn {
