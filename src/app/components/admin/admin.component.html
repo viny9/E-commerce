@@ -1,27 +1,27 @@
 <mat-sidenav-container class="adminComponent">
     <mat-sidenav #drawer class="sidenav" [mode]="sidebarMode">
         <mat-nav-list class="nav">
-            <a mat-list-item routerLink="products" [ngClass]="selected === 'Products' ? 'selected' : '' ">
+            <a mat-list-item (click)="drawer.toggle()" routerLink="products" [ngClass]="selected === 'Products' ? 'selected' : '' ">
                 <mat-icon>storefront</mat-icon>
                 Produtos
             </a>
 
-            <a mat-list-item routerLink="promotions" [ngClass]="selected === 'Promotions' ? 'selected' : '' ">
+            <a mat-list-item (click)="drawer.toggle()" routerLink="promotions" [ngClass]="selected === 'Promotions' ? 'selected' : '' ">
                 <mat-icon>local_offer</mat-icon>
                 Promoções
             </a>
 
-            <a mat-list-item routerLink="orders" [ngClass]="selected === 'Orders' ? 'selected' : '' ">
+            <a mat-list-item (click)="drawer.toggle()" routerLink="orders" [ngClass]="selected === 'Orders' ? 'selected' : '' ">
                 <mat-icon>list_alt</mat-icon>
                 Pedidos
             </a>
 
-            <a mat-list-item routerLink="notifications" [ngClass]="selected === 'Notifications' ? 'selected' : '' ">
+            <a mat-list-item (click)="drawer.toggle()" routerLink="notifications" [ngClass]="selected === 'Notifications' ? 'selected' : '' ">
                 <mat-icon>notifications_active</mat-icon>
                 Notificações
             </a>
 
-            <a mat-list-item routerLink="adminUsersList" [ngClass]="selected === 'AdminUsers' ? 'selected' : '' ">
+            <a mat-list-item (click)="drawer.toggle()" routerLink="adminUsersList" [ngClass]="selected === 'AdminUsers' ? 'selected' : '' ">
                 <mat-icon>person</mat-icon>
                 Configurações de Usuário
             </a>

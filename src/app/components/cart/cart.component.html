@@ -24,7 +24,7 @@
                     {{product.price.toFixed(2).replace('.', ',')}}</h1>
                 <h1 *ngIf="product.promotionInfos != null && product.promotionInfos != undefined">R$
                     {{product.promotionInfos?.promotionPrice.toFixed(2).replace('.', ',')}}</h1>
-                <button mat-icon-button color="warn" (click)="removeCartItem(product)">
+                <button mat-icon-button color="warn" (click)="removeCartItem(product)" class="closeBtn">
                     <mat-icon>close</mat-icon>
                 </button>
             </mat-card>
