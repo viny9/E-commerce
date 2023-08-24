@@ -27,6 +27,7 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   width: 60%;
+  margin-bottom: 0;
 }
 
 .productInfos h1:hover {
@@ -40,6 +41,7 @@
 }
 
 img {
+  padding: 10px 0;
   max-height: 7rem;
   border-radius: 3px;
 }
@@ -59,9 +61,10 @@ img {
   color: var(--opposite-text-color);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 660px) {
   .productContainer {
     padding: 0 1rem;
+    background-color: transparent;
   }
 
   .imgContainer {
@@ -71,6 +74,7 @@ img {
 
   img {
     width: 100%;
+    padding: 0;
   }
 }
 
@@ -82,5 +86,15 @@ img {
   .productContainer {
     box-shadow: none;
     border-bottom: 1px solid;
+  }
+
+
+  .empty {
+    box-shadow: none;
+    background-color: transparent;
+  }
+
+  .empty button {
+    width: 100%;
   }
 }

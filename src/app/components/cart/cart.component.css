@@ -39,7 +39,6 @@ h1 {
 img {
   margin: 0 20px;
   width: 40%;
-  /* max-width: 150px; */
   max-height: 108px;
 }
 
@@ -139,10 +138,6 @@ img {
     padding: 1rem 0.5rem;
   }
 
-  .product>img {
-    margin: 0;
-  }
-
   .total {
     width: 100%;
   }
@@ -157,7 +152,43 @@ img {
     box-shadow: none;
   }
 
+  .product>img {
+    margin: 0;
+  }
+
+
   .total {
     box-shadow: none;
   }
+
+  .emptyCart {
+    box-shadow: none;
+    background-color: transparent;
+  }
+
+  .emptyCart button {
+    width: 100%;
+  }
+}
+
+@media (max-width:580px) {
+  .favoriteListComponent {
+    padding: 0;
+  }
+
+  .product {
+    position: relative;
+  }
+
+  .productContainer {
+    box-shadow: none;
+    border-bottom: 1px solid;
+  }
+
+  .closeBtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
 }
