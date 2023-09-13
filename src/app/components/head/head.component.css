@@ -8,7 +8,9 @@
 }
 
 .logo {
-  font-size: 1rem;
+  text-decoration: none;
+  color: var(--main-color);
+  font-size: 25px;
 }
 
 .search {

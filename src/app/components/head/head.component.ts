@@ -11,20 +11,16 @@ export class HeadComponent implements OnInit {
 
   theme = localStorage['theme']
   logged: boolean = false
-  searchInput: any
+  searchInput: string = ''
   @Input() isSidebarOpen!: any
+  screenSize: number = window.screen.width
 
   constructor(private db: ProductService, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.getSearch()
     this.themeIcon()
 
     this.logged = this.userService.isLogged()
-  }
-
-  getSearch() {
-    this.searchInput = localStorage.getItem('search')
   }
 
   themeIcon() {
