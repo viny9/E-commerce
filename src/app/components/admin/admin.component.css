@@ -58,6 +58,10 @@ mat-icon {
   display: none;
 }
 
+.menu mat-icon {
+  margin: 0;
+}
+
 .hideAnimation {
   animation: both alternate 0.5s hide;
 }

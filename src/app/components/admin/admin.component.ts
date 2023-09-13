@@ -32,7 +32,6 @@ export class AdminComponent implements OnInit {
       this.sidebarMode = 'side'
       this.isSidebarOpen = true
     }
-
   }
 
   themeIcon() {
