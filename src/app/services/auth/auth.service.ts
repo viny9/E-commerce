@@ -14,14 +14,14 @@ import { Login } from 'src/app/models/login';
   providedIn: 'root',
 })
 export class AuthService {
+  private baseUrl: string = environment.backendBaseUrl;
+
   constructor(
     private http: HttpClient,
     private errorService: ErrorsService,
     private router: Router,
     private snackBar: MatSnackBar
   ) {}
-
-  private baseUrl: string = environment.backendBaseUrl;
 
   async signUp(user: SignUp) {
     this.http
@@ -39,7 +39,7 @@ export class AuthService {
       .pipe(catchError((e) => this.errorService.handleError(e)))
       .subscribe(({ access_token }) => {
         localStorage.setItem('token', access_token);
-        
+
         // Decodar o token aqui
         // localStorage.setItem('userId', infos.userId);
         // localStorage.setItem('admin', infos.admin);

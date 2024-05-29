@@ -1,39 +1,42 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map } from 'rxjs';
+import { catchError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ErrorsService } from '../errors/errors.service';
-import { List } from 'src/app/models/list';
 import { Product } from 'src/app/models/product';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ListService {
+export class CartService {
   private baseUrl: string = environment.backendBaseUrl;
   private userId: string = '';
 
   constructor(private http: HttpClient, private errorService: ErrorsService) {}
 
-  getFavoriteList() {
+  getCart() {
     return this.http
-      .get<List>(`${this.baseUrl}/list/${this.userId}`)
-      .pipe(catchError((e: Error) => this.errorService.handleError(e)));
-  }
-
-  addProductInList(product: Product) {
-    let listId = '';
-
-    return this.http
-      .post(`${this.baseUrl}/list/${listId}/product/${product.id}`, null)
+      .get(`${this.baseUrl}/cart/${this.userId}`)
       .pipe(catchError((e) => this.errorService.handleError(e)));
   }
 
-  deleteFromList(productId: string) {
-    let listId = '';
+  addProductInCart(product: Product) {
+    let cartId = '';
 
     return this.http
-      .delete(`${this.baseUrl}/list/${listId}/product/${productId}`)
+      .post(`${this.baseUrl}/cart/${cartId}/products/${product.id}`, undefined)
       .pipe(catchError((e) => this.errorService.handleError(e)));
+  }
+
+  deleteCartProduct(productId: string) {
+    let cartId = '';
+
+    return this.http
+    .delete(`${this.baseUrl}/cart/${cartId}/products/${productId}`)
+    .pipe(catchError((e) => this.errorService.handleError(e)));
+  }
+
+  emptyCart() {
+    // Create a method to clear cart
   }
 }
