@@ -87,52 +87,6 @@ export class ProductService {
     return this.storage.refFromURL(url).delete();
   }
 
-  // Metodos de Promoções
-  getPromotions() {
-    return this.firebase
-      .collection('promotions')
-      .get()
-      .pipe(
-        map((res) => {
-          return res.docs.map((doc) => doc.data());
-        }),
-        catchError((e: Error) => this.errorService.handleError(e))
-      );
-  }
-
-  getPromotionById(id: string) {
-    return this.firebase
-      .collection('promotions')
-      .doc(id)
-      .get()
-      .pipe(
-        map((doc) => doc.data()),
-        catchError((e: Error) => this.errorService.handleError(e))
-      );
-  }
-
-  createPromotion(promotion: Promotion) {
-    return this.firebase
-      .collection('promotions')
-      .add(promotion)
-      .catch((e: Error) => this.errorService.handleError(e));
-  }
-
-  updatePromotion(id: string, updatedPromotion: Promotion) {
-    return this.firebase
-      .collection('promotions')
-      .doc(id)
-      .update(updatedPromotion)
-      .catch((e: Error) => this.errorService.handleError(e));
-  }
-
-  deletePromotion(id: string) {
-    return this.firebase
-      .collection('promotions')
-      .doc(id)
-      .delete()
-      .catch((e: Error) => this.errorService.handleError(e));
-  }
 
   // Metodos de Notificações
   getNotifications() {
@@ -260,20 +214,6 @@ export class ProductService {
     return this.component.asObservable();
   }
 
-  // Mostra mensagens ao usuário
-  userMessages(message: string) {
-    this.snackBar.open(message, 'X', {
-      duration: 2000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-      panelClass: 'snackBar',
-    });
-  }
-
-  // Navega pela rotas escolhidas
-  navegate(path: string) {
-    return this.router.navigate([path]);
-  }
 
   // Pega o id de todos os metodos
   getId(path: string, item: any) {
