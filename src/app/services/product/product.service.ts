@@ -60,27 +60,6 @@ export class ProductService {
       .catch((e: Error) => this.errorService.handleError(e))
   }
 
-  // Metodos da lista
-  getFavoriteList() {
-    return this.firebase.collection('users').doc(this.userId).collection('list').get()
-      .pipe(
-        map((res) => {
-          return res.docs.map((doc) => doc.data())
-        }),
-        catchError((e: Error) => this.errorService.handleError(e))
-      )
-  }
-
-  addProductInList(product: Product) {
-    return this.firebase.collection('users').doc(this.userId).collection('list').add(product)
-      .catch((e: Error) => this.errorService.handleError(e))
-  }
-
-  deleteFromList(productId: string) {
-    return this.firebase.collection('users').doc(this.userId).collection('list').doc(productId).delete()
-      .catch((e: Error) => this.errorService.handleError(e))
-  }
-
   // Metodos do carrinho
   getCart() {
     return this.firebase.collection('users').doc(this.userId).collection('cart').get()

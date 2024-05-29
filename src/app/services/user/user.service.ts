@@ -222,8 +222,4 @@ export class UserService {
   //     panelClass: 'snackBar'
   //   })
   // }
-
-  navegate(path: string) {
-    return this.router.navigate([path])
-  }
 }
