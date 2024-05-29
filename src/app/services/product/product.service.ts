@@ -33,7 +33,6 @@ export class ProductService {
     private errorService: ErrorsService
   ) {}
 
-  // Metodos de Produto
   getProducts() {
     return this.http
       .get(`${this.baseUrl}/product`)
@@ -86,122 +85,7 @@ export class ProductService {
   deleteProductImg(url: string) {
     return this.storage.refFromURL(url).delete();
   }
-
-
-  // Metodos de Notificações
-  getNotifications() {
-    return this.firebase
-      .collection('notifications')
-      .get()
-      .pipe(
-        map((res) => {
-          return res.docs.map((doc) => doc.data());
-        }),
-        catchError((e: Error) => this.errorService.handleError(e))
-      );
-  }
-
-  async getNotificationId(notification: Notification) {
-    const query = this.firebase.collection('notifications', (ref) =>
-      ref.where('id', '==', notification.id)
-    );
-
-    const id = await lastValueFrom<any>(
-      query.get().pipe(
-        map((res) => {
-          const doc = res.docs[0];
-          return doc ? doc.id : null;
-        })
-      )
-    );
-
-    return id;
-  }
-
-  updateNotificationStatus(notification: Notification, id: string) {
-    return this.firebase
-      .collection('notifications')
-      .doc(id)
-      .update(notification)
-      .catch((e: Error) => this.errorService.handleError(e));
-  }
-
-  deleteNotification(notificationId: string) {
-    return this.firebase
-      .collection('notifications')
-      .doc(notificationId)
-      .delete()
-      .catch((e: Error) => this.errorService.handleError(e));
-  }
-
-  // Metodos de Notificações arquivadas
-  getArchivedNotification() {
-    return this.firebase
-      .collection('archivedNotifications')
-      .get()
-      .pipe(
-        map((res) => {
-          return res.docs.map((doc) => doc.data());
-        }),
-        catchError((e: Error) => this.errorService.handleError(e))
-      );
-  }
-
-  async getArchivedNotificationId(notification: Notification) {
-    const query = this.firebase.collection('archivedNotifications', (ref) =>
-      ref.where('date', '==', notification.date)
-    );
-
-    const id = await lastValueFrom<any>(
-      query.get().pipe(
-        map((res) => {
-          console.log(res);
-          const doc = res.docs[0];
-          return doc ? doc.id : null;
-        })
-      )
-    );
-
-    return id;
-  }
-
-  archiveNotification(notification: Notification) {
-    return this.firebase
-      .collection('archivedNotifications')
-      .add(notification)
-      .catch((e: Error) => this.errorService.handleError(e));
-  }
-
-  async unachiveNotification(notification: Notification, id: string) {
-    try {
-      await this.firebase.collection('archivedNotifications').doc(id).delete();
-      await this.firebase.collection('notifications').add(notification);
-    } catch (error) {
-      this.errorService.handleError(error);
-    }
-  }
-
-  // Metodos de Pedidos
-  getOrders() {
-    return this.firebase
-      .collection('allOrders')
-      .get()
-      .pipe(
-        map((res) => {
-          return res.docs.map((doc) => doc.data());
-        }),
-        catchError((e: Error) => this.errorService.handleError(e))
-      );
-  }
-
-  sendOrderToAdmin(order: Object) {
-    return this.firebase
-      .collection('allOrders')
-      .add(order)
-      .catch((e: Error) => this.errorService.handleError(e));
-  }
-
-  //Atualizar o componente selecionado na área do admin
+  
   get selectComponent() {
     return this.component.value;
   }
@@ -212,52 +96,5 @@ export class ProductService {
 
   get updatedComponent() {
     return this.component.asObservable();
-  }
-
-
-  // Pega o id de todos os metodos
-  getId(path: string, item: any) {
-    const query = this.firebase.collection(path, (ref) =>
-      ref.where('name', '==', item.name || item)
-    );
-
-    return lastValueFrom<any>(
-      query.get().pipe(
-        map((res) => {
-          const doc = res.docs[0];
-          return doc ? doc.id : null;
-        })
-      )
-    ).catch((e: Error) => this.errorService.handleError(e));
-  }
-
-  // Máscaras dos inputs
-  inputMasks() {
-    const maskPhone = [
-      '(',
-      /[1-9]/,
-      /\d/,
-      ')',
-      ' ',
-      /\d/,
-      ' ',
-      /\d/,
-      /\d/,
-      /\d/,
-      /\d/,
-      '-',
-      /\d/,
-      /\d/,
-      /\d/,
-      /\d/,
-    ];
-    const maskCep = [/[1-9]/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
-
-    const masks = {
-      phone: maskPhone,
-      cep: maskCep,
-    };
-
-    return masks;
   }
 }
