@@ -23,26 +23,7 @@ export class UserService {
   constructor(private snackBar: MatSnackBar, private router: Router, private http: HttpClient, private dialog: MatDialog, private productService: ProductService, private stripeService: StripeService, private errorService: ErrorsService) { }
 
   // Login e cadastro
-  async signUp(user: any) {
-    try {
-      await this.auth.createUserWithEmailAndPassword(user.email, user.password)
 
-      delete user.password
-      await this.createUser(user)
-
-      const token: any = await getAuth().currentUser?.getIdToken()
-      localStorage.setItem('token', token)
-
-      const infos: any = await this.userInfos(user)
-      localStorage.setItem('userId', infos.userId)
-      localStorage.setItem('admin', infos.admin)
-
-      await Promise.all([this.userMessages('Usuário criado'), this.navegate('')])
-
-    } catch (error) {
-      this.errorService.handleError(error)
-    }
-  }
 
   async newAdminUser(user: any) {
     try {
@@ -53,30 +34,6 @@ export class UserService {
       await this.createUser(user)
       await Promise.all([this.userMessages('Usuário criado'), this.navegate('admin/adminUsersList')])
 
-    } catch (error) {
-      this.errorService.handleError(error)
-    }
-  }
-
-  async signIn(user: any) {
-    try {
-      await this.auth.signInWithEmailAndPassword(user.email, user.password)
-
-      const infos: any = await this.userInfos(user)
-      const token: any = await getAuth().currentUser?.getIdToken()
-
-      if (!infos.admin) {
-        localStorage.setItem('token', token)
-        localStorage.setItem('userId', infos.userId)
-        localStorage.setItem('admin', infos.admin)
-
-      } else {
-        sessionStorage.setItem('token', token)
-        sessionStorage.setItem('userId', infos.userId)
-        sessionStorage.setItem('admin', infos.admin)
-      }
-
-      this.navegate('')
     } catch (error) {
       this.errorService.handleError(error)
     }
@@ -99,14 +56,6 @@ export class UserService {
     }
 
     return userInfos
-  }
-
-  logOut() {
-    this.auth.signOut()
-
-    localStorage.clear()
-    sessionStorage.clear()
-    window.location.reload()
   }
 
   // Informações do usuário
@@ -242,16 +191,6 @@ export class UserService {
       )
   }
 
-  // User status
-  isLogged() {
-    const token = localStorage['token']
-
-    if (token) {
-      return true
-    } else {
-      return false
-    }
-  }
 
   // Emails
   sendVerificationCodeEmail(email: string) {
@@ -274,15 +213,15 @@ export class UserService {
     }
   }
 
-  // Extras
-  userMessages(message: string) {
-    this.snackBar.open(message, 'X', {
-      duration: 2000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-      panelClass: 'snackBar'
-    })
-  }
+  // // Extras
+  // userMessages(message: string) {
+  //   this.snackBar.open(message, 'X', {
+  //     duration: 2000,
+  //     horizontalPosition: 'end',
+  //     verticalPosition: 'top',
+  //     panelClass: 'snackBar'
+  //   })
+  // }
 
   navegate(path: string) {
     return this.router.navigate([path])
