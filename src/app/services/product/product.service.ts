@@ -1,10 +1,8 @@
 import { BehaviorSubject, catchError, lastValueFrom, map } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoadService } from '../load/load.service';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Notification } from 'src/app/models/notification';
 import { Product } from 'src/app/models/product';
 import { Promotion } from 'src/app/models/promotion';
@@ -26,7 +24,7 @@ export class ProductService {
     promotions: 'promotions',
   }
 
-  constructor(private firebase: AngularFirestore, private storage: AngularFireStorage, private snackBar: MatSnackBar, private router: Router, private loadService: LoadService, private errorService: ErrorsService) { }
+  constructor(private snackBar: MatSnackBar, private router: Router, private loadService: LoadService, private errorService: ErrorsService) { }
 
   // Metodos de Produto
   getProducts() {
@@ -114,7 +112,7 @@ export class ProductService {
     })
   }
 
-  // Metodos de Categorias 
+  // Metodos de Categorias
   getCategorys() {
     return this.firebase.collection('productsCategorys').get()
       .pipe(

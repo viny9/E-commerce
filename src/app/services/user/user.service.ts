@@ -2,9 +2,6 @@ import { User } from './../../models/user';
 import { NoopScrollStrategy } from '@angular/cdk/overlay';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { getAuth, updateEmail } from '@angular/fire/auth';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -23,7 +20,7 @@ export class UserService {
   userId = localStorage['userId']
   baseUrl: string = environment.backendBaseUrl
 
-  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth, private snackBar: MatSnackBar, private router: Router, private http: HttpClient, private dialog: MatDialog, private productService: ProductService, private stripeService: StripeService, private errorService: ErrorsService) { }
+  constructor(private snackBar: MatSnackBar, private router: Router, private http: HttpClient, private dialog: MatDialog, private productService: ProductService, private stripeService: StripeService, private errorService: ErrorsService) { }
 
   // Login e cadastro
   async signUp(user: any) {
@@ -203,7 +200,7 @@ export class UserService {
   async deleteUser(user: any) {
     try {
       await this.auth.signInWithEmailAndPassword(user.email, user.password)
-      await getAuth().currentUser?.delete() // Exclui o usuário no authentic 
+      await getAuth().currentUser?.delete() // Exclui o usuário no authentic
       await this.firestore.collection('users').doc(this.userId).delete() // Exclui o usuário da firestore
       this.stripeService.deleteCustomer(user.stripe_id).subscribe() //Exclui o  usuário no stripe
     } catch (error) {
@@ -256,7 +253,7 @@ export class UserService {
     }
   }
 
-  // Emails 
+  // Emails
   sendVerificationCodeEmail(email: string) {
     const body = {
       email: email

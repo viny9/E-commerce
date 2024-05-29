@@ -1,4 +1,3 @@
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ProductService } from 'src/app/services/product/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
