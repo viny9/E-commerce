@@ -63,29 +63,19 @@ export class ProductService {
     .pipe(catchError((e) => this.errorService.handleError(e)));
   }
 
-
-  // Metodos de Imgs
-  addProductImg(path: string, file: File) {
-    const uploadTask = this.storage.upload(path, file);
-
-    uploadTask
-      .percentageChanges()
-      .pipe(catchError((e: Error) => this.errorService.handleError(e)))
-      .subscribe((percentage: any) => {
-        if (percentage === 100) {
-          this.loadService.hideLoading();
-        } else if (percentage < 100) {
-          this.loadService.showLoading();
-        }
-      });
-
-    return uploadTask;
+  addProductImg(productId: string, file: File) {
+    return this.http
+    .post(`${this.baseUrl}/product/${productId}/img`, file)
+    .pipe(catchError((e) => this.errorService.handleError(e)));
   }
 
-  deleteProductImg(url: string) {
-    return this.storage.refFromURL(url).delete();
+  updatedProductImgs(productId: string, removedImgs: string[]) {
+    // Adaptar para que receba tantas as que vão remover quantas as novas
+    return this.http
+    .put(`${this.baseUrl}/product/${productId}/img`, removedImgs)
+    .pipe(catchError((e) => this.errorService.handleError(e)));
   }
-  
+
   get selectComponent() {
     return this.component.value;
   }
