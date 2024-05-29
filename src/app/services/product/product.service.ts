@@ -64,41 +64,6 @@ export class ProductService {
     .pipe(catchError((e) => this.errorService.handleError(e)));
   }
 
-  // Metodos de Categorias
-  getCategorys() {
-    return this.firebase
-      .collection('productsCategorys')
-      .get()
-      .pipe(
-        map((res) => {
-          return res.docs.map((doc) => doc.data());
-        }),
-        catchError((e: Error) => this.errorService.handleError(e))
-      );
-  }
-
-  createCategory(category: Object) {
-    return this.firebase
-      .collection('productsCategorys')
-      .add(category)
-      .catch((e: Error) => this.errorService.handleError(e));
-  }
-
-  updateCategory(categoryId: string, updatedCategory: Object) {
-    return this.firebase
-      .collection('productsCategorys')
-      .doc(categoryId)
-      .update(updatedCategory)
-      .catch((e: Error) => this.errorService.handleError(e));
-  }
-
-  removeCategory(categoryId: string) {
-    return this.firebase
-      .collection('productsCategorys')
-      .doc(categoryId)
-      .delete()
-      .catch((e: Error) => this.errorService.handleError(e));
-  }
 
   // Metodos de Imgs
   addProductImg(path: string, file: File) {
