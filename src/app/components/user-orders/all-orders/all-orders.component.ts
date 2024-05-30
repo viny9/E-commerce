@@ -11,6 +11,7 @@ export class AllOrdersComponent implements OnInit {
 
   payments: any[] = []
   loading: boolean = false
+  teste!: number;
 
   constructor(private stripeService: StripeService, private loadService: LoadService) {
     loadService.isLoading.subscribe((res) => {
@@ -20,6 +21,8 @@ export class AllOrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserPayments()
+
+    this.teste = window.screen.width
   }
 
   getUserPayments() {

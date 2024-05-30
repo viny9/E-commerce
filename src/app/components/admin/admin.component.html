@@ -1,27 +1,32 @@
 <mat-sidenav-container class="adminComponent">
-    <mat-sidenav opened class="sidenav" mode="side">
+    <mat-sidenav #drawer class="sidenav" [mode]="sidebarMode" [opened]="isSidebarOpen">
         <mat-nav-list class="nav">
-            <a mat-list-item routerLink="products" [ngClass]="selected === 'Products' ? 'selected' : '' ">
+            <a mat-list-item (click)="closeSidebar(drawer)" routerLink="products"
+                [ngClass]="selected === 'Products' ? 'selected' : '' ">
                 <mat-icon>storefront</mat-icon>
                 Produtos
             </a>
 
-            <a mat-list-item routerLink="promotions" [ngClass]="selected === 'Promotions' ? 'selected' : '' ">
+            <a mat-list-item (click)="closeSidebar(drawer)" routerLink="promotions"
+                [ngClass]="selected === 'Promotions' ? 'selected' : '' ">
                 <mat-icon>local_offer</mat-icon>
                 Promoções
             </a>
 
-            <a mat-list-item routerLink="orders" [ngClass]="selected === 'Orders' ? 'selected' : '' ">
+            <a mat-list-item (click)="closeSidebar(drawer)" routerLink="orders"
+                [ngClass]="selected === 'Orders' ? 'selected' : '' ">
                 <mat-icon>list_alt</mat-icon>
                 Pedidos
             </a>
 
-            <a mat-list-item routerLink="notifications" [ngClass]="selected === 'Notifications' ? 'selected' : '' ">
+            <a mat-list-item (click)="closeSidebar(drawer)" routerLink="notifications"
+                [ngClass]="selected === 'Notifications' ? 'selected' : '' ">
                 <mat-icon>notifications_active</mat-icon>
                 Notificações
             </a>
 
-            <a mat-list-item routerLink="adminUsersList" [ngClass]="selected === 'AdminUsers' ? 'selected' : '' ">
+            <a mat-list-item (click)="closeSidebar(drawer)" routerLink="adminUsersList"
+                [ngClass]="selected === 'AdminUsers' ? 'selected' : '' ">
                 <mat-icon>person</mat-icon>
                 Configurações de Usuário
             </a>
@@ -41,6 +46,9 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="main">
+        <button (click)="closeSidebar(drawer)" class="menu" mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
         <app-loading></app-loading>
         <router-outlet></router-outlet>
     </mat-sidenav-content>

@@ -5,7 +5,7 @@ h2 {
 }
 
 .notificationsComponent {
-  width: 90%;
+  width: 100%;
   padding: 0 3rem 2rem;
 }
 
@@ -49,7 +49,6 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 2rem;
   cursor: pointer;
 }
 
@@ -61,21 +60,15 @@ h2 {
   background-color: var(--hover-color);
 }
 
+.new {
+  background-color: var(--hover-color);
+}
+
 .messageContainer {
   display: flex;
   align-items: center;
   width: 50%;
-}
-
-.new {
-  background-color: blue;
-  border-radius: 50%;
-  display: block;
-  width: 6px;
-  height: 6px;
-  margin: 0;
   position: relative;
-  left: -1rem;
 }
 
 .date {
@@ -88,11 +81,11 @@ h2 {
   display: none;
 }
 
-.notification:hover > .actions {
+.notification:hover>.actions {
   display: block;
 }
 
-.notification:hover > .date {
+.notification:hover>.date {
   display: none;
 }
 
@@ -129,4 +122,39 @@ h2 {
 .noNotification {
   background-color: var(--card-color);
   color: var(--text-color);
+}
+
+@media (max-width:500px) {
+  .notificationsComponent {
+    padding: 0;
+  }
+
+  .notificationsContainer {
+    margin: 0;
+  }
+
+  .controlPanel {
+    border-radius: 0;
+  }
+
+  .notification:first-of-type {
+    border-top: none;
+  }
+
+  .notification {
+    width: 100%;
+    border-inline: none;
+  }
+
+  .messageContainer {
+    width: 50%;
+  }
+
+  .messageContainer>p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 }

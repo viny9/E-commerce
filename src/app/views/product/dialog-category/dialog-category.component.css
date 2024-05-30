@@ -44,6 +44,11 @@ p {
 }
 
 /* mat-label normal state style */
+.mat-form-field {
+  width: 60%;
+}
+
+/* mat-label normal state style */
 ::ng-deep .mat-form-field-label {
   color: var(--text-color) !important;
 }
@@ -55,4 +60,23 @@ p {
 
 ::ng-deep.mat-form-field-ripple {
   background-color: var(--main-color) !important;
+}
+
+@media (max-width: 430px) {
+  .teste {
+    flex-direction: column;
+    padding: 1rem 0;
+  }
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+  .teste button {
+    width: 100%;
+  }
+
+  .list {
+    border: none;
+  }
 }

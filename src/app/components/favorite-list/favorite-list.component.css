@@ -1,5 +1,5 @@
 .favoriteListComponent {
-  padding: 0 3rem;
+  padding: 1rem 3rem;
 }
 
 .productContainer {
@@ -19,7 +19,7 @@
   align-items: center;
 }
 
-.productInfos h1{
+.productInfos h1 {
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -27,6 +27,7 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   width: 60%;
+  margin-bottom: 0;
 }
 
 .productInfos h1:hover {
@@ -40,6 +41,7 @@
 }
 
 img {
+  padding: 10px 0;
   max-height: 7rem;
   border-radius: 3px;
 }
@@ -57,4 +59,42 @@ img {
 .empty button {
   background-color: var(--main-color);
   color: var(--opposite-text-color);
+}
+
+@media (max-width: 660px) {
+  .productContainer {
+    padding: 0 1rem;
+    background-color: transparent;
+  }
+
+  .imgContainer {
+    width: 50%;
+    margin: 0 5%;
+  }
+
+  img {
+    width: 100%;
+    padding: 0;
+  }
+}
+
+@media (max-width:500px) {
+  .favoriteListComponent {
+    padding: 0;
+  }
+
+  .productContainer {
+    box-shadow: none;
+    border-bottom: 1px solid;
+  }
+
+
+  .empty {
+    box-shadow: none;
+    background-color: transparent;
+  }
+
+  .empty button {
+    width: 100%;
+  }
 }

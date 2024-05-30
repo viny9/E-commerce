@@ -1,11 +1,13 @@
 <div class="head mat-elevation-z3">
-    <a href="">Logo</a>
+    <a href="" class="logo" *ngIf="screenSize > 900">E-commerce</a>
+    <a href="" class="logo" *ngIf="screenSize < 900">E</a>
     <div class="search">
         <input type="text" placeholder="Pesquisar" [(ngModel)]="searchInput" (keyup.enter)="search()">
-        <button (click)="search()" [disabled]="searchInput === undefined">
+        <button (click)="search()" [disabled]="searchInput === '' ">
             <mat-icon>search</mat-icon>
         </button>
     </div>
+
     <div class="options">
         <div *ngIf="logged === false" class="logged">
             <a routerLink="signUp">Cadastro</a>
@@ -32,5 +34,10 @@
                 <mat-icon>brightness_4</mat-icon>
             </button>
         </div>
+
     </div>
+
+    <button mat-icon-button class="menu" (click)="isSidebarOpen.toggle()">
+        <mat-icon class="icons">menu</mat-icon>
+    </button>
 </div>

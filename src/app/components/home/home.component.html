@@ -1,17 +1,7 @@
-<div class="main" *ngIf="!loading">
-    <div class="alerts">
-        <div class="imgs">
-            <img *ngFor="let img of imgss" [src]="img.url" alt="" class="img{{img.imgNumber}}">
-        </div>
-
-        <div class="alertBtns">
-            <button class="navBtn1" (click)="prev()">
-                <mat-icon>arrow_back_ios</mat-icon>
-            </button>
-
-            <button class="navBtn2" (click)="next()">
-                <mat-icon>arrow_forward_ios</mat-icon>
-            </button>
+<div class="main">
+    <div class="carousel">
+        <div class="img" *ngFor="let img of imgss">
+            <img [src]="img.url" alt="" class="img{{img.imgNumber}}">
         </div>
     </div>
 

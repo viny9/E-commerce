@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, CanActivateChild, UrlTree } from '@angular/router';
 import { ProductService } from '../services/product/product.service';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserAuthGuard implements CanActivate, CanActivateChild {
 
-  constructor(private db: ProductService, private auth: AngularFireAuth) { }
+  constructor(private db: ProductService) { }
 
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {

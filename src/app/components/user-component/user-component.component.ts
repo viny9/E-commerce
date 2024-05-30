@@ -1,6 +1,5 @@
 import { NoopScrollStrategy } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { User } from 'src/app/models/user';
@@ -22,7 +21,7 @@ export class UserComponentComponent implements OnInit {
   mask: any
   loading: boolean = false
 
-  constructor(private userService: UserService, private db: ProductService, private auth: AngularFireAuth, private loadService: LoadService, private dialog: MatDialog) {
+  constructor(private userService: UserService, private db: ProductService, private loadService: LoadService, private dialog: MatDialog) {
     loadService.isLoading.subscribe((res) => {
       this.loading = res
     })

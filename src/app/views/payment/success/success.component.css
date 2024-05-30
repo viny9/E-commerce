@@ -46,3 +46,13 @@
 .btns button:nth-child(2) {
   background-color: var(--main-color);
 }
+
+@media (max-width:425px) {
+  .main {
+    width: 90%;
+  }
+
+  .main h1 {
+    text-align: center;
+  }
+}

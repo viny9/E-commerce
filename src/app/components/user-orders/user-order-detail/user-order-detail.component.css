@@ -1,7 +1,7 @@
 .OrderDetailsComponent {
   background-color: var(--background-color);
   color: var(--text-color);
-  padding: 0 3rem;
+  padding: 2rem 3rem;
 }
 
 .orderHead {
@@ -29,6 +29,7 @@
 .paymentFieldContainer {
   display: flex;
   justify-content: space-between;
+  flex-flow: wrap;
   padding: 0 2rem;
 }
 
@@ -40,6 +41,13 @@
 .fields {
   display: flex;
   flex-direction: column;
+  margin-inline: 20px;
+  margin-bottom: 2rem;
+}
+
+.fields h3 {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
 .orderProductsContainer {
@@ -81,4 +89,45 @@
 
 .unpaid {
   color: var(--error-color);
+}
+
+@media (max-width:500px) {
+  .OrderDetailsComponent {
+    padding: 2rem 5%;
+  }
+
+  .paymentFieldContainer {
+    padding: 0;
+  }
+
+  .products {
+    background-color: transparent;
+    width: 100%;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .orderProduct {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width:385px) {
+  .orderHead {
+    flex-direction: column;
+    align-items: start;
+    margin-bottom: 2rem;
+  }
+
+  .products {
+    margin-top: 2rem;
+  }
+
+  .orderProduct {
+    align-items: flex-end;
+  }
+
+  .orderProduct img {
+    width: 31%;
+  }
 }

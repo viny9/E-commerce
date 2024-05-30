@@ -26,9 +26,9 @@
                 </mat-card>
             </div>
 
-            <div class="notification" *ngFor="let notification of notifications" routerLink="/admin/orders/{{notification.order}}">
+            <div *ngFor="let notification of notifications" class="notification"
+                [ngClass]="notification.new ? 'new' : '' " routerLink="/admin/orders/{{notification.order}}">
                 <span class="messageContainer" (click)="checkNotification(notification)">
-                    <span class="new" *ngIf="notification.new"></span>
                     <mat-checkbox class="checkbox" (click)="$event.stopPropagation()"
                         (change)="selectedNotification(notification)"></mat-checkbox>
                     <p> {{ notification.message }}</p>

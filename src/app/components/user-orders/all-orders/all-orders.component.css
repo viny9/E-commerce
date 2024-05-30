@@ -1,8 +1,8 @@
 .orderComponent {
   display: grid;
   grid-column: auto;
-  padding: 0 3rem;
-  /* padding: 0 50px; */
+  padding: 2rem 3rem;
+  width: 100%;
 }
 
 .orderContainer {
@@ -53,4 +53,45 @@ button {
   align-items: center;
   color: var(--text-color);
   background-color: var(--card-color);
+}
+
+
+@media (max-width:630px) {
+  .orderComponent {
+    padding: 2rem 0;
+  }
+
+  .orderContainer {
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    margin: 0;
+  }
+
+  .teste {
+    display: none;
+  }
+
+  .products {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid var(--disabled-color);
+    padding: 1rem 0;
+    width: 100%;
+    color: var(--text-color);
+  }
+
+  .infos {
+    margin-left: 1rem;
+  }
+
+  .products h1 {
+    margin-bottom: 0;
+  }
+
+  .products img {
+    width: 90px;
+    margin-left: 10px;
+  }
 }

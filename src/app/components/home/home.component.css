@@ -2,48 +2,49 @@ h2 {
   margin: 0;
 }
 
+
 .main {
-  height: auto;
-  min-height: 100%;
   width: 100%;
+  height: 100%;
+  overflow: hidden;
   color: #ffffff8a;
+  position: relative;
 }
 
-.alerts {
-  display: block;
-  width: 100%;
-  height: 400px;
-  margin-bottom: 20px;
-}
-
-.imgs {
+.carousel {
   display: flex;
+  width: 100%;
+  animation: carousel-slide 10s infinite;
+  margin-bottom: 4rem;
 }
 
-.imgs img {
+.img {
+  min-width: 100%;
+}
+
+.img img {
   width: 100%;
-  height: 400px;
-  position: absolute;
-  top: 4rem;
+  object-fit: cover;
 }
 
 .alertBtns {
   width: 100%;
-  height: 45.4%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   position: absolute;
-  top: 4rem;
+  top: 0;
   left: 0;
 }
 
-.alertBtns > button {
+.alertBtns>button {
+  width: 5vw;
   background-color: transparent;
   border: 0;
   color: transparent;
 }
 
-.alertBtns > button:hover {
+.alertBtns>button:hover {
   color: #fff;
   transition: 0.4s;
   background-color: #00000028;
@@ -51,14 +52,14 @@ h2 {
 }
 
 .teste {
+  margin: 0 auto;
   padding: 0 3rem;
 }
 
 .productsContainer {
   display: grid;
-  grid-template-columns: repeat(4, 16rem);
-  padding: 1rem 0.5rem;
-  overflow: hidden;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  padding: 2rem;
   gap: 2.5rem 2rem;
 }
 
@@ -67,23 +68,21 @@ h2 {
   color: var(--text-color);
   display: flex;
   flex-direction: column;
-  height: 23rem;
-  min-width: 14rem;
   padding: 0;
+  padding-bottom: 1rem;
+  max-width: 270px;
 }
 
 .product:hover {
   background-color: var(--hover-color);
 }
 
-.product > img {
+.product>img {
   width: 100%;
-  max-height: 10rem;
-  min-height: 9rem;
+  height: 17vh;
   border-radius: 3px 3px 0 0;
   margin-bottom: 2rem;
 }
-
 
 .productInfos {
   display: flex;
@@ -116,58 +115,47 @@ h2 {
   font-size: 17px;
 }
 
-.nextShow {
-  animation: both 1s next1;
-}
+@keyframes carousel-slide {
 
-.nextHide {
-  animation: both 1s next2;
-}
-
-.backShow {
-  animation: both 1s back1;
-}
-
-.backHide {
-  animation: both 1s back2;
-}
-
-@keyframes next1 {
-  from {
-    transform: translateX(100%);
+  0%,
+  100% {
+    transform: translateX(0);
   }
 
-  to {
-    transform: translateX(0%);
-  }
-}
-
-@keyframes next2 {
-  from {
-    transform: translateX(0%);
+  25% {
+    transform: translateX(0);
   }
 
-  to {
-    transform: translateX(-100%);
-  }
-}
-
-@keyframes back1 {
-  from {
+  33.33% {
     transform: translateX(-100%);
   }
 
-  to {
-    transform: translateX(0%);
+  58.33% {
+    transform: translateX(-100%);
+  }
+
+  66.66% {
+    transform: translateX(-200%);
+  }
+
+  91.66% {
+    transform: translateX(-200%);
   }
 }
 
-@keyframes back2 {
-  from {
-    transform: translateX(0%);
+
+@media (max-width:591px) {
+  .teste {
+    padding: 0 1rem;
   }
 
-  to {
-    transform: translateX(100%);
+  .productsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-}
+
+  .product {
+    width: 100%;
+  }
+} 

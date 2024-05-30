@@ -1,6 +1,68 @@
-<app-head></app-head>
+<app-head [isSidebarOpen]="drawer"></app-head>
 <app-loading></app-loading>
-<div class="body">
-    <router-outlet></router-outlet>
-</div>
+<mat-sidenav-container class="home">
+    <mat-sidenav class="sidebar" mode="over" position="end" #drawer>
+        <mat-list class="options">
+            <mat-list-item class="logged" *ngIf="!logged">
+                <a routerLink="signUp">Cadastro</a>
+                /
+                <a routerLink="signIn">Login </a>
+            </mat-list-item>
+
+            <mat-divider *ngIf="!logged"></mat-divider>
+
+            <mat-list-item class="nav" (click)="drawer.toggle()" routerLink="cart">
+                <button mat-icon-button>
+                    <mat-icon class="icons">shopping_cart</mat-icon>
+                </button>
+                <p>Carrinho</p>
+            </mat-list-item>
+
+            <mat-divider></mat-divider>
+
+            <mat-list-item class="nav" (click)="drawer.toggle()" routerLink="favoriteList">
+                <button mat-icon-button>
+                    <mat-icon class="icons">favorite</mat-icon>
+                </button>
+                <p>Lista de desejos</p>
+            </mat-list-item>
+
+            <mat-divider *ngIf="logged"></mat-divider>
+
+            <mat-list-item class="nav" (click)="drawer.toggle()" routerLink="user" *ngIf="logged">
+                <button mat-icon-button>
+                    <mat-icon class="icons">person</mat-icon>
+                </button>
+                <p>Perfil</p>
+            </mat-list-item>
+
+            <mat-divider *ngIf="logged"></mat-divider>
+
+            <mat-list-item class="nav" (click)="drawer.toggle()" routerLink="allOrders" *ngIf="logged">
+                <button mat-icon-button>
+                    <mat-icon class="icons">shopping_basket</mat-icon>
+                </button>
+                <p>Pedidos</p>
+            </mat-list-item>
+
+            <mat-divider></mat-divider>
+
+            <mat-list-item class="nav">
+                <div class="themeChange">
+                    <div class="themeIcons">
+                        <mat-icon id="sun" class="sun">wb_sunny</mat-icon>
+                        <mat-icon id="moon" class="moon">brightness_4</mat-icon>
+                    </div>
+                    <mat-slide-toggle (change)="themeToggle()" [checked]="checked"></mat-slide-toggle>
+                </div>
+            </mat-list-item>
+
+        </mat-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="main">
+        <div class="body">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
 <app-footer></app-footer>

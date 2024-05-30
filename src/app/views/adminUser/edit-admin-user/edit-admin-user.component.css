@@ -49,3 +49,22 @@ form h1 {
 ::ng-deep.mat-form-field-ripple {
     background-color: var(--main-color) !important;
 }
+
+@media (max-width:950px) {
+    form {
+        width: 70%;
+    }
+}
+
+@media (max-width:500px) {
+    form {
+        background-color: transparent;
+        width: 90%;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .actionBts button {
+        padding: 0.5rem 0 ;
+    }
+}

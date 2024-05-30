@@ -1,7 +1,118 @@
+p {
+  margin: 0;
+}
+
 .body {
   background-color: var(--background-color);
-  padding: 1rem 0 50px;
-  height: auto;
-  min-height: 85%;
+  min-height: 100vh;
+}
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  width: 50vw;
+  height: 100%;
+  padding: 0;
+  background-color: var(--card-color);
+}
+
+.logged {
+  color: var(--text-color);
+}
+
+.logged a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
+}
+
+.nav p {
+  color: var(--text-color);
+  margin-left: 1rem;
+}
+
+.mat-divider {
+  border-top-color: var(--disabled-color);
+}
+
+.icons {
+  font-size: 1.5rem;
+  color: var(--main-color);
+}
+
+.themeChange {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.themeIcons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  width: 40px;
+}
+
+.sun,
+.moon {
+  position: absolute;
+  display: flex;
+  color: var(--main-color);
+}
+
+::ng-deep.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: var(--main-color-hover);
+}
+
+::ng-deep.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: var(--main-color);
+}
+
+.hideAnimation {
+  animation: both alternate 0.5s hide;
+}
+
+.showAnimation {
+  animation: both alternate 0.5s show;
+}
+
+.hide {
+  opacity: 0;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 100%;
+    /* transform: rotate(360deg); */
+  }
+}
+
+@keyframes hide {
+  from {
+    opacity: 100%;
+  }
+
+  to {
+    opacity: 0;
+    /* transform: rotate(360deg); */
+    display: none;
+  }
+}
+
+@media(max-width:425px) {
+  .sidebar {
+    width: 70vw;
+  }
 }

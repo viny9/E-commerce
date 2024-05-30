@@ -1,21 +1,29 @@
 .orderDetails {
-  width: 90%;
+  width: 100%;
   padding: 0 3rem;
-}
-
-.backBtn {
-  margin-bottom: 1rem;
 }
 
 .orderInfos {
   background-color: var(--card-color);
   color: var(--text-color);
-  padding: 1rem 3rem;
+  padding: 3rem;
+}
+
+.backBtn {
+  position: absolute;
+  top: 0;
+  left: 2%;
+  margin-bottom: 1rem;
 }
 
 .userInfos {
   display: flex;
   justify-content: space-between;
+  flex-flow: wrap;
+}
+
+.userInfos div:nth-of-type(2) {
+  margin: 0 20px;
 }
 
 .product {
@@ -35,10 +43,9 @@ mat-panel-title {
   display: inline;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-right: 12rem;
 }
 
-.mat-accordion > .mat-expansion-panel-spacing:last-child {
+.mat-accordion>.mat-expansion-panel-spacing:last-child {
   margin: 1rem 0;
 }
 
@@ -48,5 +55,46 @@ mat-panel-title {
 }
 
 .amount {
-    text-align: end;
+  text-align: end;
+}
+
+@media (max-width: 531px) {
+  .userInfos {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .userInfos div:nth-of-type(2) {
+    margin: 0;
+  }
+
+}
+
+@media (max-width: 425px) {
+  .orderDetails {
+    padding: 0;
+  }
+
+  .orderInfos {
+    width: 100%;
+    box-shadow: none;
+    background-color: transparent;
+  }
+
+  .orderInfos div {
+    margin-bottom: 1rem;
+  }
+
+  .userInfos div:nth-of-type(2) {
+    margin: 0;
+  }
+
+  mat-panel-title {
+    width: 100%;
+    overflow: hidden;
+    display: inline;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
 }

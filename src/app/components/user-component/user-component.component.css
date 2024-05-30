@@ -1,5 +1,5 @@
 h2 {
-  margin: 10px 0 5px 0;
+  margin: 1rem 0 5px 0;
   color: var(--text-color);
 }
 
@@ -14,7 +14,7 @@ h2 {
 }
 
 .userInfos {
-  width: 50%;
+  width: 60%;
 }
 
 .formContainer {
@@ -32,7 +32,6 @@ button {
 ::ng-deep.mat-flat-button:disabled {
     background-color: var(--disabled-color) !important;
     color: var(--secondary-text-color) !important;
-    /* color: #00000042 !important; */
 }
 
 p {
@@ -53,4 +52,10 @@ p {
 
 ::ng-deep.mat-form-field-ripple {
   background-color: var(--main-color) !important;
+}
+
+@media (max-width:425px) {
+  .userInfos {
+    width: 70%;
+  }
 }

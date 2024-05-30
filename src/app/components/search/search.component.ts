@@ -19,6 +19,7 @@ export class SearchComponent implements OnInit {
   selectedFilters: any = []
   selected: any = -1
   filterProducts: any = []
+  screenSize:number = window.screen.width
 
   dataSource = new MatTreeNestedDataSource()
   treeControl = new NestedTreeControl((node: any) => node.children)

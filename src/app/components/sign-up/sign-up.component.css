@@ -1,17 +1,17 @@
 .signUp {
-  height: 100%;
+  height: 100vh;
   background-color: #ffba00;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .form {
   background-color: #151515d8;
-  /* height: 35rem; */
-  width: 30%;
+  width: 50%;
   color: #fff;
-  padding: 3rem 3rem 2rem;
+  padding: 1.5rem 2rem;
   border-radius: 1rem;
 }
 
@@ -20,10 +20,10 @@
   top: 0;
   left: 0;
   background-color: transparent;
-  margin: 0.5rem;
 }
 
 .form h1 {
+  margin: 0;
   text-align: center;
 }
 
@@ -36,7 +36,8 @@
 .mat-form-field {
   font-size: 17px;
   width: 90%;
-  margin: 5px 0;
+  margin: 0.7rem 0;
+  height: 1.5rem;
 }
 
 /* input */
@@ -71,12 +72,16 @@
   width: 70%;
   border-radius: 20px;
   padding: 5px 0;
-  margin-top: 20px;
+  margin-top: 3rem;
+}
+
+.btn:disabled {
+  color: #ffffff70;
 }
 
 .login {
   text-align: center;
-  margin-top: 4rem;
+  margin-top: 2rem;
 }
 
 .login a {
@@ -146,4 +151,72 @@
   100% {
     transform: translateX(200%);
   }
+}
+
+@media (min-width:1000px) {
+  .form {
+    width: 30%;
+    height: auto;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .form {
+    width: 63%;
+    padding: 2rem;
+  }
+
+  .mat-form-field {
+    height: 1rem;
+    margin: 1rem 0;
+  }
+
+  .login {
+    margin-top: 2rem;
+  }
+}
+
+
+@media (max-width: 425px) {
+  .form {
+    width: 80%;
+    padding: 0;
+    background-color: transparent;
+    color: #000;
+  }
+
+  .mat-form-field {
+    height: 1.5rem;
+    margin: 1rem 0;
+    width: 100%;
+  }
+
+  ::ng-deep .mat-form-field-label {
+    color: #000 !important;
+  }
+
+  ::ng-deep .mat-form-field-underline {
+    background-color: #00000068 !important;
+  }
+
+  ::ng-deep.mat-form-field-ripple {
+    background-color: #000 !important;
+  }
+
+  .btn {
+    background-color: #000;
+    color: #fff;
+    margin-top: 3.5rem;
+    width: 100%;
+  }
+
+  .login {
+    margin-top: 2rem;
+  }
+
+  .login a {
+    color: #000;
+  }
+
 }

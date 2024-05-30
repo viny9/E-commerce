@@ -10,7 +10,7 @@ import { PromotionsComponent } from '../promotions/promotions.component';
 })
 export class DialogAddProductPromotionComponent implements OnInit {
 
-  promotionInput: string | number = ''
+  promotionInput: string | number | any = ''
   searchInput: string = ''
   products: any[] = []
   promotionProducts: any[] = []
