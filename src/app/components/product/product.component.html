@@ -12,16 +12,16 @@
         <div class="productInfos">
             <h1 class="productName">{{product.name}}</h1>
 
-            <div class="priceContainer" *ngIf="product.promotionInfos === null || product.promotionInfos === undefined">
+            <div class="priceContainer" *ngIf="product.promotionalValue === null || product.promotionalValue === undefined">
                 <p class="productPrice">R${{product.price.toFixed(2).replace('.', ',')}}</p>
             </div>
 
-            <div class="priceContainer" *ngIf="product.promotionInfos != null && product.promotionInfos != undefined">
+            <div class="priceContainer" *ngIf="product.promotionalValue != null && product.promotionalValue != undefined">
                 <p class="oldPrice"><s>R${{product.price.toFixed(2).replace('.', ',')}}</s></p>
                 <span>
-                    <h2 class="productPrice">R$ {{product.promotionInfos.promotionPrice.toFixed(2).replace('.', ',')}}
+                    <h2 class="productPrice">R$ {{product.promotionalValue.toFixed(2).replace('.', ',')}}
                     </h2>
-                    <p class="percentage"> {{product.promotionInfos.percentage}}%</p>
+                    <!-- <p class="percentage"> {{product.promotionalValue.percentage}}%</p> -->
                 </span>
             </div>
             <!-- | currency:'BRL'}} -->
