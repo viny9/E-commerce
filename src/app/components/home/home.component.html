@@ -1,32 +1,60 @@
 <div class="main">
-    <div class="carousel">
-        <div class="img" *ngFor="let img of imgss">
-            <img [src]="img.url" alt="" class="img{{img.imgNumber}}">
-        </div>
+  <div class="carousel">
+    <div class="img" *ngFor="let img of imgss">
+      <img [src]="img.url" alt="" class="img{{ img.imgNumber }}" />
     </div>
+  </div>
 
-    <div class="teste">
-        <h1>Alguns Produtos</h1>
-        <div class="productsContainer">
-            <mat-card class="product" (click)="selectProduct(product)" *ngFor="let product of products">
-                <img *ngIf="product.imgs.length !== 0" [src]="product.imgs[0].url" alt="">
-                <img *ngIf="product.imgs.length === 0" src="../../../assets/without img.jpg" alt="">
+  <div class="teste">
+    <h1>Alguns Produtos</h1>
+    <div class="productsContainer">
+      <mat-card
+        class="product"
+        (click)="selectProduct(product.id!)"
+        *ngFor="let product of products"
+      >
+        <img
+          *ngIf="product.imgs.length > 0"
+          [src]="product.imgs[0].url"
+          alt=""
+        />
 
-                <div class="productInfos">
-                    <h2>{{ product.name }}</h2>
+        <img
+          *ngIf="product.imgs.length === 0"
+          src="../../../assets/without img.jpg"
+          alt=""
+        />
 
-                    <div class="priceContainer"
-                        *ngIf="product.promotionInfos !== null && product.promotionInfos !== undefined">
-                        <p class="oldPrice"><s>R$ {{ product.price.toFixed(2).replace('.', ',') }}</s></p>
-                        <p>R$ {{ product.promotionInfos.promotionPrice.toFixed(2).replace('.', ',') }}</p>
-                    </div>
+        <div class="productInfos">
+          <h2>{{ product.name }}</h2>
 
-                    <div class="priceContainer"
-                        *ngIf="product.promotionInfos === null || product.promotionInfos === undefined">
-                        <p>R$ {{ product.price.toFixed(2).replace('.', ',') }}</p>
-                    </div>
-                </div>
-            </mat-card>
+          <div
+            class="priceContainer"
+            *ngIf="
+              product.promotionalValue !== null &&
+              product.promotionalValue !== undefined
+            "
+          >
+            <p class="oldPrice">
+              <s>R$ {{ product.price.toFixed(2).replace(".", ",") }}</s>
+            </p>
+            <p>
+              R$
+              {{ product.promotionalValue.toFixed(2).replace(".", ",") }}
+            </p>
+          </div>
+
+          <div
+            class="priceContainer"
+            *ngIf="
+              product.promotionalValue === null ||
+              product.promotionalValue === undefined
+            "
+          >
+            <p>R$ {{ product.price.toFixed(2).replace(".", ",") }}</p>
+          </div>
         </div>
+      </mat-card>
     </div>
+  </div>
 </div>
