@@ -26,12 +26,12 @@ export class FavoriteListComponent implements OnInit {
   getList() {
     this.loadService.showLoading()
 
-    this.db.getFavoriteList().subscribe((res) => {
-      this.list = res;
+    // this.db.getFavoriteList().subscribe((res) => {
+    //   this.list = res;
 
-      this.isEmpty()
-      this.loadService.hideLoading()
-    })
+    //   this.isEmpty()
+    //   this.loadService.hideLoading()
+    // })
   }
 
   isEmpty() {
@@ -43,10 +43,10 @@ export class FavoriteListComponent implements OnInit {
   }
 
   async removeListProduct(product: Object) {
-    const id: any = await this.db.getId(this.db.path.list, product)
+    // const id: any = await this.db.getId(this.db.path.list, product)
 
-    await this.db.deleteFromList(id)
-    this.getList()
+    // await this.db.deleteFromList(id)
+    // this.getList()
   }
 
 }

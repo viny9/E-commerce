@@ -49,11 +49,11 @@ export class PasswordRecoveryComponent implements OnInit {
         return user.email === this.email
       })
 
-      if (user[0]) {
-        this.userSevice.sendVerificationCodeEmail(this.email).subscribe((res: any) => {
-          this.sendedCode = res.code
-        })
-      }
+      // if (user[0]) {
+      //   this.userSevice.sendVerificationCodeEmail(this.email).subscribe((res: any) => {
+      //     this.sendedCode = res.code
+      //   })
+      // }
     })
 
     this.formChangeAnimationControl('code')
@@ -61,7 +61,7 @@ export class PasswordRecoveryComponent implements OnInit {
 
   checkEmailCode() {
     if (this.code === this.sendedCode) {
-      this.userSevice.sendPasswordResetEmail(this.email)
+      // this.userSevice.sendPasswordResetEmail(this.email)
     }
   }
 

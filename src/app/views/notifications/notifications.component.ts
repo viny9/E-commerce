@@ -32,18 +32,18 @@ export class NotificationsComponent implements OnInit {
   }
 
   getNotifications() {
-    this.loadService.showLoading()
-    this.db.getNotifications().subscribe((res: any) => {
+    // this.loadService.showLoading()
+    // this.db.getNotifications().subscribe((res: any) => {
 
-      this.notifications = res.sort((a: any, b: any) => {
-        const d: any = new Date(a.date);
-        const c: any = new Date(b.date);
-        return c - d;
-      })
+    //   this.notifications = res.sort((a: any, b: any) => {
+    //     const d: any = new Date(a.date);
+    //     const c: any = new Date(b.date);
+    //     return c - d;
+    //   })
 
-      this.notificationDate()
-      this.loadService.hideLoading()
-    })
+    //   this.notificationDate()
+    //   this.loadService.hideLoading()
+    // })
   }
 
   notificationDate() {
@@ -82,55 +82,55 @@ export class NotificationsComponent implements OnInit {
   }
 
   archivedNotifications() {
-    this.db.getArchivedNotification().subscribe((res: any) => {
-      this.archived = res
-    })
+    // this.db.getArchivedNotification().subscribe((res: any) => {
+    //   this.archived = res
+    // })
   }
 
   checkNotification(checkedNotification: any) {
-    if (checkedNotification.new) {
-      this.db.getNotifications().subscribe(async (res: any) => {
+    // if (checkedNotification.new) {
+    //   this.db.getNotifications().subscribe(async (res: any) => {
 
-        const filter = res.filter((notification: any) => {
-          return notification.id === checkedNotification.id
-        })
+    //     const filter = res.filter((notification: any) => {
+    //       return notification.id === checkedNotification.id
+    //     })
 
-        filter[0].new = false
+    //     filter[0].new = false
 
-        const id = await this.db.getNotificationId(checkedNotification)
+    //     const id = await this.db.getNotificationId(checkedNotification)
 
-        await this.db.updateNotificationStatus(filter[0], id)
-        this.getNotifications()
-      })
-    }
+    //     await this.db.updateNotificationStatus(filter[0], id)
+    //     this.getNotifications()
+    //   })
+    // }
   }
 
   async archiveNotification(notification: any, event: Event) {
-    event.stopPropagation()
+    // event.stopPropagation()
 
-    const id = await this.db.getNotificationId(notification)
+  //   const id = await this.db.getNotificationId(notification)
 
-    await this.db.archiveNotification(notification)
-    await this.db.deleteNotification(id)
-    this.getNotifications()
-  }
+  //   await this.db.archiveNotification(notification)
+  //   await this.db.deleteNotification(id)
+  //   this.getNotifications()
+  // }
 
-  async unarchiveNotification(notification: any, event: Event) {
-    event.stopPropagation()
+  // async unarchiveNotification(notification: any, event: Event) {
+  //   event.stopPropagation()
 
-    const id = await this.db.getArchivedNotificationId(notification)
+  //   const id = await this.db.getArchivedNotificationId(notification)
 
-    await this.db.unachiveNotification(notification, id)
-    this.archivedNotifications()
+  //   await this.db.unachiveNotification(notification, id)
+  //   this.archivedNotifications()
   }
 
   async deleteNotification(notification: any, event?: any) {
-    event?.stopPropagation()
+    // event?.stopPropagation()
 
-    const id = await this.db.getNotificationId(notification)
+    // const id = await this.db.getNotificationId(notification)
 
-    await this.db.deleteNotification(id)
-    this.getNotifications()
+    // await this.db.deleteNotification(id)
+    // this.getNotifications()
   }
 
   selectedNotification(id: any) {

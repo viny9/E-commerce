@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { lastValueFrom } from 'rxjs';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Product } from 'src/app/models/product';
+import { CategoryService } from 'src/app/services/category/category.service';
 
 @Component({
   selector: 'app-new-product',
@@ -16,7 +17,10 @@ export class NewProductComponent implements OnInit {
   imgs: Product['imgs'] = [];
   imgsFiles: any[] = [];
 
-  constructor(private db: ProductService) {}
+  constructor(
+    private db: ProductService,
+    private categoryService: CategoryService
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -32,7 +36,7 @@ export class NewProductComponent implements OnInit {
   }
 
   categoryList() {
-    this.db.getCategorys().subscribe((res) => {
+    this.categoryService.getCategorys().subscribe((res) => {
       this.categorys = res;
     });
   }
@@ -87,7 +91,7 @@ export class NewProductComponent implements OnInit {
 
   removeImg(selectedImg: any) {
     const imgs = this.imgs.map((i) => {
-      return i.name;
+      // return i.name;
     });
 
     const files = this.imgsFiles.map((file: any) => {
@@ -105,10 +109,10 @@ export class NewProductComponent implements OnInit {
 
   updateImgsOrder() {
     this.imgs.forEach((element) => {
-      const imgs = this.imgs.map((img) => img.name);
-      let index = imgs.indexOf(element.name) + 1;
+      // const imgs = this.imgs.map((img) => img.name);
+      // let index = imgs.indexOf(element.name) + 1;
 
-      element.order = index;
+      // element.order = index;
     });
   }
 
@@ -127,10 +131,10 @@ export class NewProductComponent implements OnInit {
     product.imgs = imgs;
 
     await this.db.createProduct(product);
-    await Promise.all([
-      this.db.userMessages('Produto criado'),
-      this.db.navegate('admin/products'),
-    ]);
+    // await Promise.all([
+    //   this.db.userMessages('Produto criado'),
+    //   this.db.navegate('admin/products'),
+    // ]);
   }
 
   async uploadImgs() {
@@ -142,16 +146,16 @@ export class NewProductComponent implements OnInit {
     }
 
     for (let file of files) {
-      const filePath = `${this.form.value.name}/${file.name}`;
-      const fileRef = this.storage.ref(filePath);
+      // const filePath = `${this.form.value.name}/${file.name}`;
+      // const fileRef = this.storage.ref(filePath);
 
-      await this.db.addProductImg(filePath, file);
+      // await this.db.addProductImg(filePath, file);
 
-      const url: string = await lastValueFrom(fileRef.getDownloadURL());
-      const imgInfos: any = this.imgs.find((img) => img.name === file.name);
+      // const url: string = await lastValueFrom(fileRef.getDownloadURL());
+      // const imgInfos: any = this.imgs.find((img) => img.name === file.name);
 
-      imgInfos.url = url;
-      imgs.push(imgInfos);
+      // imgInfos.url = url;
+      // imgs.push(imgInfos);
 
       if (imgs.length === files.length) {
         imgs.sort((a: any, b: any) => a.order - b.order);

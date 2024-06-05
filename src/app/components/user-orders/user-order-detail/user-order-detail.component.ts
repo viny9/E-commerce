@@ -33,25 +33,25 @@ export class UserOrderDetailComponent implements OnInit {
     this.loadService.showLoading()
 
     this.router.params.subscribe((params) => {
-      const orderNumber = Number(params['orderId'])
+      // const orderNumber = Number(params['orderId'])
 
-      this.stripe.getPayments().subscribe((res: any) => {
+      // this.stripe.getPayments().subscribe((res: any) => {
 
-        const filter = res.filter((order: any) => {
-          return order.order_number === orderNumber
-        })
+      //   const filter = res.filter((order: any) => {
+      //     return order.order_number === orderNumber
+      //   })
 
-        this.order = filter[0]
-        this.paymentInfos = this.order.payment_intent.payment_method
-        this.address = this.order.customer_details.address
+      //   this.order = filter[0]
+      //   this.paymentInfos = this.order.payment_intent.payment_method
+      //   this.address = this.order.customer_details.address
 
-        const date = new Date(this.order.created * 1000)
-        this.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+      //   const date = new Date(this.order.created * 1000)
+      //   this.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
 
-        this.paymentStatus()
-        this.totalPrice()
-        this.loadService.hideLoading()
-      })
+      //   this.paymentStatus()
+      //   this.totalPrice()
+      //   this.loadService.hideLoading()
+      // })
     })
   }
 

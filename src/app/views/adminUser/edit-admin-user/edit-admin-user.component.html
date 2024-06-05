@@ -1,18 +1,29 @@
 <div class="component">
-    <form [formGroup]="form" *ngIf="!loading">
-        <h1>Editar Usuário</h1>
-        <mat-form-field>
-            <mat-label>Nome</mat-label>
-            <input type="text" matInput formControlName="name">
-        </mat-form-field>
+  <!-- Achar o error aqui -->
+  <!-- <form [formGroup]="form" *ngIf="!loading">
 
-        <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input type="text" matInput formControlName="email">
-        </mat-form-field>
-        <div class="actionBts">
-            <button mat-flat-button color="primary" [disabled]="form.pristine" (click)="updateUser()">Salvar</button>
-            <button mat-flat-button color="warn" routerLink="../../">Cancelar</button>
-        </div>
-    </form>
+    <h1>Editar Usuário</h1>
+
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input type="text" matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input type="text" matInput formControlName="email" />
+    </mat-form-field>
+
+    <div class="actionBts">
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="form.pristine"
+        (click)="updateUser()"
+      >
+        Salvar
+      </button>
+      <button mat-flat-button color="warn" routerLink="../../">Cancelar</button>
+    </div>
+  </form> -->
 </div>

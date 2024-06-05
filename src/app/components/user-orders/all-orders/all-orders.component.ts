@@ -26,22 +26,22 @@ export class AllOrdersComponent implements OnInit {
   }
 
   getUserPayments() {
-    this.loadService.showLoading()
-    this.stripeService.getPayments().subscribe((res) => {
+    // this.loadService.showLoading()
+    // this.stripeService.getPayments().subscribe((res) => {
 
-      res.map((element: any) => {
-        const date = new Date(element.created * 1000)
-        element.data = date
-      });
+    //   res.map((element: any) => {
+    //     const date = new Date(element.created * 1000)
+    //     element.data = date
+    //   });
 
-      this.payments = res.sort((a: any, b: any) => {
-        const d: any = new Date(a.created);
-        const c: any = new Date(b.created);
-        return c - d;
-      })
+    //   this.payments = res.sort((a: any, b: any) => {
+    //     const d: any = new Date(a.created);
+    //     const c: any = new Date(b.created);
+    //     return c - d;
+    //   })
 
-      this.loadService.hideLoading()
-    })
+    //   this.loadService.hideLoading()
+    // })
   }
 
 }
