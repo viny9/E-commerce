@@ -67,15 +67,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { TextMaskModule } from 'angular2-text-mask';
 
-// Firebase
-import { AngularFireModule } from '@angular/fire/compat'
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
-import { AngularFireStorageModule } from '@angular/fire/compat/storage'
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { EditAdminUserComponent } from './views/adminUser/edit-admin-user/edit-admin-user.component';
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -110,7 +101,6 @@ import { EditAdminUserComponent } from './views/adminUser/edit-admin-user/edit-a
     DialogAddProductPromotionComponent,
     AdminUsersListComponent,
     CreateAdminUserComponent,
-    EditAdminUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -142,12 +132,6 @@ import { EditAdminUserComponent } from './views/adminUser/edit-admin-user/edit-a
     MatTreeModule,
     MatAutocompleteModule,
     DragDropModule,
-
-    AngularFirestoreModule,
-    AngularFireStorageModule,
-    AngularFireAuthModule,
-    AngularFireModule.initializeApp(environment.firebase),
-
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -32,25 +32,25 @@ export class OrdersListComponent implements AfterViewInit {
   }
 
   allOrders() {
-    this.loadService.showLoading()
+    // this.loadService.showLoading()
 
-    this.db.getOrders().subscribe((res) => {
+    // this.db.getOrders().subscribe((res) => {
 
-      this.products = res.sort((a: any, b: any) => {
-        const d: any = new Date(a.created);
-        const c: any = new Date(b.created);
-        return c - d;
-      })
+    //   this.products = res.sort((a: any, b: any) => {
+    //     const d: any = new Date(a.created);
+    //     const c: any = new Date(b.created);
+    //     return c - d;
+    //   })
 
-      this.dataSource = new MatTableDataSource(this.products)
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort
+    //   this.dataSource = new MatTableDataSource(this.products)
+    //   this.dataSource.paginator = this.paginator;
+    //   this.dataSource.sort = this.sort
 
-      this.notificationDate()
-      this.paymentStatus()
-      this.total()
-      this.loadService.hideLoading()
-    })
+    //   this.notificationDate()
+    //   this.paymentStatus()
+    //   this.total()
+    //   this.loadService.hideLoading()
+    // })
   }
 
   notificationDate() {

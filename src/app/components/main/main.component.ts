@@ -1,66 +1,62 @@
-import { UserService } from 'src/app/services/user/user.service';
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  styleUrls: ['./main.component.css'],
 })
 export class MainComponent implements OnInit {
+  public logged: boolean = false;
+  public checked: boolean = false;
+  private theme: string | null = localStorage['theme'];
+  private isSidebarOpen: boolean = false;
 
-  theme: string | null = localStorage['theme']
-  logged:boolean = false
-  isSidebarOpen: boolean = false
-  checked: boolean = false
-
-  constructor(private userService:UserService) { }
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.themeIcon()
+    this.themeIcon();
 
-    this.logged = this.userService.isLogged()
+    this.logged = this.authService.isLogged();
   }
 
   themeIcon() {
-    const sun = document.querySelector('#sun')
-    const moon = document.querySelector('#moon')
+    const sun = document.querySelector('#sun');
+    const moon = document.querySelector('#moon');
 
-
-    if (this.theme === "dark") {
-      sun?.classList.toggle('hide')
-      this.checked = true
+    if (this.theme === 'dark') {
+      sun?.classList.toggle('hide');
+      this.checked = true;
     } else {
-      moon?.classList.toggle('hide')
-      this.checked = false
+      moon?.classList.toggle('hide');
+      this.checked = false;
     }
   }
 
   themeToggle() {
-    const sun = document.querySelector('#sun')
-    const moon = document.querySelector('#moon')
+    const sun = document.querySelector('#sun');
+    const moon = document.querySelector('#moon');
 
-    if (this.theme == "dark") {
-      this.theme = 'light'
-      sun?.classList.remove('hideAnimation')
-      moon?.classList.remove('showAnimation')
+    if (this.theme == 'dark') {
+      this.theme = 'light';
+      sun?.classList.remove('hideAnimation');
+      moon?.classList.remove('showAnimation');
 
-      sun?.classList.toggle('showAnimation')
-      moon?.classList.toggle('hideAnimation')
+      sun?.classList.toggle('showAnimation');
+      moon?.classList.toggle('hideAnimation');
 
-      localStorage.setItem('theme', 'light')
-      document.body.classList.toggle('lightMode')
-
+      localStorage.setItem('theme', 'light');
+      document.body.classList.toggle('lightMode');
     } else {
-      this.theme = 'dark'
-      sun?.classList.remove('showAnimation')
-      moon?.classList.remove('hideAnimation')
+      this.theme = 'dark';
+      sun?.classList.remove('showAnimation');
+      moon?.classList.remove('hideAnimation');
 
-      sun?.classList.toggle('hideAnimation')
-      moon?.classList.toggle('showAnimation')
+      sun?.classList.toggle('hideAnimation');
+      moon?.classList.toggle('showAnimation');
 
-      document.body.classList.toggle('lightMode')
-      localStorage.setItem('theme', 'dark')
+      document.body.classList.toggle('lightMode');
+      localStorage.setItem('theme', 'dark');
     }
   }
-
 }

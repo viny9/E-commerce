@@ -1,6 +1,6 @@
+import { AuthService } from './../../services/auth/auth.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,7 +12,7 @@ export class SignInComponent implements OnInit {
   hide: boolean = true
   signinForm!: FormGroup
 
-  constructor(private userService: UserService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.createForm()
@@ -26,7 +26,7 @@ export class SignInComponent implements OnInit {
   }
 
   login() {
-    this.userService.signIn(this.signinForm.value)
+    this.authService.login(this.signinForm.value)
   }
 
 }

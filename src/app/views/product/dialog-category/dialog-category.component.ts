@@ -1,85 +1,86 @@
 import { ProductService } from '../../../services/product/product.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CategoryService } from 'src/app/services/category/category.service';
+import { userMessages } from 'src/app/utils/snackbar';
 
 @Component({
   selector: 'app-dialog-category',
   templateUrl: './dialog-category.component.html',
-  styleUrls: ['./dialog-category.component.css']
+  styleUrls: ['./dialog-category.component.css'],
 })
 export class DialogCategoryComponent implements OnInit {
+  public inputStatus = 'new';
+  public newCategoryInput = '';
+  public editCategoryInput = '';
+  public categorys: any[] = [];
+  private selectedCategory = '';
+  private changed: boolean = false;
 
-  inputStatus = 'new'
-  newCategoryInput = ''
-  editCategoryInput = ''
-  selectedCategory = ''
-  categorys: any[] = []
-  changed: boolean = false
-
-  constructor(private db: ProductService, private dialog: MatDialogRef<DialogCategoryComponent>) { }
+  constructor(
+    private db: ProductService,
+    private categoryService: CategoryService,
+    private dialog: MatDialogRef<DialogCategoryComponent>,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
-    this.categorysList()
+    this.categorysList();
   }
 
   categorysList() {
-    this.db.getCategorys().subscribe((res: any) => {
-      this.categorys = res
-    })
+    this.categoryService.getCategorys().subscribe((res: any) => {
+      this.categorys = res;
+    });
   }
 
   async newCategory() {
-    const category = { name: this.newCategoryInput }
+    const category = { name: this.newCategoryInput };
 
-    await this.db.createCategory(category)
-    this.categorysList()
+    await this.categoryService.createCategory(category);
+    this.categorysList();
   }
 
   selectCategory(category: any) {
-    this.editCategoryInput = category.name
-    this.selectedCategory = category.name
+    this.editCategoryInput = category.name;
+    this.selectedCategory = category.name;
   }
 
   async updateCategory() {
-    const id = await this.db.getId(this.db.path.categorys, this.selectedCategory)
-    const upadatedCategory = { name: this.editCategoryInput }
+    const upadatedCategory = { name: this.editCategoryInput };
 
-    await this.db.updateCategory(id, upadatedCategory)
-    this.categorysList()
-    this.filterProducts()
+    await this.categoryService.updateCategory('', upadatedCategory);
+    this.categorysList();
+    this.filterProducts();
   }
 
   filterProducts() {
     this.db.getProducts().subscribe((res: any) => {
       const filter = res.filter((product: any) => {
-        return product.category === this.selectedCategory
-      })
+        return product.category === this.selectedCategory;
+      });
 
       filter.forEach((product: any) => {
-        product.category = this.editCategoryInput
-        this.updateProducts(product)
+        product.category = this.editCategoryInput;
+        this.updateProducts(product);
       });
-    })
+    });
   }
 
   async updateProducts(product: any) {
-    const id = await this.db.getId(this.db.path.products, product)
-
-    await this.db.editProduct(id, product)
-    this.db.userMessages('Produtos foram atualizados')
-    this.changed = true
+    this.db.editProduct(product.id, product);
+    userMessages('Produtos foram atualizados', this.snackBar);
+    this.changed = true;
   }
 
   async deleteCategory(category: any) {
-    const id = await this.db.getId(this.db.path.categorys, category)
-
-    await this.db.removeCategory(id)
-    this.db.userMessages('Categoria removida')
-    this.categorysList()
+    this.categoryService.removeCategory(category.id);
+    userMessages('Categoria removida', this.snackBar);
+    this.categorysList();
   }
 
   close() {
-    this.dialog.close(this.changed)
+    this.dialog.close(this.changed);
   }
-
 }

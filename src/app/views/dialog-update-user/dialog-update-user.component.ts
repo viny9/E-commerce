@@ -20,7 +20,7 @@ export class DialogUpdateUserComponent implements OnInit {
   async updateAccount() {
     this.data.password = this.password
 
-    await this.userService.updateUserWithLogin(this.data)
+    // await this.userService.updateUserWithLogin(this.data)
     this.dialog.close()
   }
 

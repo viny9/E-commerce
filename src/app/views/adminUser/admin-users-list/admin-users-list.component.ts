@@ -5,60 +5,61 @@ import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { DeleteAccountComponent } from '../../delete-account/delete-account.component';
+import { Router } from '@angular/router';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-admin-users-list',
   templateUrl: './admin-users-list.component.html',
-  styleUrls: ['./admin-users-list.component.css']
+  styleUrls: ['./admin-users-list.component.css'],
 })
 export class AdminUsersListComponent implements OnInit {
+  dataSource: any;
+  columns: string[] = ['name', 'email', 'actions'];
 
-  dataSource: any
-  columns: string[] = ['name', 'email', 'actions']
-
-  constructor(private db: ProductService, private userService: UserService, private loadService: LoadService, private dialog: MatDialog) {
-    db.selectComponent = AdminRoutes.adminUsers
+  constructor(
+    private userService: UserService,
+    private loadService: LoadService,
+    private dialog: MatDialog,
+    private router: Router
+  ) {
+    // db.selectComponent = AdminRoutes.adminUsers;
   }
 
   ngOnInit(): void {
-    this.getUsers()
+    this.getUsers();
   }
 
   getUsers() {
-    this.loadService.showLoading()
+    this.loadService.showLoading();
 
     this.userService.getAdminUsers().subscribe((res) => {
       this.dataSource = res.docs.map((user: any) => {
-        return user.data()
-      })
-      this.loadService.hideLoading()
-    })
+        return user.data();
+      });
+      this.loadService.hideLoading();
+    });
   }
 
-  async editPage(user: any) {
-    const id = await this.db.getId('users', user)
-    this.db.navegate(`admin/adminUsersList/editAdminUser/${id}`)
+  async editPage(user: User) {
+    this.router.navigate([`admin/adminUsersList/editAdminUser/${user.id}`]);
   }
 
-  async deleteUser(user: any) {
-    const userId = sessionStorage['userId']
-    const id = await this.db.getId('users', user)
+  async deleteUser(user: User) {
+    const userId = sessionStorage['userId'];
 
-    if (userId === id) {
-      user.id = id
+    if (userId === user.id) {
 
       this.dialog.open(DeleteAccountComponent, {
         width: '500px',
         height: '300px',
-        data: user
-      })
-
+        data: user,
+      });
     } else {
-      (await this.userService.deleteUserAsAdmin(user)).subscribe(() => {
-        this.userService.userMessages('Usuário removido com sucesso')
-        this.getUsers()
-      })
+      // (await this.userService.deleteUserAsAdmin(user)).subscribe(() => {
+      //   this.userService.userMessages('Usuário removido com sucesso')
+      //   this.getUsers()
+      // })
     }
   }
-
 }
