@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { ProductService } from '../services/product/product.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminAuthGuard implements CanActivate {
+export class AdminAuthGuard  {
 
-  constructor(private db: ProductService) { }
+  constructor(private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const token = localStorage['token'] || sessionStorage['token']
@@ -16,7 +16,7 @@ export class AdminAuthGuard implements CanActivate {
     if (token && admin === true) {
       return true
     } else {
-      this.db.navegate('')
+      this.router.navigate([''])
       return false
     }
   }

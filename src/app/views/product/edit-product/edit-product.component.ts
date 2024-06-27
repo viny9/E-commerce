@@ -1,9 +1,10 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { Product } from 'src/app/models/product';
+import { CategoryService } from 'src/app/services/category/category.service';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/services/product/product.service';
 
@@ -15,7 +16,7 @@ import { ProductService } from 'src/app/services/product/product.service';
 export class EditProductComponent implements OnInit {
   product!: Product;
   categorys: any[] = [];
-  editForm!: FormGroup;
+  editForm!: UntypedFormGroup;
   imgs: any[] = [];
   newImgs: any[] = [];
   imgsFiles: any[] = [];
@@ -23,7 +24,8 @@ export class EditProductComponent implements OnInit {
   loading: boolean = false;
 
   constructor(
-    private db: ProductService,
+    private productService: ProductService,
+    private categoryService: CategoryService,
     private loadService: LoadService,
     private route: ActivatedRoute
   ) {
@@ -43,7 +45,7 @@ export class EditProductComponent implements OnInit {
     this.route.params.subscribe((res) => {
       const id = res['productId'];
 
-      this.db.getProductById(id).subscribe((res: any) => {
+      this.productService.getProductById(id).subscribe((res: any) => {
         this.product = res;
         this.imgs = this.product.imgs;
         this.createForm(this.product);
@@ -52,17 +54,17 @@ export class EditProductComponent implements OnInit {
   }
 
   categoryList() {
-    this.db.getCategorys().subscribe((res) => {
+    this.categoryService.getCategorys().subscribe((res) => {
       this.categorys = res;
       this.loadService.hideLoading();
     });
   }
 
   createForm(product?: any) {
-    this.editForm = new FormGroup({
-      name: new FormControl(product?.name, [Validators.required]),
-      price: new FormControl(product?.price, [Validators.required]),
-      category: new FormControl(product?.category, [Validators.required]),
+    this.editForm = new UntypedFormGroup({
+      name: new UntypedFormControl(product?.name, [Validators.required]),
+      price: new UntypedFormControl(product?.price, [Validators.required]),
+      category: new UntypedFormControl(product?.category, [Validators.required]),
     });
   }
 
@@ -159,46 +161,46 @@ export class EditProductComponent implements OnInit {
 
     product.price = Number(product.price);
 
-    this.route.params.subscribe(async (res: any) => {
-      if (this.removedImgs.length > 0) {
-        this.removedImgs.forEach((img: any) => {
-          this.db.deleteProductImg(img).subscribe();
-        });
-      }
+    // this.route.params.subscribe(async (res: any) => {
+    //   if (this.removedImgs.length > 0) {
+    //     this.removedImgs.forEach((img: any) => {
+    //       this.db.deleteProductImg(img).subscribe();
+    //     });
+    //   }
 
-      await this.uploadImgs();
-      await this.db.editProduct(res.productId, product);
-      await Promise.all([
-        this.db.navegate('admin/products'),
-        this.db.userMessages('Produto Editado'),
-      ]);
-    });
+      // await this.uploadImgs();
+      // await this.db.editProduct(res.productId, product);
+      // await Promise.all([
+      //   this.db.navegate('admin/products'),
+      //   this.db.userMessages('Produto Editado'),
+      // ]);
+    // });
   }
 
-  async uploadImgs() {
+   uploadImgs() {
     const files = this.imgsFiles;
     const imgs: any = [];
 
-    if (files.length === 0 || this.imgs.length === 0) {
-      return null;
-    }
+    // if (files.length === 0 || this.imgs.length === 0) {
+    //   return null;
+    // }
 
     for (let file of files) {
-      const filePath = `${this.editForm.value.name}/${file.name}`;
-      const fileRef = this.storage.ref(filePath);
+      // const filePath = `${this.editForm.value.name}/${file.name}`;
+      // const fileRef = this.storage.ref(filePath);
 
-      await this.db.addProductImg(filePath, file);
+      // await this.db.addProductImg(filePath, file);
 
-      const url = await lastValueFrom(fileRef.getDownloadURL());
-      const imgInfos = this.imgs.find((img) => img.name === file.name);
+      // const url = await lastValueFrom(fileRef.getDownloadURL());
+      // const imgInfos = this.imgs.find((img) => img.name === file.name);
 
-      imgInfos.url = url;
-      imgs.push(imgInfos);
+      // imgInfos.url = url;
+      // imgs.push(imgInfos);
 
-      if (imgs.length === files.length) {
-        imgs.sort((a: any, b: any) => a.order - b.order);
-        return imgs;
-      }
+      // if (imgs.length === files.length) {
+      //   imgs.sort((a: any, b: any) => a.order - b.order);
+      //   return imgs;
+      // }
     }
   }
 

@@ -28,13 +28,13 @@ export class CartComponent implements OnInit {
   cartItens() {
     this.loadService.showLoading()
 
-    this.db.getCart().subscribe((res) => {
-      this.products = res
+    // this.db.getCart().subscribe((res) => {
+    //   this.products = res
 
-      this.isEmpty()
-      this.totalPrice()
-      this.loadService.hideLoading()
-    })
+    //   this.isEmpty()
+    //   this.totalPrice()
+    //   this.loadService.hideLoading()
+    // })
   }
 
   isEmpty() {
@@ -46,10 +46,10 @@ export class CartComponent implements OnInit {
   }
 
   async removeCartItem(product: Object) {
-    const id = await this.db.getId(this.db.path.cart, product)
+    // const id = await this.db.getId(this.db.path.cart, product)
 
-    await this.db.deleteCartProduct(id)
-    this.cartItens()
+    // await this.db.deleteCartProduct(id)
+    // this.cartItens()
   }
 
   subProductAmount(product: any) {
@@ -82,6 +82,6 @@ export class CartComponent implements OnInit {
   }
 
   pay() {
-    this.stripe.cartPayment(this.products)
+    // this.stripe.cartPayment(this.products)
   }
 }

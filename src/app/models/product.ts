@@ -1,19 +1,12 @@
+import { img } from "./img";
+
 export interface Product {
-    id?: string
-    amount?: number
-    name: string
-    price: number
-    edit?: boolean
-    imgs: {
-        name: string
-        order: number
-        size: string
-        url: string
-    }[]
-    category: string
-    promotionInfos?: {
-        name: string
-        promotionPrice: number
-        percentage: number
-    }
+  id?: string;
+  name: string;
+  price: number;
+  category: string;
+  promotionalValue: number;
+  imgs: img[]
+  // amount?: number;
+  // edit?: boolean;
 }

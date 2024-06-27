@@ -32,17 +32,17 @@ export class OrderInfosComponent implements OnInit {
     this.router.params.subscribe((param) => {
       const id = param['orderId']
 
-      this.db.getOrders().subscribe((res) => {
+      // this.db.getOrders().subscribe((res) => {
 
-        const filter = res.filter((order: any) => {
-          return order.id === id
-        })
+      //   const filter = res.filter((order: any) => {
+      //     return order.id === id
+      //   })
 
-        this.orderInfos = filter[0]
+      //   this.orderInfos = filter[0]
 
-        this.total()
-        this.loadService.hideLoading()
-      })
+      //   this.total()
+      //   this.loadService.hideLoading()
+      // })
     })
   }
 

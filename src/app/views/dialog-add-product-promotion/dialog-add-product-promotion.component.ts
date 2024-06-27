@@ -6,118 +6,123 @@ import { PromotionsComponent } from '../promotions/promotions.component';
 @Component({
   selector: 'app-dialog-add-product-promotion',
   templateUrl: './dialog-add-product-promotion.component.html',
-  styleUrls: ['./dialog-add-product-promotion.component.css']
+  styleUrls: ['./dialog-add-product-promotion.component.css'],
 })
 export class DialogAddProductPromotionComponent implements OnInit {
+  promotionInput: string | number | any = '';
+  searchInput: string = '';
+  products: any[] = [];
+  promotionProducts: any[] = [];
+  selectedProducts: any[] = [];
+  deletedProducts: any[] = [];
 
-  promotionInput: string | number | any = ''
-  searchInput: string = ''
-  products: any[] = []
-  promotionProducts: any[] = []
-  selectedProducts: any[] = []
-  deletedProducts: any[] = []
-
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private db: ProductService, private dialog: MatDialogRef<PromotionsComponent>) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private db: ProductService,
+    private dialog: MatDialogRef<PromotionsComponent>
+  ) {}
 
   ngOnInit(): void {
-    this.getProducts()
-    this.selectedProducts = this.data?.products || []
-    this.promotionProducts = this.data?.products || []
+    this.getProducts();
+    this.selectedProducts = this.data?.products || [];
+    this.promotionProducts = this.data?.products || [];
   }
 
   getProducts() {
     this.db.getProducts().subscribe((res) => {
-
-      const noPromotionProducts: any[] = []
+      const noPromotionProducts: any[] = [];
 
       res.forEach((element: any) => {
-        if (element.promotionInfos === undefined || element.promotionInfos === null) {
-          noPromotionProducts.push(element)
+        if (
+          element.promotionInfos === undefined ||
+          element.promotionInfos === null
+        ) {
+          noPromotionProducts.push(element);
         }
-      })
+      });
 
-      this.products = noPromotionProducts
-    })
+      this.products = noPromotionProducts;
+    });
   }
 
   searchProduct() {
     this.products = this.products.filter((product: any) => {
-      return product.name.includes(this.searchInput)
-    })
+      return product.name.includes(this.searchInput);
+    });
   }
 
   selectProduct(option: any) {
     const products: any = this.selectedProducts.map((product: any) => {
-      return product.name
-    })
+      return product.name;
+    });
 
     if (products.includes(option.name) === false) {
-      option.edit = false
+      option.edit = false;
       option.promotionInfos = {
-        percentage: 0
-      }
+        percentage: 0,
+      };
 
-      this.selectedProducts.push(option)
+      this.selectedProducts.push(option);
     }
 
-    this.getProducts()
+    this.getProducts();
   }
 
   editProduct(product: any) {
     const products = this.selectedProducts.map((product: any) => {
-      return product.name
-    })
+      return product.name;
+    });
 
-    const index = products.indexOf(product.name)
+    const index = products.indexOf(product.name);
 
     if (this.promotionInput === '') {
-      this.selectedProducts[index].promotionInfos.percentage = 0
-
+      this.selectedProducts[index].promotionInfos.percentage = 0;
     } else {
-      this.selectedProducts[index].promotionInfos.percentage = Number(this.promotionInput)
+      this.selectedProducts[index].promotionInfos.percentage = Number(
+        this.promotionInput
+      );
     }
 
-    this.promotionInput = ''
+    this.promotionInput = '';
   }
 
   check() {
     const products = this.selectedProducts.map((product: any) => {
-      return product.edit
-    })
+      return product.edit;
+    });
 
     if (products.includes(true)) {
-      return true
+      return true;
     } else {
-      return false
+      return false;
     }
   }
 
   removeProduct(product: any) {
     const products = this.selectedProducts?.map((product: any) => {
-      return product.name
-    })
+      return product.name;
+    });
 
-    const index = products.indexOf(product.name)
-    const selectedProduct = this.selectedProducts[index]
+    const index = products.indexOf(product.name);
+    const selectedProduct = this.selectedProducts[index];
 
     if (this.promotionProducts.includes(selectedProduct)) {
-      this.deletedProducts.push(selectedProduct)
+      this.deletedProducts.push(selectedProduct);
     }
 
-    this.selectedProducts.splice(index, 1)
+    this.selectedProducts.splice(index, 1);
   }
 
   addPromotion() {
     const updates = {
       selectedProducts: this.selectedProducts,
-      deletedProducts: this.deletedProducts
-    }
+      deletedProducts: this.deletedProducts,
+    };
 
-    this.dialog.close(updates)
+    this.dialog.close(updates);
   }
 
   cancel() {
-    this.dialog.close()
+    this.dialog.close();
   }
-
 }

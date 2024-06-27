@@ -37,14 +37,14 @@
         </button>
         <h2>Resultados para: "{{searchWord}}"</h2>
         <div class="selectedFilters">
-            <mat-chip-list>
+            <mat-chip-listbox>
                 <mat-chip *ngFor="let filter of selectedFilters" selected>
                     {{filter.name}}
                     <button matChipRemove (click)="removeFilter(filter)" class="removeChipBtn">
                         <mat-icon>cancel</mat-icon>
                     </button>
                 </mat-chip>
-            </mat-chip-list>
+            </mat-chip-listbox>
         </div>
         <div class="productsContainer">
             <mat-card class="product" *ngFor="let product of products" (click)="selectProduct(product)">

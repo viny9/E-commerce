@@ -2,16 +2,19 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 //Componentes
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SignInComponent } from './components/sign-in/sign-in.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { SignInComponent } from './views/sign-in/sign-in.component';
+import { SignUpComponent } from './views/sign-up/sign-up.component';
 import { MainComponent } from './components/main/main.component';
-import { HeadComponent } from './components/head/head.component'
+import { HeadComponent } from './components/head/head.component';
 import { FavoriteListComponent } from './components/favorite-list/favorite-list.component';
 import { ProductComponent } from './components/product/product.component';
 import { CartComponent } from './components/cart/cart.component';
@@ -39,20 +42,19 @@ import { PromotionsComponent } from './views/promotions/promotions.component';
 import { DialogAddProductPromotionComponent } from './views/dialog-add-product-promotion/dialog-add-product-promotion.component';
 import { AdminUsersListComponent } from './views/adminUser/admin-users-list/admin-users-list.component';
 import { CreateAdminUserComponent } from './views/adminUser/create-admin-user/create-admin-user.component';
-import { environment } from './../environments/environment';
 
 //Angular Material
-import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatInputModule } from '@angular/material/input'
-import { MatButtonModule } from '@angular/material/button'
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatTableModule } from '@angular/material/table'
-import { MatPaginatorModule } from '@angular/material/paginator'
-import { MatSortModule } from '@angular/material/sort'
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -64,8 +66,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTreeModule } from '@angular/material/tree';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
-import { TextMaskModule } from 'angular2-text-mask';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
   declarations: [
@@ -102,9 +103,10 @@ import { TextMaskModule } from 'angular2-text-mask';
     AdminUsersListComponent,
     CreateAdminUserComponent,
   ],
+  bootstrap: [AppComponent],
   imports: [
-    BrowserModule,
     AppRoutingModule,
+    BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -125,15 +127,13 @@ import { TextMaskModule } from 'angular2-text-mask';
     MatSnackBarModule,
     MatSlideToggleModule,
     MatDialogModule,
-    TextMaskModule,
-    HttpClientModule,
     MatProgressBarModule,
     MatChipsModule,
     MatTreeModule,
     MatAutocompleteModule,
     DragDropModule,
+    MatStepperModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  providers: [provideHttpClient(withInterceptorsFromDi())],
 })
-export class AppModule { }
+export class AppModule {}
