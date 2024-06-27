@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdminRoutes } from 'src/app/enums/admin-routes';
 import { ProductService } from 'src/app/services/product/product.service';
@@ -12,7 +12,7 @@ import { userMessages } from 'src/app/utils/snackbar';
   styleUrls: ['./create-admin-user.component.css'],
 })
 export class CreateAdminUserComponent implements OnInit {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
   constructor(
     private db: ProductService,
@@ -27,14 +27,14 @@ export class CreateAdminUserComponent implements OnInit {
   }
 
   createForm() {
-    this.form = new FormGroup({
-      name: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [
+    this.form = new UntypedFormGroup({
+      name: new UntypedFormControl('', Validators.required),
+      email: new UntypedFormControl('', [Validators.required, Validators.email]),
+      password: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(6),
       ]),
-      confirmPassword: new FormControl('', [
+      confirmPassword: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(6),
       ]),

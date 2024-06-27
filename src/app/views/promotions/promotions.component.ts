@@ -1,6 +1,6 @@
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { DialogAddProductPromotionComponent } from '../dialog-add-product-promotion/dialog-add-product-promotion.component';
@@ -17,7 +17,7 @@ import { PromotionService } from 'src/app/services/promotion/promotion.service';
 export class PromotionsComponent implements OnInit {
   public columns: string[] = ['name', 'start', 'finish', 'actions'];
   public dataSource: any;
-  public form!: FormGroup;
+  public form!: UntypedFormGroup;
   public id: string = '';
   public selected: boolean = false;
   public promotionProducts: any;
@@ -38,11 +38,11 @@ export class PromotionsComponent implements OnInit {
   }
 
   createForm(promotionInfos?: Promotion) {
-    this.form = new FormGroup({
-      name: new FormControl(promotionInfos?.name),
-      description: new FormControl(promotionInfos?.description),
-      start: new FormControl(promotionInfos?.start),
-      end: new FormControl(promotionInfos?.end),
+    this.form = new UntypedFormGroup({
+      name: new UntypedFormControl(promotionInfos?.name),
+      description: new UntypedFormControl(promotionInfos?.description),
+      start: new UntypedFormControl(promotionInfos?.start),
+      end: new UntypedFormControl(promotionInfos?.end),
     });
   }
 

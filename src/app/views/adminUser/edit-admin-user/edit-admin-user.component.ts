@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AdminRoutes } from 'src/app/enums/admin-routes';
 import { LoadService } from 'src/app/services/load/load.service';
@@ -32,9 +32,9 @@ export class EditAdminUserComponent implements OnInit {
   }
 
   createForm(userInfos?: any) {
-    this.form = new FormGroup({
-      name: new FormControl(userInfos?.name, Validators.required),
-      email: new FormControl(userInfos?.email, [
+    this.form = new UntypedFormGroup({
+      name: new UntypedFormControl(userInfos?.name, Validators.required),
+      email: new UntypedFormControl(userInfos?.email, [
         Validators.required,
         Validators.email,
       ]),

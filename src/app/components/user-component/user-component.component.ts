@@ -1,7 +1,7 @@
 import { AuthService } from './../../services/auth/auth.service';
 import { NoopScrollStrategy } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { User } from 'src/app/models/user';
 import { LoadService } from 'src/app/services/load/load.service';
@@ -16,8 +16,8 @@ import { DeleteAccountComponent } from 'src/app/views/delete-account/delete-acco
 })
 export class UserComponentComponent implements OnInit {
   user!: User;
-  userForm!: FormGroup;
-  addressForm!: FormGroup;
+  userForm!: UntypedFormGroup;
+  addressForm!: UntypedFormGroup;
   mask: any;
   loading: boolean = false;
 
@@ -57,19 +57,19 @@ export class UserComponentComponent implements OnInit {
   }
 
   createForms(userInfos?: any) {
-    this.userForm = new FormGroup({
-      name: new FormControl(userInfos?.name),
-      email: new FormControl(userInfos?.email),
-      phone: new FormControl(userInfos?.phone),
+    this.userForm = new UntypedFormGroup({
+      name: new UntypedFormControl(userInfos?.name),
+      email: new UntypedFormControl(userInfos?.email),
+      phone: new UntypedFormControl(userInfos?.phone),
     });
 
-    this.addressForm = new FormGroup({
-      cep: new FormControl(userInfos?.address.cep),
-      number: new FormControl(userInfos?.address.number),
-      neighborhood: new FormControl(userInfos?.address.neighborhood),
-      city: new FormControl(userInfos?.address.city),
-      state: new FormControl(userInfos?.address.state),
-      extra: new FormControl(userInfos?.address.extra),
+    this.addressForm = new UntypedFormGroup({
+      cep: new UntypedFormControl(userInfos?.address.cep),
+      number: new UntypedFormControl(userInfos?.address.number),
+      neighborhood: new UntypedFormControl(userInfos?.address.neighborhood),
+      city: new UntypedFormControl(userInfos?.address.city),
+      state: new UntypedFormControl(userInfos?.address.state),
+      extra: new UntypedFormControl(userInfos?.address.extra),
     });
   }
 
