@@ -24,7 +24,7 @@ import { EditProductComponent } from './views/product/edit-product/edit-product.
 import { OrderInfosComponent } from './views/orders/order-infos/order-infos.component';
 import { OrdersListComponent } from './views/orders/orders-list/orders-list.component';
 import { NotificationsComponent } from './views/notifications/notifications.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './views/home/home.component';
 import { NotFoundComponent } from './views/not-found/not-found.component';
 import { SearchComponent } from './components/search/search.component';
 import { DialogCategoryComponent } from './views/product/dialog-category/dialog-category.component';
@@ -66,6 +66,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatStepperModule } from '@angular/material/stepper';
 
 import { TextMaskModule } from 'angular2-text-mask';
+import { ProductCardComponent } from './components/product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { TextMaskModule } from 'angular2-text-mask';
     DialogAddProductPromotionComponent,
     AdminUsersListComponent,
     CreateAdminUserComponent,
+    ProductCardComponent,
   ],
   imports: [
     BrowserModule,
