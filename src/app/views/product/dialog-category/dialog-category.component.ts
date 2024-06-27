@@ -1,7 +1,7 @@
 import { ProductService } from '../../../services/product/product.service';
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { userMessages } from 'src/app/utils/snackbar';
 

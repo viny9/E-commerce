@@ -1,7 +1,7 @@
 import { User } from './../../models/user';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { environment } from 'src/environments/environment';
 import { catchError, filter } from 'rxjs';
 import { ErrorsService } from '../errors/errors.service';

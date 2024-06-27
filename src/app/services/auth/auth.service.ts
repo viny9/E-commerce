@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { User } from 'src/app/models/user';
 import { catchError } from 'rxjs';
 import { userMessages } from 'src/app/utils/snackbar';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Login } from 'src/app/models/login';
 import { LoginResponse } from 'src/app/models/loginResponse';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { SignInComponent } from 'src/app/views/sign-in/sign-in.component';
 import { ErrorsService } from 'src/app/services/errors/errors.service';
 import { UserService } from 'src/app/services/user/user.service';

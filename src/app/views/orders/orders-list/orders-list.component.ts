@@ -1,8 +1,8 @@
-import { MatPaginator } from '@angular/material/paginator';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ProductService } from 'src/app/services/product/product.service';
 import { LoadService } from 'src/app/services/load/load.service';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
 import { MatSort } from '@angular/material/sort';
 import { AdminRoutes } from 'src/app/enums/admin-routes';
 import { Product } from 'src/app/models/product';

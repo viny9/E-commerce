@@ -1,16 +1,16 @@
-import { MatTableDataSource } from '@angular/material/table';
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product/product.service';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { DialogCategoryComponent } from '../dialog-category/dialog-category.component';
 import { LoadService } from 'src/app/services/load/load.service';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
 import { MatSort } from '@angular/material/sort';
 import { AdminRoutes } from 'src/app/enums/admin-routes';
 import { Product } from 'src/app/models/product';
 import { userMessages } from 'src/app/utils/snackbar';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 
 @Component({
   selector: 'app-product-list',
