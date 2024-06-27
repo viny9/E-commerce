@@ -2,7 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 //Componentes
 import { AppRoutingModule } from './app-routing.module';
@@ -65,7 +68,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatStepperModule } from '@angular/material/stepper';
 
-import { TextMaskModule } from 'angular2-text-mask';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 
 @NgModule({
@@ -104,9 +106,10 @@ import { ProductCardComponent } from './components/product-card/product-card.com
     CreateAdminUserComponent,
     ProductCardComponent,
   ],
+  bootstrap: [AppComponent],
   imports: [
-    BrowserModule,
     AppRoutingModule,
+    BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -127,8 +130,6 @@ import { ProductCardComponent } from './components/product-card/product-card.com
     MatSnackBarModule,
     MatSlideToggleModule,
     MatDialogModule,
-    TextMaskModule,
-    HttpClientModule,
     MatProgressBarModule,
     MatChipsModule,
     MatTreeModule,
@@ -136,7 +137,6 @@ import { ProductCardComponent } from './components/product-card/product-card.com
     DragDropModule,
     MatStepperModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  providers: [provideHttpClient(withInterceptorsFromDi())],
 })
 export class AppModule {}

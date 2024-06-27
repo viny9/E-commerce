@@ -1,6 +1,10 @@
 import { userMessages } from './../../utils/snackbar';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SignUp } from 'src/app/models/signup';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -11,7 +15,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent implements OnInit {
-  public signupForm!: FormGroup;
+  public signupForm!: UntypedFormGroup;
   public hidePassword: boolean = true;
   public hideConfirmPassword: boolean = true;
   public isFormValid: boolean = false;
@@ -26,12 +30,15 @@ export class SignUpComponent implements OnInit {
   }
 
   createForm() {
-    this.signupForm = new FormGroup({
-      name: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      phone: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
-      confirmPassword: new FormControl('', Validators.required),
+    this.signupForm = new UntypedFormGroup({
+      name: new UntypedFormControl('', Validators.required),
+      email: new UntypedFormControl('', [
+        Validators.required,
+        Validators.email,
+      ]),
+      phone: new UntypedFormControl('', Validators.required),
+      password: new UntypedFormControl('', Validators.required),
+      confirmPassword: new UntypedFormControl('', Validators.required),
     });
   }
 

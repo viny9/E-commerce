@@ -55,7 +55,7 @@ export class UserService {
   createUser(userInfos: SignUp) {
     return this.http
       .post(`${this.baseUrl}/user`, userInfos)
-      .pipe(catchError((e: Error) => this.errorService.handleError(e)))
+      .pipe(catchError((e: Error) => this.errorService.handleError(e)));
   }
 
   async updateUser(id: string, updatedInfos: User) {

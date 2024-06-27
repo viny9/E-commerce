@@ -1,6 +1,6 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { Product } from 'src/app/models/product';
@@ -16,7 +16,7 @@ import { ProductService } from 'src/app/services/product/product.service';
 export class EditProductComponent implements OnInit {
   product!: Product;
   categorys: any[] = [];
-  editForm!: FormGroup;
+  editForm!: UntypedFormGroup;
   imgs: any[] = [];
   newImgs: any[] = [];
   imgsFiles: any[] = [];
@@ -61,10 +61,10 @@ export class EditProductComponent implements OnInit {
   }
 
   createForm(product?: any) {
-    this.editForm = new FormGroup({
-      name: new FormControl(product?.name, [Validators.required]),
-      price: new FormControl(product?.price, [Validators.required]),
-      category: new FormControl(product?.category, [Validators.required]),
+    this.editForm = new UntypedFormGroup({
+      name: new UntypedFormControl(product?.name, [Validators.required]),
+      price: new UntypedFormControl(product?.price, [Validators.required]),
+      category: new UntypedFormControl(product?.category, [Validators.required]),
     });
   }
 

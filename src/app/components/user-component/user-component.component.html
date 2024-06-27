@@ -14,7 +14,7 @@
 
             <mat-form-field>
                 <mat-label>Telefone</mat-label>
-                <input type="text" matInput formControlName="phone" [textMask]="{mask: mask.phone}">
+                <input type="text" matInput formControlName="phone">
             </mat-form-field>
         </form>
         <button mat-flat-button [disabled]="userForm.pristine" (click)="updateUserInfos()">Atualizar perfil</button>
@@ -23,7 +23,7 @@
         <form class="formContainer" [formGroup]="addressForm">
             <mat-form-field>
                 <mat-label>Cep</mat-label>
-                <input type="text" matInput formControlName="cep" [textMask]="{mask: mask.cep}">
+                <input type="text" matInput formControlName="cep">
             </mat-form-field>
 
             <mat-form-field>

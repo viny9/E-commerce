@@ -1,6 +1,6 @@
 import { ProductService } from '../../../services/product/product.service';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { lastValueFrom } from 'rxjs';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Product } from 'src/app/models/product';
@@ -12,7 +12,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
   styleUrls: ['./new-product.component.css'],
 })
 export class NewProductComponent implements OnInit {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   categorys: any[] = [];
   imgs: Product['imgs'] = [];
   imgsFiles: any[] = [];
@@ -28,10 +28,10 @@ export class NewProductComponent implements OnInit {
   }
 
   createForm() {
-    this.form = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      price: new FormControl('', [Validators.required]),
-      category: new FormControl('', [Validators.required]),
+    this.form = new UntypedFormGroup({
+      name: new UntypedFormControl('', [Validators.required]),
+      price: new UntypedFormControl('', [Validators.required]),
+      category: new UntypedFormControl('', [Validators.required]),
     });
   }
 

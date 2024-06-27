@@ -62,7 +62,10 @@ export class ProductListComponent implements AfterViewInit {
       // this.db.deleteProductImg(img.url).subscribe();
     });
 
-    await Promise.all([this.product(), userMessages('Produto removido', this.snackBar)]);
+    await Promise.all([
+      this.product(),
+      userMessages('Produto removido', this.snackBar),
+    ]);
   }
 
   openDialog() {
