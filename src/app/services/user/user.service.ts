@@ -1,7 +1,7 @@
 import { User } from './../../models/user';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 import { catchError, filter } from 'rxjs';
 import { ErrorsService } from '../errors/errors.service';
@@ -55,7 +55,7 @@ export class UserService {
   createUser(userInfos: SignUp) {
     return this.http
       .post(`${this.baseUrl}/user`, userInfos)
-      .pipe(catchError((e: Error) => this.errorService.handleError(e)))
+      .pipe(catchError((e: Error) => this.errorService.handleError(e)));
   }
 
   async updateUser(id: string, updatedInfos: User) {

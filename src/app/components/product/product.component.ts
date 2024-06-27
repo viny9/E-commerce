@@ -7,7 +7,7 @@ import { LoadService } from 'src/app/services/load/load.service';
 import { Product } from 'src/app/models/product';
 import { ListService } from 'src/app/services/list/list.service';
 import { userMessages } from 'src/app/utils/snackbar';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',

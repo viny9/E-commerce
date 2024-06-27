@@ -1,6 +1,6 @@
 import { BehaviorSubject, catchError, lastValueFrom, map } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoadService } from '../load/load.service';
 import { Notification } from 'src/app/models/notification';

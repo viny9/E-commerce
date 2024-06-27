@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SignInComponent } from 'src/app/views/sign-in/sign-in.component';
 import { ErrorsService } from 'src/app/services/errors/errors.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -28,18 +28,15 @@ export class DeleteAccountComponent implements OnInit {
     //   stripe_id: this.data.stripe_id,
     //   id: this.data.id,
     // };
-
     // if (!this.data.admin) {
     //   await this.userService.deleteUser(user);
     //   await Promise.all([this.userService.logOut(), this.dialog.close()]);
     // } else {
     //   delete user.stripe_id;
-
     //   try {
     //     await this.auth.signInWithEmailAndPassword(user.email, user.password);
     //     await getAuth().currentUser?.delete();
     //     await this.firestore.collection('users').doc(user.id).delete();
-
     //     await Promise.all([this.userService.logOut(), this.dialog.close()]);
     //   } catch (error) {
     //     this.errorsService.handleError(error);

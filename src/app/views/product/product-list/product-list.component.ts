@@ -1,16 +1,16 @@
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatTableDataSource } from '@angular/material/table';
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product/product.service';
 import { Router } from '@angular/router';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DialogCategoryComponent } from '../dialog-category/dialog-category.component';
 import { LoadService } from 'src/app/services/load/load.service';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { AdminRoutes } from 'src/app/enums/admin-routes';
 import { Product } from 'src/app/models/product';
 import { userMessages } from 'src/app/utils/snackbar';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product-list',
@@ -62,7 +62,10 @@ export class ProductListComponent implements AfterViewInit {
       // this.db.deleteProductImg(img.url).subscribe();
     });
 
-    await Promise.all([this.product(), userMessages('Produto removido', this.snackBar)]);
+    await Promise.all([
+      this.product(),
+      userMessages('Produto removido', this.snackBar),
+    ]);
   }
 
   openDialog() {

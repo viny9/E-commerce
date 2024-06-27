@@ -1,7 +1,11 @@
 import { userMessages } from './../../utils/snackbar';
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SignUp } from 'src/app/models/signup';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
@@ -28,7 +32,10 @@ export class SignUpComponent implements OnInit {
   createForm() {
     this.signupForm = new UntypedFormGroup({
       name: new UntypedFormControl('', Validators.required),
-      email: new UntypedFormControl('', [Validators.required, Validators.email]),
+      email: new UntypedFormControl('', [
+        Validators.required,
+        Validators.email,
+      ]),
       phone: new UntypedFormControl('', Validators.required),
       password: new UntypedFormControl('', Validators.required),
       confirmPassword: new UntypedFormControl('', Validators.required),
