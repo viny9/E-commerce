@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { SignInComponent } from 'src/app/components/sign-in/sign-in.component';
+import { SignInComponent } from 'src/app/views/sign-in/sign-in.component';
 import { ErrorsService } from 'src/app/services/errors/errors.service';
 import { UserService } from 'src/app/services/user/user.service';
 
