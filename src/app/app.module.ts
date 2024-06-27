@@ -9,9 +9,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignInComponent } from './components/sign-in/sign-in.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { SignUpComponent } from './views/sign-up/sign-up.component';
 import { MainComponent } from './components/main/main.component';
-import { HeadComponent } from './components/head/head.component'
+import { HeadComponent } from './components/head/head.component';
 import { FavoriteListComponent } from './components/favorite-list/favorite-list.component';
 import { ProductComponent } from './components/product/product.component';
 import { CartComponent } from './components/cart/cart.component';
@@ -42,17 +42,17 @@ import { CreateAdminUserComponent } from './views/adminUser/create-admin-user/cr
 import { environment } from './../environments/environment';
 
 //Angular Material
-import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatInputModule } from '@angular/material/input'
-import { MatButtonModule } from '@angular/material/button'
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatTableModule } from '@angular/material/table'
-import { MatPaginatorModule } from '@angular/material/paginator'
-import { MatSortModule } from '@angular/material/sort'
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -64,6 +64,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTreeModule } from '@angular/material/tree';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatStepperModule } from '@angular/material/stepper';
 
 import { TextMaskModule } from 'angular2-text-mask';
 
@@ -132,8 +133,9 @@ import { TextMaskModule } from 'angular2-text-mask';
     MatTreeModule,
     MatAutocompleteModule,
     DragDropModule,
+    MatStepperModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,25 +1,20 @@
 .signUp {
   height: 100vh;
+  /* padding: 0 50px 20px ; */
   background-color: #ffba00;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
   overflow: hidden;
 }
 
 .form {
+  width: 45%;
   background-color: #151515d8;
-  width: 50%;
   color: #fff;
-  padding: 1.5rem 2rem;
+  padding:  2rem 3rem;
   border-radius: 1rem;
-}
-
-.backIcon {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: transparent;
+  margin: auto;
 }
 
 .form h1 {
@@ -30,13 +25,12 @@
 .fields {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .mat-form-field {
   font-size: 17px;
-  width: 90%;
-  margin: 0.7rem 0;
+  width: 100%;
+  margin: 1.2rem 0;
   height: 1.5rem;
 }
 
@@ -79,87 +73,22 @@
   color: #ffffff70;
 }
 
-.login {
+.loginLink {
   text-align: center;
   margin-top: 2rem;
 }
 
-.login a {
+.loginLink a {
   text-decoration: underline;
   color: #ffba00;
 }
 
-.showAddressForm {
-  animation: forwards 1s showAddress;
-}
-
-.showUserForm {
-  animation: forwards 1s showUserForm;
-}
-
-.hideUserForm {
-  animation: forwards 1s hideUserForm;
-}
-
-.hideAdressForm {
-  animation: forwards 1s hideAddress;
-}
-
-.none {
-  display: none;
-}
-
-@keyframes showAddress {
-  0% {
-    position: relative;
-    transform: translateX(200%);
-  }
-
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-@keyframes hideUserForm {
-  0% {
-    position: relative;
-    transform: translateX(0%);
-  }
-
-  100% {
-    transform: translateX(-200%);
-  }
-}
-
-@keyframes showUserForm {
-  0% {
-    position: relative;
-    transform: translateX(-200%);
-  }
-
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-@keyframes hideAddress {
-  0% {
-    position: relative;
-    transform: translateX(0%);
-  }
-
-  100% {
-    transform: translateX(200%);
-  }
-}
-
-@media (min-width:1000px) {
+@media (max-width: 1000px) {
   .form {
     width: 30%;
     height: auto;
   }
 }
-
 
 @media (max-width: 600px) {
   .form {
@@ -176,7 +105,6 @@
     margin-top: 2rem;
   }
 }
-
 
 @media (max-width: 425px) {
   .form {
@@ -218,5 +146,4 @@
   .login a {
     color: #000;
   }
-
 }

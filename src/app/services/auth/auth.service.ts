@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SignUp } from 'src/app/models/signup';
 import { ErrorsService } from '../errors/errors.service';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { User } from 'src/app/models/user';
 import { catchError } from 'rxjs';
 import { userMessages } from 'src/app/utils/snackbar';
@@ -29,7 +29,7 @@ export class AuthService {
       .pipe(catchError((e) => this.errorService.handleError(e)))
       .subscribe(() => {
         userMessages('Usuário criado', this.snackBar);
-        this.router.navigate(['/login']);
+        this.router.navigate(['/signIn']);
       });
   }
 
@@ -38,7 +38,7 @@ export class AuthService {
       .post(`${this.baseUrl}/auth/login`, user)
       .pipe(catchError((e) => this.errorService.handleError(e)))
       .subscribe(({ access_token }) => {
-        localStorage.setItem('token', access_token);
+        // localStorage.setItem('token', access_token);
 
         // Decodar o token aqui
         // localStorage.setItem('userId', infos.userId);

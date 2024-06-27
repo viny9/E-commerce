@@ -7,6 +7,7 @@ import { catchError, filter } from 'rxjs';
 import { ErrorsService } from '../errors/errors.service';
 import { userMessages } from 'src/app/utils/snackbar';
 import { Router } from '@angular/router';
+import { SignUp } from 'src/app/models/signup';
 
 @Injectable({
   providedIn: 'root',
@@ -51,10 +52,10 @@ export class UserService {
       .pipe(catchError((e: Error) => this.errorService.handleError(e)));
   }
 
-  createUser(userInfos: User) {
+  createUser(userInfos: SignUp) {
     return this.http
       .post(`${this.baseUrl}/user`, userInfos)
-      .pipe(catchError((e: Error) => this.errorService.handleError(e)));
+      .pipe(catchError((e: Error) => this.errorService.handleError(e)))
   }
 
   async updateUser(id: string, updatedInfos: User) {

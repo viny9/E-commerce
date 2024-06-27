@@ -5,7 +5,7 @@ import { ProductService } from 'src/app/services/product/product.service';
 @Component({
   selector: 'app-favorite-list',
   templateUrl: './favorite-list.component.html',
-  styleUrls: ['./favorite-list.component.css']
+  styleUrls: ['./favorite-list.component.css'],
 })
 export class FavoriteListComponent implements OnInit {
 

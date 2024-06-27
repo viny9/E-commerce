@@ -8,7 +8,7 @@ import { MainComponent } from './components/main/main.component';
 import { ProductComponent } from './components/product/product.component';
 import { SearchComponent } from './components/search/search.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { SignUpComponent } from './views/sign-up/sign-up.component';
 import { UserComponentComponent } from './components/user-component/user-component.component';
 import { AllOrdersComponent } from './components/user-orders/all-orders/all-orders.component';
 import { UserOrderDetailComponent } from './components/user-orders/user-order-detail/user-order-detail.component';
