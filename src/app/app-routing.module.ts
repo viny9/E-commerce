@@ -7,7 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { MainComponent } from './components/main/main.component';
 import { ProductComponent } from './components/product/product.component';
 import { SearchComponent } from './components/search/search.component';
-import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SignInComponent } from './views/sign-in/sign-in.component';
 import { SignUpComponent } from './views/sign-up/sign-up.component';
 import { UserComponentComponent } from './components/user-component/user-component.component';
 import { AllOrdersComponent } from './components/user-orders/all-orders/all-orders.component';

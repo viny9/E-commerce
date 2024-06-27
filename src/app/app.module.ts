@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SignInComponent } from './views/sign-in/sign-in.component';
 import { SignUpComponent } from './views/sign-up/sign-up.component';
 import { MainComponent } from './components/main/main.component';
 import { HeadComponent } from './components/head/head.component';
@@ -39,7 +39,6 @@ import { PromotionsComponent } from './views/promotions/promotions.component';
 import { DialogAddProductPromotionComponent } from './views/dialog-add-product-promotion/dialog-add-product-promotion.component';
 import { AdminUsersListComponent } from './views/adminUser/admin-users-list/admin-users-list.component';
 import { CreateAdminUserComponent } from './views/adminUser/create-admin-user/create-admin-user.component';
-import { environment } from './../environments/environment';
 
 //Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field';

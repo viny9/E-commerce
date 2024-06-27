@@ -9,6 +9,7 @@ import { catchError } from 'rxjs';
 import { userMessages } from 'src/app/utils/snackbar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Login } from 'src/app/models/login';
+import { LoginResponse } from 'src/app/models/loginResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -37,8 +38,8 @@ export class AuthService {
     this.http
       .post(`${this.baseUrl}/auth/login`, user)
       .pipe(catchError((e) => this.errorService.handleError(e)))
-      .subscribe(({ access_token }) => {
-        // localStorage.setItem('token', access_token);
+      .subscribe(({ access_token }: LoginResponse) => {
+        localStorage.setItem('token', access_token);
 
         // Decodar o token aqui
         // localStorage.setItem('userId', infos.userId);
