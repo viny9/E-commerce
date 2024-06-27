@@ -68,8 +68,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatStepperModule } from '@angular/material/stepper';
 
-import { TextMaskModule } from 'angular2-text-mask';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -107,6 +105,8 @@ import { TextMaskModule } from 'angular2-text-mask';
   ],
   bootstrap: [AppComponent],
   imports: [
+    AppRoutingModule,
+    BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -127,7 +127,6 @@ import { TextMaskModule } from 'angular2-text-mask';
     MatSnackBarModule,
     MatSlideToggleModule,
     MatDialogModule,
-    TextMaskModule,
     MatProgressBarModule,
     MatChipsModule,
     MatTreeModule,
