@@ -1,4 +1,10 @@
-import { BehaviorSubject, catchError, lastValueFrom, map } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  lastValueFrom,
+  map,
+} from 'rxjs';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -34,15 +40,15 @@ export class ProductService {
     private errorService: ErrorsService
   ) {}
 
-  getProducts() {
+  getProducts(): Observable<Product[]> {
     return this.http
-      .get(`${this.baseUrl}/product`, httpHeadAuthorization())
+      .get<Product[]>(`${this.baseUrl}/product`, httpHeadAuthorization())
       .pipe(catchError((e) => this.errorService.handleError(e)));
   }
 
-  getProductById(id: string) {
+  getProductById(id: string): Observable<Product> {
     return this.http
-      .get(`${this.baseUrl}/product/${id}`)
+      .get<Product>(`${this.baseUrl}/product/${id}`)
       .pipe(catchError((e) => this.errorService.handleError(e)));
   }
 

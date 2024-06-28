@@ -1,0 +1,41 @@
+.carousel {
+  display: flex;
+  width: 100%;
+  animation: carousel-slide 10s infinite;
+}
+
+.img {
+  min-width: 100%;
+}
+
+.img img {
+  width: 100%;
+  object-fit: cover;
+}
+
+@keyframes carousel-slide {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(0);
+  }
+
+  33.33% {
+    transform: translateX(-100%);
+  }
+
+  58.33% {
+    transform: translateX(-100%);
+  }
+
+  66.66% {
+    transform: translateX(-200%);
+  }
+
+  91.66% {
+    transform: translateX(-200%);
+  }
+}

@@ -1,4 +1,4 @@
-import { img } from "./img";
+import type { Img } from './img';
 
 export interface Product {
   id?: string;
@@ -6,7 +6,5 @@ export interface Product {
   price: number;
   category: string;
   promotionalValue: number;
-  imgs: img[]
-  // amount?: number;
-  // edit?: boolean;
+  imgs: Img[];
 }

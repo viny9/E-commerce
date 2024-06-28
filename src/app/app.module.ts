@@ -42,6 +42,8 @@ import { PromotionsComponent } from './views/promotions/promotions.component';
 import { DialogAddProductPromotionComponent } from './views/dialog-add-product-promotion/dialog-add-product-promotion.component';
 import { AdminUsersListComponent } from './views/adminUser/admin-users-list/admin-users-list.component';
 import { CreateAdminUserComponent } from './views/adminUser/create-admin-user/create-admin-user.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
 
 //Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -67,8 +69,6 @@ import { MatTreeModule } from '@angular/material/tree';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatStepperModule } from '@angular/material/stepper';
-
-import { ProductCardComponent } from './components/product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -105,6 +105,7 @@ import { ProductCardComponent } from './components/product-card/product-card.com
     AdminUsersListComponent,
     CreateAdminUserComponent,
     ProductCardComponent,
+    CarouselComponent,
   ],
   bootstrap: [AppComponent],
   imports: [
