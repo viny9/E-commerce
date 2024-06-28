@@ -39,7 +39,7 @@ export class AuthService {
       .post(`${this.baseUrl}/auth/login`, user)
       .pipe(catchError((e) => this.errorService.handleError(e)))
       .subscribe(({ access_token }: LoginResponse) => {
-        localStorage.setItem('token', access_token);
+        localStorage.setItem('token', `Bearer ${access_token}`);
 
         // Decodar o token aqui
         // localStorage.setItem('userId', infos.userId);

@@ -1,4 +1,10 @@
-import { BehaviorSubject, catchError, lastValueFrom, map } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  lastValueFrom,
+  map,
+} from 'rxjs';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -9,6 +15,7 @@ import { Promotion } from 'src/app/models/promotion';
 import { ErrorsService } from '../errors/errors.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { httpHeadAuthorization } from 'src/app/utils/httpHeadAuthorization';
 
 @Injectable({
   providedIn: 'root',
@@ -33,15 +40,15 @@ export class ProductService {
     private errorService: ErrorsService
   ) {}
 
-  getProducts() {
+  getProducts(): Observable<Product[]> {
     return this.http
-      .get(`${this.baseUrl}/product`)
+      .get<Product[]>(`${this.baseUrl}/product`, httpHeadAuthorization())
       .pipe(catchError((e) => this.errorService.handleError(e)));
   }
 
-  getProductById(id: string) {
+  getProductById(id: string): Observable<Product> {
     return this.http
-      .get(`${this.baseUrl}/product/${id}`)
+      .get<Product>(`${this.baseUrl}/product/${id}`)
       .pipe(catchError((e) => this.errorService.handleError(e)));
   }
 
@@ -53,27 +60,27 @@ export class ProductService {
 
   editProduct(productId: string, updatedProduct: Product) {
     return this.http
-    .patch(`${this.baseUrl}/product/${productId}`, updatedProduct)
-    .pipe(catchError((e) => this.errorService.handleError(e)));
+      .patch(`${this.baseUrl}/product/${productId}`, updatedProduct)
+      .pipe(catchError((e) => this.errorService.handleError(e)));
   }
 
   deleteProduct(productId: string) {
     return this.http
-    .delete(`${this.baseUrl}/product/${productId}`)
-    .pipe(catchError((e) => this.errorService.handleError(e)));
+      .delete(`${this.baseUrl}/product/${productId}`)
+      .pipe(catchError((e) => this.errorService.handleError(e)));
   }
 
   addProductImg(productId: string, file: File) {
     return this.http
-    .post(`${this.baseUrl}/product/${productId}/img`, file)
-    .pipe(catchError((e) => this.errorService.handleError(e)));
+      .post(`${this.baseUrl}/product/${productId}/img`, file)
+      .pipe(catchError((e) => this.errorService.handleError(e)));
   }
 
   updatedProductImgs(productId: string, removedImgs: string[]) {
     // Adaptar para que receba tantas as que vão remover quantas as novas
     return this.http
-    .put(`${this.baseUrl}/product/${productId}/img`, removedImgs)
-    .pipe(catchError((e) => this.errorService.handleError(e)));
+      .put(`${this.baseUrl}/product/${productId}/img`, removedImgs)
+      .pipe(catchError((e) => this.errorService.handleError(e)));
   }
 
   get selectComponent() {

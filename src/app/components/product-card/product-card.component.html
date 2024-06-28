@@ -1,0 +1,26 @@
+<mat-card class="product" (click)="selectProduct(productInfos.id!)">
+  @if(productInfos.imgs.length > 0){
+  <img [src]="productInfos.imgs[0].url" alt="product img" />
+  } @else {
+  <img src="../../../assets/without img.jpg" alt="product withou img" />
+  }
+
+  <div class="productInfos">
+    <h2>{{ productInfos.name }}</h2>
+
+    @if(productInfos.promotionalValue) {
+    <div class="priceContainer">
+      <p class="oldPrice">
+        {{ "R$" + productInfos.promotionalValue.toFixed(2).replace(".", ",") }}
+      </p>
+      <p>
+        {{ "R$" + productInfos.promotionalValue.toFixed(2).replace(".", ",") }}
+      </p>
+    </div>
+    } @else {
+    <div class="priceContainer">
+      <p>R$ {{ productInfos.price.toFixed(2).replace(".", ",") }}</p>
+    </div>
+    }
+  </div>
+</mat-card>

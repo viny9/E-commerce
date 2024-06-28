@@ -27,7 +27,7 @@ import { EditProductComponent } from './views/product/edit-product/edit-product.
 import { OrderInfosComponent } from './views/orders/order-infos/order-infos.component';
 import { OrdersListComponent } from './views/orders/orders-list/orders-list.component';
 import { NotificationsComponent } from './views/notifications/notifications.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './views/home/home.component';
 import { NotFoundComponent } from './views/not-found/not-found.component';
 import { SearchComponent } from './components/search/search.component';
 import { DialogCategoryComponent } from './views/product/dialog-category/dialog-category.component';
@@ -42,6 +42,8 @@ import { PromotionsComponent } from './views/promotions/promotions.component';
 import { DialogAddProductPromotionComponent } from './views/dialog-add-product-promotion/dialog-add-product-promotion.component';
 import { AdminUsersListComponent } from './views/adminUser/admin-users-list/admin-users-list.component';
 import { CreateAdminUserComponent } from './views/adminUser/create-admin-user/create-admin-user.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
 
 //Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -102,6 +104,8 @@ import { MatStepperModule } from '@angular/material/stepper';
     DialogAddProductPromotionComponent,
     AdminUsersListComponent,
     CreateAdminUserComponent,
+    ProductCardComponent,
+    CarouselComponent,
   ],
   bootstrap: [AppComponent],
   imports: [
