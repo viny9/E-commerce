@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import type { CarouselImg } from 'src/app/models/img';
+import type { CarouselImg } from 'src/app/shared/models/img';
 
 @Component({
   selector: 'carousel',
