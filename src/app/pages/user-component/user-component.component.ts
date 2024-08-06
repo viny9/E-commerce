@@ -3,7 +3,7 @@ import { NoopScrollStrategy } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { User } from 'src/app/shared/models/user';
+import { User } from 'src/app/shared/interfaces/User';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/core/services/product/product.service';
 import { UserService } from 'src/app/core/services/user/user.service';
@@ -93,7 +93,7 @@ export class UserComponentComponent implements OnInit {
       user.address.cep = user.address.cep.replace(/\D/g, ''); //Removendo a mask do valor
       user.phone = user.phone.replace(/\D/g, ''); //Removendo a mask do valor
 
-      await this.userService.updateUser(res.id, user);
+      await this.userService.updateUser(res.id!, user);
       this.userInfos();
     });
   }

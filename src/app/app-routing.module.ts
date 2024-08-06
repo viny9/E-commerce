@@ -1,3 +1,5 @@
+import { NewProductComponent } from './pages/new-product/new-product.component';
+import { ProductListComponent } from './pages/product-list/product-list.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './pages/admin/admin.component';
@@ -18,8 +20,6 @@ import { OrderInfosComponent } from './pages/order-infos/order-infos.component';
 import { OrdersListComponent } from './pages/orders-list/orders-list.component';
 import { SuccessComponent } from './pages/success/success.component';
 import { EditProductComponent } from './pages/edit-product/edit-product.component';
-import { NewProductComponent } from './views/product/new-product/new-product.component';
-import { ProductListComponent } from './views/product/product-list/product-list.component';
 import { PasswordRecoveryComponent } from './pages/password-recovery/password-recovery.component';
 import { PromotionsComponent } from './pages/promotions/promotions.component';
 import { AdminAuthGuard } from './core/guards/admin/admin-auth.guard';

@@ -1,7 +1,7 @@
-import { Product } from './product';
+import { Product } from './Product';
 
 export interface Promotion {
-  id: string;
+  id?: string;
   name: string;
   start: string;
   end: string;

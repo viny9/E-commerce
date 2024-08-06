@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/core/services/product/product.service';
 import { LoadService } from 'src/app/services/load/load.service';
-import { Product } from 'src/app/shared/models/product';
+import { Product } from 'src/app/shared/interfaces/Product';
 import { ListService } from 'src/app/core/services/list/list.service';
 import { userMessages } from 'src/app/shared/utils/snackbar';
 import { MatSnackBar } from '@angular/material/snack-bar';

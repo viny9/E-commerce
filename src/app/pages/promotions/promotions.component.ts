@@ -5,8 +5,8 @@ import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/core/services/product/product.service';
 import { DialogAddProductPromotionComponent } from '../../components/dialogs/dialog-add-product-promotion/dialog-add-product-promotion.component';
 import { AdminRoutes } from 'src/app/shared/enums/admin-routes';
-import { Promotion } from 'src/app/shared/models/promotion';
-import { Product } from 'src/app/shared/models/product';
+import { Promotion } from 'src/app/shared/interfaces/Promotion';
+import { Product } from 'src/app/shared/interfaces/Product';
 import { PromotionService } from 'src/app/core/services/promotion/promotion.service';
 
 @Component({
@@ -73,7 +73,7 @@ export class PromotionsComponent implements OnInit {
     this.selected = true;
 
     this.promotionService
-      .getPromotionById(promotion.id)
+      .getPromotionById(promotion.id!)
       .subscribe((res: any) => {
         this.selectedPromotion = res;
 
@@ -151,7 +151,7 @@ export class PromotionsComponent implements OnInit {
   async deletePromotion(promotion: Promotion) {
     this.loadService.showLoading();
 
-    this.promotionService.deletePromotion(promotion.id).subscribe(() => {
+    this.promotionService.deletePromotion(promotion.id!).subscribe(() => {
       this.removeProductPromotion(promotion.products);
     });
 

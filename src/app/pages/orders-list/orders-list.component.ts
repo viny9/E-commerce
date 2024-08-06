@@ -5,7 +5,7 @@ import { LoadService } from 'src/app/services/load/load.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { AdminRoutes } from 'src/app/shared/enums/admin-routes';
-import { Product } from 'src/app/shared/models/product';
+import { Product } from 'src/app/shared/interfaces/Product';
 
 @Component({
   selector: 'app-orders-list',

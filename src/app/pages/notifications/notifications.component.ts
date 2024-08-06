@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminRoutes } from 'src/app/shared/enums/admin-routes';
-import { Notification } from 'src/app/shared/models/notification';
+import { Notification } from 'src/app/shared/interfaces/Notification';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/core/services/product/product.service';
 

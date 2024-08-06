@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { catchError, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ErrorsService } from '../../../services/errors/errors.service';
-import { List } from 'src/app/shared/models/list';
-import { Product } from 'src/app/shared/models/product';
+import { List } from 'src/app/shared/interfaces/List';
+import { Product } from 'src/app/shared/interfaces/Product';
 
 @Injectable({
   providedIn: 'root',
