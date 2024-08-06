@@ -1,4 +1,4 @@
-import type { Img } from './img';
+import { Img } from './Img';
 
 export interface Product {
   id?: string;

@@ -6,7 +6,7 @@ import { ProductService } from 'src/app/core/services/product/product.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { DeleteAccountComponent } from '../../components/dialogs/delete-account/delete-account.component';
 import { Router } from '@angular/router';
-import { User } from 'src/app/shared/models/user';
+import { User } from 'src/app/shared/interfaces/User';
 
 @Component({
   selector: 'app-admin-users-list',

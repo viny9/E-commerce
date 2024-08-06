@@ -1,4 +1,4 @@
-import { User } from '../../../shared/models/user';
+import { User } from '../../../shared/interfaces/User';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -7,7 +7,7 @@ import { catchError, filter } from 'rxjs';
 import { ErrorsService } from '../../../services/errors/errors.service';
 import { userMessages } from 'src/app/shared/utils/snackbar';
 import { Router } from '@angular/router';
-import { SignUp } from 'src/app/shared/models/signup';
+import { SignUp } from 'src/app/shared/interfaces/Signup';
 
 @Injectable({
   providedIn: 'root',

@@ -1,5 +1,5 @@
 export interface Notification {
-    id: number
+    id?: number
     date: number
     message: string
     new: boolean

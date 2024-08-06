@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
-import { Product } from 'src/app/shared/models/product';
+import { Product } from 'src/app/shared/interfaces/Product';
 import { CategoryService } from 'src/app/core/services/category/category.service';
 import { LoadService } from 'src/app/services/load/load.service';
 import { ProductService } from 'src/app/core/services/product/product.service';

@@ -3,14 +3,13 @@ import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { ProductService } from 'src/app/core/services/product/product.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogCategoryComponent } from '../../../components/dialogs/dialog-category/dialog-category.component';
 import { LoadService } from 'src/app/services/load/load.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { AdminRoutes } from 'src/app/shared/enums/admin-routes';
-import { Product } from 'src/app/shared/models/product';
+import { Product } from 'src/app/shared/interfaces/Product';
 import { userMessages } from 'src/app/shared/utils/snackbar';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DialogCategoryComponent } from 'src/app/components/dialogs/dialog-category/dialog-category.component';
 
 @Component({
   selector: 'app-product-list',

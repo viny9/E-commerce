@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Product } from 'src/app/shared/models/product';
-import { User } from 'src/app/shared/models/user';
+import { Product } from 'src/app/shared/interfaces/Product';
+import { User } from 'src/app/shared/interfaces/User';
 import { environment } from 'src/environments/environment';
 import { ErrorsService } from '../../../services/errors/errors.service';
 import { catchError, map } from 'rxjs';

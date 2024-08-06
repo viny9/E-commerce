@@ -4,7 +4,7 @@ import { StripeService } from 'src/app/core/services/stripe/stripe.service';
 import { ProductService } from 'src/app/core/services/product/product.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { LoadService } from 'src/app/services/load/load.service';
-import { User } from 'src/app/shared/models/user';
+import { User } from 'src/app/shared/interfaces/User';
 
 @Component({
   selector: 'app-success',

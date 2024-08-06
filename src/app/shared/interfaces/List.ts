@@ -1,7 +1,7 @@
-import { Product } from "./product";
+import { Product } from "./Product";
 
 export interface List {
-  id: string,
+  id?: string,
   userId: string,
   products: Product[]
 }

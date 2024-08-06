@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SignUp } from 'src/app/shared/models/signup';
+import { SignUp } from 'src/app/shared/interfaces/Signup';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({

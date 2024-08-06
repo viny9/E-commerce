@@ -1,15 +1,15 @@
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SignUp } from 'src/app/shared/models/signup';
+import { SignUp } from 'src/app/shared/interfaces/Signup';
 import { ErrorsService } from '../../../services/errors/errors.service';
 import { environment } from 'src/environments/environment';
-import { User } from 'src/app/shared/models/user';
+import { User } from 'src/app/shared/interfaces/User';
 import { catchError } from 'rxjs';
 import { userMessages } from 'src/app/shared/utils/snackbar';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Login } from 'src/app/shared/models/login';
-import { LoginResponse } from 'src/app/shared/models/loginResponse';
+import { Login } from 'src/app/shared/interfaces/Login';
+import { LoginResponse } from 'src/app/shared/interfaces/LoginResponse';
 
 @Injectable({
   providedIn: 'root',
